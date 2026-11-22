@@ -40,18 +40,23 @@
   "sideEffects": [
     "*.css",
     "./dist/gob.js",
-    "./dist/gob.esm.js"
+    "./dist/gob.min.js",
+    "./dist/gob.esm.js",
+    "./dist/next/*.js",
+    "./src/js/*.js"
   ],
   "scripts": {
     "build:icons": "node scripts/build-icons.mjs",
     "build:fonts": "node scripts/build-fonts.mjs",
     "build:css": "tailwindcss -i src/dist-entry.css -o dist/gob.css && tailwindcss -i src/dist-entry.css -o dist/gob.min.css --minify",
     "build:js": "node scripts/build-js.mjs",
-    "build:docs": "node scripts/build-docs.mjs",
-    "build": "npm run build:icons && npm run build:fonts && npm run build:js && npm run build:next && npm run build:docs && npm run build:css",
+    "build": "npm run build:icons && npm run build:fonts && npm run build:js && npm run build:next && npm run build:css",
     "prepublishOnly": "npm run build",
     "build:core": "node tools/build-core.mjs",
-    "build:next": "node tools/build-next.mjs && tailwindcss -i src/next.css -o dist/gob-next.css --minify"
+    "build:next": "node tools/build-next.mjs && tailwindcss -i src/next.css -o dist/gob-next.css --minify",
+    "docs:dev": "vite --config site/vite.config.js",
+    "docs:build": "vite build --config site/vite.config.js",
+    "docs:preview": "vite preview --config site/vite.config.js"
   },
   "keywords": [
     "gob.cl",
@@ -75,13 +80,19 @@
     "@fontsource/roboto-slab": "^5.1.0",
     "@gobdigital-cl/gob.cl": "^3.0.10",
     "@tailwindcss/cli": "^4.1.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "@vitejs/plugin-react": "^5.2.0",
     "bootstrap-next": "npm:bootstrap@^6.0.0-alpha.1",
     "esbuild": "^0.25.0",
+    "html-react-parser": "^5.2.17",
     "lucide-static": "^0.468.0",
     "postcss": "^8.5.33",
     "pug": "^3.0.4",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "simple-icons": "^14.15.0",
     "source-map": "^0.7.4",
-    "tailwindcss": "^4.1.0"
+    "tailwindcss": "^4.1.0",
+    "vite": "^7.3.8"
   }
 }

@@ -6,4 +6,3 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @source inline("{bg,text,border,fill,stroke,outline,ring,from,to}-{primary,secondary,tertiary,accent,neutral,success,info,warning,danger,light,dark,white,black,transparent,gray-a,gray-b,gray-c}");
-@source "../docs";

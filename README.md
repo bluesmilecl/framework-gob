@@ -87,11 +87,22 @@ Bootstrap 6 está en **`6.0.0-alpha.1`** (pre-lanzamiento, rompe compatibilidad 
 - Variables SCSS → variables CSS (`var(--color-primary)`); personaliza con `@theme`.
 - jQuery/Popper ya no se necesitan: `data-toggle`, `data-dismiss`, `data-parent` funcionan con el JS incluido.
 
+## Documentación (React)
+
+`site/` es una app **React 19 + Vite** que consume el paquete igual que cualquier proyecto Tailwind 4 (con `@tailwindcss/vite`). Incluye todos los componentes con su código, galería de íconos filtrable, scrollspy y tabla de migración.
+
+```bash
+npm run docs:dev       # desarrollo
+npm run docs:build     # genera site/dist
+```
+
+Despliegue en Vercel: `vercel.json` ya define `buildCommand: npm run docs:build` y `outputDirectory: site/dist`.
+
 ## Desarrollo
 
 ```bash
 npm install
-npm run build        # íconos → fuentes → JS → next → docs → CSS (dist/)
+npm run build        # íconos → fuentes → JS → next → CSS (dist/)
 npm run build:core   # regenera src/core desde el CSS oficial
 NODE_PATH=$(npm root -g) node tools/parity.cjs <site-oficial> <site-copia>   # arnés de paridad
 ```
