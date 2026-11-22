@@ -119,6 +119,7 @@
 
 /* ── Modo alto contraste (equivale a .a11y-contrast del framework original) ── */
 :root.a11y-contrast,
+.a11y-contrast,
 [data-theme="contrast"] {
   --color-primary: #ff904c;
   --color-secondary: #019a9a;

@@ -11,7 +11,9 @@
     "dist",
     "src",
     "icons",
+    "brand",
     "scripts",
+    "tools",
     "LICENSE",
     "README.md"
   ],
@@ -21,10 +23,9 @@
       "default": "./src/index.css"
     },
     "./theme.css": "./src/theme.css",
-    "./components.css": "./src/components.css",
+    "./compat.css": "./src/compat.css",
     "./icons.css": "./src/icons.generated.css",
     "./fonts.css": "./dist/fonts.css",
-    "./compat.css": "./src/compat.css",
     "./js": {
       "import": "./dist/gob.esm.js",
       "default": "./dist/gob.js"
@@ -39,13 +40,14 @@
     "./dist/gob.esm.js"
   ],
   "scripts": {
-    "build:icons": "node scripts/build-icons.mjs && node scripts/build-compat.mjs",
+    "build:icons": "node scripts/build-icons.mjs",
     "build:fonts": "node scripts/build-fonts.mjs",
     "build:css": "tailwindcss -i src/dist-entry.css -o dist/gob.css && tailwindcss -i src/dist-entry.css -o dist/gob.min.css --minify",
     "build:js": "node scripts/build-js.mjs",
     "build:docs": "node scripts/build-docs.mjs",
     "build": "npm run build:icons && npm run build:fonts && npm run build:js && npm run build:docs && npm run build:css",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "build:core": "node tools/build-core.mjs"
   },
   "keywords": [
     "gob.cl",
@@ -67,10 +69,14 @@
   "devDependencies": {
     "@fontsource/roboto": "^5.1.0",
     "@fontsource/roboto-slab": "^5.1.0",
+    "@gobdigital-cl/gob.cl": "^3.0.10",
     "@tailwindcss/cli": "^4.1.0",
     "esbuild": "^0.25.0",
     "lucide-static": "^0.468.0",
+    "postcss": "^8.5.33",
+    "pug": "^3.0.4",
     "simple-icons": "^14.15.0",
+    "source-map": "^0.7.4",
     "tailwindcss": "^4.1.0"
   }
 }
