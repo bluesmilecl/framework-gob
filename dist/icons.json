@@ -2352,6 +2352,156 @@
     "source": "lucide"
   },
   {
+    "name": "layout-dashboard",
+    "class": "cl-layout-dashboard",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "chevrons-up-down",
+    "class": "cl-chevrons-up-down",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "palette",
+    "class": "cl-palette",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "type",
+    "class": "cl-type",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "ruler",
+    "class": "cl-ruler",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "square-check-big",
+    "class": "cl-square-check-big",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "layout-panel-left",
+    "class": "cl-layout-panel-left",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "columns-3",
+    "class": "cl-columns-3",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "command",
+    "class": "cl-command",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "life-buoy",
+    "class": "cl-life-buoy",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "bell-dot",
+    "class": "cl-bell-dot",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "rows-3",
+    "class": "cl-rows-3",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "table-properties",
+    "class": "cl-table-properties",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "sliders-vertical",
+    "class": "cl-sliders-vertical",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "import",
+    "class": "cl-import",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "mail-check",
+    "class": "cl-mail-check",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "user-round-check",
+    "class": "cl-user-round-check",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "monitor-smartphone",
+    "class": "cl-monitor-smartphone",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "badge-plus",
+    "class": "cl-badge-plus",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "copy-plus",
+    "class": "cl-copy-plus",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "ticket",
+    "class": "cl-ticket",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "log-in-alt",
+    "class": "cl-log-in-alt",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "user-round-cog",
+    "class": "cl-user-round-cog",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "database-zap",
+    "class": "cl-database-zap",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
+    "name": "hard-drive-download",
+    "class": "cl-hard-drive-download",
+    "group": "App y administración",
+    "source": "lucide"
+  },
+  {
     "name": "linkedin",
     "class": "cl-linkedin",
     "group": "Redes sociales (línea)",

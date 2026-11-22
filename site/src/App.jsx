@@ -9,6 +9,7 @@ import { Navegacion, Colapsables, Busqueda } from './sections/Navigation.jsx'
 import { Formularios, Nuevos } from './sections/Forms.jsx'
 import { Componentes, FooterDoc, Accesibilidad, Migracion } from './sections/Misc.jsx'
 import ChatIA from './sections/ChatIA.jsx'
+import ReactLib from './sections/ReactLib.jsx'
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
             <Busqueda />
             <Componentes />
             <FooterDoc />
+            <ReactLib />
             <ChatIA />
             <Accesibilidad />
             <Migracion />

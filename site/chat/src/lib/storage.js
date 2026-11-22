@@ -25,7 +25,7 @@ export const saveState = (state) => {
   } catch { /* cuota excedida o almacenamiento bloqueado */ }
 }
 
-export const DEFAULT_SETTINGS = { provider: 'demo', baseUrl: 'https://api.openai.com/v1', modelName: '', apiKey: '' }
+export const DEFAULT_SETTINGS = { provider: 'demo', baseUrl: 'https://api.openai.com/v1', modelName: '', apiKey: '', instructions: '', tone: 'neutral', defaultModel: 'asistente' }
 
 export const loadSettings = () => {
   try { return { ...DEFAULT_SETTINGS, ...JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}') } } catch { return DEFAULT_SETTINGS }

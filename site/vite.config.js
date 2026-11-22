@@ -8,11 +8,13 @@ export default defineConfig({
   root: import.meta.dirname,
   base: './',
   plugins: [react(), tailwindcss()],
+  // Las maquetas consumen la librería igual que un proyecto externo: import { … } from 'gob-cl-tailwind/react'
+  resolve: { alias: { 'gob-cl-tailwind/react': resolve(import.meta.dirname, '../src/react/index.js') } },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     // Dos páginas: documentación (/) y app de chat (/chat/)
-    rollupOptions: { input: { main: resolve(import.meta.dirname, 'index.html'), chat: resolve(import.meta.dirname, 'chat/index.html') } },
+    rollupOptions: { input: { main: resolve(import.meta.dirname, 'index.html'), chat: resolve(import.meta.dirname, 'chat/index.html'), tramites: resolve(import.meta.dirname, 'tramites/index.html') } },
   },
   server: { fs: { allow: ['..'] } },
 })

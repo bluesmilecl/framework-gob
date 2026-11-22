@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import Icon from './Icon.jsx'
-import useDismiss from './useDismiss.js'
+import { useDismiss } from 'gob-cl-tailwind/react'
 import { MODELS, modelLabel } from '../lib/models.js'
 
 export default function ModelSelect({ value, onChange }) {

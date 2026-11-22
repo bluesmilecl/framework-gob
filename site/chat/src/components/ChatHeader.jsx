@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react'
 import Icon from './Icon.jsx'
 import ModelSelect from './ModelSelect.jsx'
-import useDismiss from './useDismiss.js'
-import { toolbar } from '../../../../src/js/gob.js'
+import { useDismiss } from 'gob-cl-tailwind/react'
+import { useAccessibility } from 'gob-cl-tailwind/react'
 
 export default function ChatHeader({ title, demo, model, onModel, collapsed, onToggleSidebar, hasMessages, onExport, onClear }) {
   const [menu, setMenu] = useState(false)
   const ref = useRef(null)
+  const a11y = useAccessibility()
   useDismiss(menu, ref, () => setMenu(false))
   return (
     <header className="chat-header">
@@ -16,9 +17,9 @@ export default function ChatHeader({ title, demo, model, onModel, collapsed, onT
       <h1 className="chat-header-title">{title}</h1>
       {demo && <span className="badge badge-warning" title="Las respuestas son simuladas; no las genera un modelo de IA" style={{ flex: 'none' }}>Demo</span>}
       <ModelSelect value={model} onChange={onModel} />
-      <button type="button" className="chat-iconbtn chat-hide-sm" aria-label="Alto contraste" title="Alto contraste" onClick={() => toolbar.toggleContrast()}><Icon name="contrast" /></button>
-      <button type="button" className="chat-iconbtn chat-hide-sm" aria-label="Disminuir texto" title="Disminuir texto" onClick={() => toolbar.index() > 0 && toolbar.setFont(toolbar.index() - 1)}><Icon name="decrease-text" /></button>
-      <button type="button" className="chat-iconbtn chat-hide-sm" aria-label="Aumentar texto" title="Aumentar texto" onClick={() => toolbar.index() < 2 && toolbar.setFont(toolbar.index() + 1)}><Icon name="increase-text" /></button>
+      <button type="button" className="chat-iconbtn chat-hide-sm" aria-label="Alto contraste" title="Alto contraste" onClick={a11y.toggleContrast}><Icon name="contrast" /></button>
+      <button type="button" className="chat-iconbtn chat-hide-sm" aria-label="Disminuir texto" title="Disminuir texto" onClick={() => a11y.setFont(a11y.font - 1)}><Icon name="decrease-text" /></button>
+      <button type="button" className="chat-iconbtn chat-hide-sm" aria-label="Aumentar texto" title="Aumentar texto" onClick={() => a11y.setFont(a11y.font + 1)}><Icon name="increase-text" /></button>
       <div style={{ position: 'relative' }} ref={ref}>
         <button type="button" className="chat-iconbtn" aria-label="Más acciones" aria-haspopup="menu" aria-expanded={menu} disabled={!hasMessages} onClick={() => setMenu((v) => !v)}><Icon name="ellipsis-vertical" /></button>
         {menu && (

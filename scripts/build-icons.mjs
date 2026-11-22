@@ -49,6 +49,9 @@ const LUCIDE = {
     corner-down-left paperclip file-code file-spreadsheet file-image file-archive audio-lines languages quote panel-left-close
     panel-left-open square-pen text-cursor-input arrow-big-up thumbs-up thumbs-down flag-triangle-right pin-off history
     messages-square list-restart rotate-ccw clipboard-copy share download-cloud`,
+  'App y administración': `layout-dashboard chevrons-up-down palette type ruler square-check-big layout-panel-left columns-3 command
+    life-buoy bell-dot rows-3 table-properties sliders-vertical import mail-check user-round-check monitor-smartphone badge-plus
+    copy-plus ticket log-in user-round-cog database-zap hard-drive-download`,
   'Redes sociales (línea)': `linkedin`,
 }
 

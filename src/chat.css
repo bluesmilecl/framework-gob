@@ -92,6 +92,10 @@
     display: flex; flex: 1 1 auto; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; font-size: 0.875rem; color: #fff; text-align: left; cursor: pointer; background: transparent; border: 0;
   }
   .chat-side-link:hover { background: var(--chat-side-hover); }
+  .chat-app .app-menu { --app-bg: var(--chat-bg); --app-fg: var(--chat-fg); --app-surface: var(--chat-surface); --app-border: var(--chat-border); --app-border-soft: var(--chat-border-soft); --app-muted: var(--chat-muted); --app-danger-ink: color-mix(in srgb, var(--chat-danger) 70%, #000); }
+  .chat-foot-menu { display: block; width: 100%; }
+  .chat-foot-menu .app-menu { left: 0; right: auto; color: var(--chat-fg); background: var(--chat-bg); }
+  .chat-foot-menu .app-menu button, .chat-foot-menu .app-menu a { color: inherit; }
   .chat-overlay { display: none; }
 
   /* ───────── Menú contextual / desplegable ───────── */

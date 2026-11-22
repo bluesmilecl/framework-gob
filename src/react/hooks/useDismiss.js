@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-/** Cierra un menú con clic fuera o Escape. */
+/** Cierra un menú desplegable con clic fuera o Escape. */
 export default function useDismiss(open, ref, close) {
   useEffect(() => {
     if (!open) return undefined

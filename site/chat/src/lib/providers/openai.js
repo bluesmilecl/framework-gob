@@ -18,7 +18,7 @@ export const openaiProvider = (cfg) => ({
       method: 'POST',
       signal,
       headers: { 'Content-Type': 'application/json', ...(cfg.apiKey ? { Authorization: `Bearer ${cfg.apiKey}` } : {}) },
-      body: JSON.stringify({ model: cfg.modelName || model, stream: true, messages: messages.map((m) => ({ role: m.role, content: toContent(m) })) }),
+      body: JSON.stringify({ model: cfg.modelName || model, stream: true, messages: [...(cfg.instructions ? [{ role: 'system', content: `${cfg.instructions}${cfg.tone && cfg.tone !== 'neutral' ? `\nTono de respuesta: ${cfg.tone}.` : ''}` }] : []), ...messages.map((m) => ({ role: m.role, content: toContent(m) }))] }),
     })
     if (!res.ok || !res.body) {
       const detail = await res.text().catch(() => '')
