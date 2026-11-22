@@ -6,8 +6,10 @@
 @import "../../../src/compat.css";
 @import "../../../src/next.css";
 @import "../../../src/chat.css";
+@import "../../../src/app.css";
 @import "tailwindcss/utilities.css" layer(utilities);
 @source ".";
 
 html, body, #root { height: 100%; }
 body { overflow: hidden; }
+/* El chat ocupa toda la pantalla; el resto de páginas usan el AppShell */

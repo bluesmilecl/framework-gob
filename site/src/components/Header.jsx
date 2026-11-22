@@ -20,6 +20,7 @@ export default function Header() {
                 <a className="dropdown-item" href="#nuevos">Nuevos (Bootstrap 6)</a>
               </div>
             </li>
+            <li className="nav-item"><a className="nav-link" href="#react">React</a></li>
             <li className="nav-item"><a className="nav-link" href="#chat-ia">Chat IA</a></li>
             <li className="nav-item"><a className="nav-link" href="#migracion">Migración</a></li>
             <li className="nav-separator" />

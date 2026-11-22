@@ -5,6 +5,7 @@
 @import "../../src/index.css";
 @import "../../src/compat.css";
 @import "../../src/next.css";
+@import "../../src/app.css";
 @import "tailwindcss/utilities.css" layer(utilities);
 @source ".";
 

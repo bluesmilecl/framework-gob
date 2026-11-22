@@ -36,7 +36,12 @@
     "./next.css": "./src/next.css",
     "./next/js": "./dist/next/bootstrap6.bundle.min.js",
     "./contrast-tokens.css": "./src/contrast-tokens.css",
-    "./chat.css": "./src/chat.css"
+    "./chat.css": "./src/chat.css",
+    "./app.css": "./src/app.css",
+    "./react": {
+      "import": "./dist/react/index.js",
+      "default": "./dist/react/index.js"
+    }
   },
   "sideEffects": [
     "*.css",
@@ -51,13 +56,14 @@
     "build:fonts": "node scripts/build-fonts.mjs",
     "build:css": "tailwindcss -i src/dist-entry.css -o dist/gob.css && tailwindcss -i src/dist-entry.css -o dist/gob.min.css --minify",
     "build:js": "node scripts/build-js.mjs",
-    "build": "npm run build:icons && npm run build:fonts && npm run build:js && npm run build:next && npm run build:css",
+    "build": "npm run build:icons && npm run build:fonts && npm run build:js && npm run build:react && npm run build:next && npm run build:css",
     "prepublishOnly": "npm run build",
     "build:core": "node tools/build-core.mjs",
     "build:next": "node tools/build-next.mjs && tailwindcss -i src/next.css -o dist/gob-next.css --minify",
     "docs:dev": "vite --config site/vite.config.js",
     "docs:build": "vite build --config site/vite.config.js",
-    "docs:preview": "vite preview --config site/vite.config.js"
+    "docs:preview": "vite preview --config site/vite.config.js",
+    "build:react": "node scripts/build-react.mjs"
   },
   "keywords": [
     "gob.cl",
@@ -69,10 +75,14 @@
     "framework"
   ],
   "peerDependencies": {
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.0",
+    "react": ">=18"
   },
   "peerDependenciesMeta": {
     "tailwindcss": {
+      "optional": true
+    },
+    "react": {
       "optional": true
     }
   },
@@ -92,6 +102,7 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.18.6",
     "remark-gfm": "^4.0.1",
     "simple-icons": "^14.15.0",
     "source-map": "^0.7.4",

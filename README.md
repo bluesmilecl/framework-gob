@@ -1,7 +1,7 @@
 # gob-cl-tailwind
 
 Framework CSS del **Gobierno de Chile** ([framework.digital.gob.cl](https://framework.digital.gob.cl/)) sobre **Tailwind CSS 4**.
-Traspaso íntegro del framework oficial (`@gobdigital-cl/gob.cl` 3.0.10, que dependía de Bootstrap 4 + jQuery + Popper): mismo diseño, mismos nombres de clase, ahora con tokens de Tailwind, capas CSS, JS sin dependencias, **402 íconos** y una capa opcional con los componentes nuevos de **Bootstrap 6**.
+Traspaso íntegro del framework oficial (`@gobdigital-cl/gob.cl` 3.0.10, que dependía de Bootstrap 4 + jQuery + Popper): mismo diseño, mismos nombres de clase, ahora con tokens de Tailwind, capas CSS, JS sin dependencias, **427 íconos** y una capa opcional con los componentes nuevos de **Bootstrap 6**.
 
 > Proyecto comunitario no oficial. El diseño, marca y logotipos pertenecen al Gobierno de Chile / División de Gobierno Digital.
 
@@ -59,7 +59,7 @@ import "gob-cl-tailwind/next/js";  // opcional: dialog, drawer, menu, combobox�
 | `src/core/a11y-contrast.css` | Tema oficial `html.a11y-contrast` | CSS oficial compilado |
 | `src/core/utilities-bootstrap.css` | Utilidades de Bootstrap 4 (`compat.css`) | CSS oficial compilado |
 | `src/core/a11y-fonts.css` | Re-flujo de grilla con fuentes ampliadas (`compat.css`) | CSS oficial compilado |
-| `src/icons.generated.css` | 402 íconos como máscaras CSS (`.cl-*`) | `scripts/build-icons.mjs` |
+| `src/icons.generated.css` | 427 íconos como máscaras CSS (`.cl-*`) | `scripts/build-icons.mjs` |
 | `src/next/*` | Componentes nuevos de Bootstrap 6 reteñidos | `tools/build-next.mjs` |
 | `src/extras.css` | `container`/`collapse` sin choque con Tailwind, skip-link, foco | Propio |
 
@@ -69,7 +69,7 @@ Los componentes están en `@layer components`, por lo que una utilidad de Tailwi
 
 ## Íconos
 
-`<i class="cl cl-search"></i>`: máscaras CSS que heredan `currentColor` y se dimensionan con `font-size` (`cl-2x` … `cl-10x`, `text-2xl`). 53 oficiales + 349 extra (Lucide, Simple Icons). Si un nombre extra coincide con uno oficial se publica con sufijo `-alt`. Listado en `dist/icons.json`.
+`<i class="cl cl-search"></i>`: máscaras CSS que heredan `currentColor` y se dimensionan con `font-size` (`cl-2x` … `cl-10x`, `text-2xl`). 53 oficiales + 374 extra (Lucide, Simple Icons). Si un nombre extra coincide con uno oficial se publica con sufijo `-alt`. Listado en `dist/icons.json`.
 
 ## Bootstrap 6 (opcional)
 
@@ -86,6 +86,39 @@ Bootstrap 6 está en **`6.0.0-alpha.1`** (pre-lanzamiento, rompe compatibilidad 
 - `.collapse` y `.container` conservan su significado Bootstrap (se neutralizan las utilidades homónimas de Tailwind; usa `invisible` para `visibility: collapse`).
 - Variables SCSS → variables CSS (`var(--color-primary)`); personaliza con `@theme`.
 - jQuery/Popper ya no se necesitan: `data-toggle`, `data-dismiss`, `data-parent` funcionan con el JS incluido.
+
+## Librería de componentes React (`gob-cl-tailwind/react`)
+
+Componentes funcionales, accesibles y reutilizables, con su CSS (`gob-cl-tailwind/app.css`):
+
+| Categoría | Componentes |
+|---|---|
+| Layout | `AppShell` (sidebar expandido / riel / oculto / móvil + navbar + contenedor + footer), `Container`, `PageHeader`, `Panel`, `StatCard`, `Footer`, `AppFooter`, `SiteNavbar` |
+| Navegación | `DropdownMenu` (teclado completo), `Tabs`, `Stepper`, `Breadcrumbs`, `Pagination` |
+| Formularios | `Field`, `TextField`, `TextareaField`, `SelectField`, `DateField`, `RunField`, `PasswordField` (medidor de fortaleza), `CheckboxField`, `Switch`, `RadioGroup`, `SearchInput`, `OtpInput`, `FileUpload` (arrastrar, vista previa, validación, progreso), `useForm` |
+| Datos | `DataTable` (orden, selección, acciones por fila, paginación, estados de carga/vacío), `FilterBar`, `StatusBadge`, `Avatar`, `EmptyState`, `Skeleton`, `toCsv` / `parseCsv` |
+| Feedback | `Modal` (tamaños, tonos, drawer, hoja inferior en móvil, apilado, animación de salida), `useModal` (`confirm`, `alert`, `prompt`), `ToastProvider` (con acción «Deshacer»), `Alert` |
+| Autenticación | `AuthLayout`, `LoginForm`, `RegisterForm`, `ForgotPasswordForm`, `ResetPasswordForm`, `TwoFactorForm` |
+| Accesibilidad | `useAccessibility` (alto contraste y tamaño de texto, sincronizado entre componentes) |
+
+```css
+@import "tailwindcss/theme.css" layer(theme);
+@import "gob-cl-tailwind";
+@import "gob-cl-tailwind/app.css";
+@import "tailwindcss/utilities.css" layer(utilities);
+```
+
+```jsx
+import { ToastProvider, ModalProvider, DataTable, FilterBar, useModal } from 'gob-cl-tailwind/react'
+```
+
+El código fuente está en `src/react`; `npm run build:react` genera `dist/react/index.js` (ESM, `react` como dependencia externa).
+
+## Maquetas (hechas solo con la librería)
+
+- **`/tramites/` — Plataforma de gestión de trámites**: autenticación (login, registro, recuperar, restablecer, verificación en dos pasos), panel, listado con filtros/orden/paginación/acciones masivas/exportar CSV, asistente de nuevo trámite (carga de documentos, borrador automático, comprobante), detalle con línea de tiempo y comentarios, usuarios (CRUD con modal, drawer, importación CSV y deshacer), configuración (perfil, seguridad con 2FA y tokens, notificaciones, apariencia, zona de riesgo) y página de layouts con controles en vivo.
+- **`/chat/` — Plataforma de IA tipo ChatGPT**: autenticación, chat (historial, streaming, adjuntos, Markdown), biblioteca de archivos (tabla + carga) y ajustes (perfil, personalización, proveedor, apariencia, datos).
+- Cuenta de demostración de ambas: `demo@example.com` / `Demo1234!` (en trámites, código de verificación `123456`). **La autenticación es simulada**: no hay servidor.
 
 ## Chat de IA
 

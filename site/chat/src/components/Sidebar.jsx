@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Icon from './Icon.jsx'
-import useDismiss from './useDismiss.js'
+import { DropdownMenu, useDismiss } from 'gob-cl-tailwind/react'
 
 function ConversationItem({ conv, active, onSelect, onRename, onDelete, onPin }) {
   const [menu, setMenu] = useState(false)
@@ -48,11 +48,11 @@ function ConversationItem({ conv, active, onSelect, onRename, onDelete, onPin })
   )
 }
 
-export default function Sidebar({ groups, activeId, query, setQuery, searchRef, onSelect, onNew, onRename, onDelete, onPin, onSettings, onShortcuts, onClose }) {
+export default function Sidebar({ groups, activeId, query, setQuery, searchRef, onSelect, onNew, onRename, onDelete, onPin, onSettings, onShortcuts, onFiles, onLogout, user, onClose }) {
   return (
     <aside className="chat-sidebar" aria-label="Historial de conversaciones">
       <div className="chat-sidebar-head">
-        <a className="chat-brand" href="/">
+        <a className="chat-brand" href="#/">
           <img src="/img/gob-footer.svg" alt="Gobierno de Chile" />
           <span className="chat-brand-name">Asistente IA<small>Interfaz de demostración</small></span>
         </a>
@@ -75,9 +75,16 @@ export default function Sidebar({ groups, activeId, query, setQuery, searchRef, 
           </section>
         ))}
       </nav>
-      <div className="chat-sidebar-foot">
-        <button type="button" className="chat-side-link" onClick={onSettings}><Icon name="settings" /> Ajustes</button>
-        <button type="button" className="chat-side-link" style={{ flex: '0 0 auto' }} onClick={onShortcuts} aria-label="Atajos de teclado" title="Atajos de teclado"><Icon name="keyboard" /></button>
+      <div className="chat-sidebar-foot" style={{ position: 'relative' }}>
+        <DropdownMenu label="Cuenta y ajustes" align="left" side="top" width="16rem" className="chat-foot-menu"
+          items={[{ header: user?.email ?? 'Cuenta' }, { label: 'Biblioteca de archivos', icon: 'folder-open', onSelect: onFiles }, { label: 'Ajustes', icon: 'settings', onSelect: onSettings }, { label: 'Atajos de teclado', icon: 'keyboard', onSelect: onShortcuts }, { separator: true }, { label: 'Cerrar sesión', icon: 'log-out', danger: true, onSelect: onLogout }]}
+          trigger={(p) => (
+            <button type="button" className="chat-side-link" style={{ width: '100%' }} {...p}>
+              <span className="chat-avatar" style={{ width: '2rem', height: '2rem', fontSize: '0.75rem' }}>{(user?.name ?? 'U').split(' ').map((x) => x[0]).slice(0, 2).join('')}</span>
+              <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name ?? 'Usuario'}</span>
+              <Icon name="chevrons-up-down" />
+            </button>
+          )} />
       </div>
     </aside>
   )
