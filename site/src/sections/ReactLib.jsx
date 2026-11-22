@@ -1,13 +1,16 @@
 import { useMemo, useState } from 'react'
-import { Alert, Avatar, DataTable, DropdownMenu, FileUpload, FilterBar, Icon, Modal, PasswordField, RunField, SelectField, Stepper, StatusBadge, Switch, Tabs, TextField, useForm, useModal, useToast, validEmail, validRun } from 'gob-cl-tailwind/react'
+import { Alert, Avatar, FilePreview, FilePreviewModal, Loading, LoadingOverlay, LoadingScreen, ProgressBar, SkeletonCard, SkeletonText, Spinner, DataTable, DropdownMenu, FileUpload, FilterBar, Icon, Modal, PasswordField, RunField, SelectField, Stepper, StatusBadge, Switch, Tabs, TextField, useForm, useModal, useToast, validEmail, validRun } from 'gob-cl-tailwind/react'
 import Section from '../components/Section.jsx'
 import CodeBlock from '../components/CodeBlock.jsx'
+import * as samples from '../lib/samples.js'
 
 const CATALOG = [
   ['Layout', 'AppShell, Container, PageHeader, Panel, StatCard, Footer, AppFooter, SiteNavbar'],
   ['Navegación', 'DropdownMenu, Tabs, Stepper, Breadcrumbs, Pagination'],
   ['Formularios', 'Field, TextField, TextareaField, SelectField, DateField, RunField, PasswordField, CheckboxField, Switch, RadioGroup, SearchInput, OtpInput, FileUpload, useForm'],
   ['Datos', 'DataTable, FilterBar, StatusBadge, Avatar, EmptyState, Skeleton, toCsv / parseCsv / downloadFile'],
+  ['Carga', 'Spinner, Loading, LoadingScreen, LoadingOverlay, ProgressBar, SkeletonText, SkeletonCard, Skeleton'],
+  ['Vista previa', 'FilePreview, FilePreviewModal, previewKind — imagen, PDF, video/audio, texto, CSV, Word, Excel, PowerPoint, DXF; DWG informativo'],
   ['Feedback', 'Modal (+ variant drawer), ModalProvider / useModal (confirm, alert, prompt), ToastProvider / useToast, Alert'],
   ['Autenticación', 'AuthLayout, LoginForm, RegisterForm, ForgotPasswordForm, ResetPasswordForm, TwoFactorForm'],
   ['Accesibilidad', 'useAccessibility (contraste y tamaño de texto), useDismiss'],
@@ -82,6 +85,47 @@ function NavDemo() {
   )
 }
 
+const SAMPLES = [['PDF', 'samplePdf'], ['Word', 'sampleDocx'], ['Excel', 'sampleXlsx'], ['PowerPoint', 'samplePptx'], ['DXF', 'sampleDxf'], ['DWG', 'sampleDwg'], ['Imagen', 'sampleImage'], ['CSV', 'sampleCsv'], ['Texto', 'sampleText'], ['.doc antiguo', 'sampleLegacy']]
+function PreviewDemo() {
+  const [file, setFile] = useState(null)
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <div className="d-flex flex-wrap gap-2 mb-3 align-items-center">
+        {SAMPLES.map(([l, fn]) => <button key={fn} type="button" className="btn btn-sm btn-outline-primary" data-sample={fn} onClick={async () => setFile(await samples[fn]())}>{l}</button>)}
+        <label className="btn btn-sm btn-primary mb-0">Elegir archivo…<input type="file" hidden onChange={(e) => e.target.files[0] && setFile(e.target.files[0])} /></label>
+        <button type="button" className="btn btn-sm btn-secondary" disabled={!file} onClick={() => setOpen(true)}>Abrir en modal</button>
+      </div>
+      {file ? <FilePreview file={file} height="22rem" /> : <p className="text-muted">Elige un ejemplo o sube tu archivo: se lee en tu navegador, no se envía a ningún servidor.</p>}
+      <FilePreviewModal file={file} open={open} onClose={() => setOpen(false)} />
+    </>
+  )
+}
+
+function LoadingDemo() {
+  const [busy, setBusy] = useState(false)
+  const [pct, setPct] = useState(35)
+  return (
+    <div className="row g-4">
+      <div className="col-md-6">
+        <p className="mb-2"><Spinner size="sm" /> <Spinner /> <Spinner size="lg" /> <Spinner variant="grow" /> <Spinner tone="danger" size="sm" /></p>
+        <p><Loading>Enviando solicitud…</Loading></p>
+        <ProgressBar value={pct} label="Subiendo documentos" />
+        <div className="d-flex gap-2 my-2"><button type="button" className="btn btn-sm btn-outline-primary" onClick={() => setPct((p) => Math.min(100, p + 15))}>+15%</button><button type="button" className="btn btn-sm btn-outline-primary" onClick={() => setPct(0)}>Reiniciar</button></div>
+        <ProgressBar label="Procesando (indeterminado)" className="mt-3" />
+        <LoadingOverlay active={busy} label="Guardando cambios…" className="mt-3 p-3 border rounded">
+          <p className="mb-2">Contenido que se bloquea mientras guarda.</p>
+          <button type="button" className="btn btn-primary btn-sm" onClick={() => { setBusy(true); setTimeout(() => setBusy(false), 1800) }}>Guardar</button>
+        </LoadingOverlay>
+      </div>
+      <div className="col-md-6">
+        <div className="border rounded mb-3"><LoadingScreen minHeight="9rem" title="Cargando trámites" message="Consultando el servidor…" /></div>
+        <SkeletonCard className="mb-2" /><SkeletonText lines={2} />
+      </div>
+    </div>
+  )
+}
+
 export default function ReactLib() {
   return (
     <Section id="react" title="Componentes React" lead={<>Librería <code>gob-cl-tailwind/react</code>: componentes funcionales, accesibles y reutilizables con la identidad gob.cl. Las dos maquetas de abajo están construidas <strong>solo con estos componentes</strong>.</>}>
@@ -114,6 +158,20 @@ const nombre = await modal.prompt({ title: 'Renombrar', label: 'Nombre', validat
       <div className="ex"><div className="ex-preview"><FormDemo /></div></div>
       <h3>Carga de archivos</h3>
       <div className="ex"><div className="ex-preview"><FileUpload label="Documentos" maxFiles={3} hint="Arrastra o selecciona; se simula la subida." /></div></div>
+      <h3>Indicadores de carga</h3>
+      <p>Spinners, barras de progreso y esqueletos basados en los componentes oficiales (<code>spinner-border</code>, <code>progress</code>), con texto accesible (<code>role="status"</code>).</p>
+      <div className="ex"><div className="ex-preview"><LoadingDemo /></div></div>
+      <CodeBlock code={`<Spinner size="sm" /> <Loading>Enviando…</Loading>
+<ProgressBar value={60} label="Subiendo" />
+<LoadingOverlay active={saving} label="Guardando…">…</LoadingOverlay>
+<LoadingScreen title="Cargando trámites" />`} />
+      <h3>Vista previa de archivos</h3>
+      <p>PDF, imágenes (con zoom), video y audio, texto, CSV, <strong>Word (.docx)</strong>, <strong>Excel (.xlsx)</strong>, <strong>PowerPoint (.pptx)</strong> y planos <strong>DXF</strong> se muestran en la página. Los <strong>DWG</strong> (formato binario propietario) y los formatos Office antiguos (.doc/.xls/.ppt) no se pueden dibujar en un navegador: se muestra la información disponible, como la versión de AutoCAD, y se ofrece la descarga. Word, Excel y PowerPoint se leen con <code>mammoth</code> y <code>jszip</code>, que se cargan solo al abrir uno de esos archivos.</p>
+      <div className="ex"><div className="ex-preview"><PreviewDemo /></div></div>
+      <CodeBlock code={`npm install mammoth jszip   # solo si previsualizas Word / Excel / PowerPoint
+
+<FilePreview file={file} height="28rem" />          {/* File | Blob | { url, name, type } */}
+<FilePreviewModal file={file} open={open} onClose={close} />`} />
       <h3>Tabla de datos con filtros, orden, selección y paginación</h3>
       <TableDemo />
       <h3 className="mt-4">Pestañas, stepper y menú</h3>

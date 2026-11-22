@@ -4,7 +4,7 @@
  * Los colores salen de variables locales --app-* (mapeadas a los tokens de gob), con bloque propio de alto contraste.
  */
 @layer components {
-  .app-shell, .gob-modal, .gob-toasts, .auth-page, .app-public {
+  .app-shell, .gob-modal, .gob-toasts, .auth-page, .app-public, .gob-pv, .gob-loading-screen, .gob-overlay-wrap, .gob-loading {
     --app-bg: var(--color-white);
     --app-fg: var(--color-black);
     --app-muted: var(--color-gray-a);
@@ -367,8 +367,60 @@
     .app-shell, .app-sidebar, .gob-modal, .gob-modal::backdrop, .app-skeleton { transition: none; animation: none !important; }
   }
 
+  /* ───────────────────────── Carga y vista previa de archivos ───────────────────────── */
+  .gob-loading { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--app-muted); }
+  .gob-loading-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; text-align: center; padding: 2rem 1rem; color: var(--app-muted); }
+  .gob-loading-screen strong { color: var(--app-heading); font-size: 1.15rem; }
+  .gob-loading-screen .spinner-border, .gob-overlay .spinner-border { color: var(--app-primary); }
+  .gob-overlay-wrap { position: relative; }
+  .gob-overlay { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; background: color-mix(in srgb, var(--app-bg) 78%, transparent); color: var(--app-fg); font-weight: 500; border-radius: inherit; }
+  .gob-progress-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--app-fg); }
+  .gob-skeleton-text { display: flex; flex-direction: column; gap: 0.55rem; flex: 1; }
+  .gob-skeleton-card { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; border: 1px solid var(--app-border-soft); border-radius: 0.5rem; background: var(--app-bg); }
+  .gob-skeleton-avatar { width: 3rem; height: 3rem; border-radius: 50%; flex: none; }
+
+  .gob-pv { border: 1px solid var(--app-border-soft); border-radius: 0.5rem; background: var(--app-bg); color: var(--app-fg); overflow: hidden; display: flex; flex-direction: column; box-sizing: border-box; }
+  .gob-pv *, .gob-pv *::before, .gob-pv *::after { box-sizing: border-box; }
+  .gob-pv-bar { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--app-border-soft); background: var(--app-surface); min-width: 0; }
+  .gob-pv-name { font-weight: 600; color: var(--app-heading); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .gob-pv-spacer { flex: 1; }
+  .gob-pv-muted { color: var(--app-muted); font-size: 0.85rem; }
+  .gob-pv-zoom { display: inline-flex; gap: 0.25rem; }
+  .gob-pv-body { position: relative; overflow: auto; background: var(--app-page-bg); }
+  .gob-pv-image { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow: auto; }
+  .gob-pv-image img { max-width: 100%; max-height: 100%; transform-origin: center; transition: transform 0.15s; background: repeating-conic-gradient(#e4e7ec 0 25%, #fff 0 50%) 0 0 / 16px 16px; }
+  .gob-pv-frame { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+  .gob-pv-media { height: 100%; display: flex; align-items: center; justify-content: center; padding: 1rem; background: #000; }
+  .gob-pv-media video { max-width: 100%; max-height: 100%; } .gob-pv-media audio { width: min(32rem, 100%); }
+  .gob-pv-text { margin: 0; padding: 1rem; min-height: 100%; background: var(--app-bg); color: var(--app-fg); font: 0.85rem/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-word; }
+  .gob-pv-doc { max-width: 52rem; min-height: 100%; margin: 0 auto; padding: 2rem 2.2rem; background: var(--app-bg); color: var(--app-fg); box-shadow: var(--app-shadow); line-height: 1.6; }
+  .gob-pv-doc img { max-width: 100%; height: auto; } .gob-pv-doc table { border-collapse: collapse; margin-block: 1rem; } .gob-pv-doc td, .gob-pv-doc th { border: 1px solid var(--app-border-soft); padding: 0.35rem 0.6rem; }
+  .gob-pv-sheets { height: 100%; display: flex; flex-direction: column; } .gob-pv-sheets .gob-pv-table-wrap { flex: 1; }
+  .gob-pv-table-wrap { overflow: auto; background: var(--app-bg); min-height: 100%; }
+  .gob-pv-table { border-collapse: separate; border-spacing: 0; font-size: 0.85rem; min-width: 100%; }
+  .gob-pv-table th, .gob-pv-table td { border-right: 1px solid var(--app-border-soft); border-bottom: 1px solid var(--app-border-soft); padding: 0.3rem 0.6rem; white-space: nowrap; text-align: left; max-width: 22rem; overflow: hidden; text-overflow: ellipsis; background: var(--app-bg); color: var(--app-fg); font-weight: 400; }
+  .gob-pv-table thead th { position: sticky; top: 0; z-index: 2; background: var(--app-surface); color: var(--app-muted); text-align: center; font-weight: 600; }
+  .gob-pv-table .gob-pv-rownum { position: sticky; left: 0; z-index: 1; width: 2.6rem; min-width: 2.6rem; text-align: center; background: var(--app-surface); color: var(--app-muted); font-weight: 600; }
+  .gob-pv-table thead .gob-pv-rownum { z-index: 3; }
+  .gob-pv-sheetbar { display: flex; align-items: center; gap: 0.25rem; padding: 0.35rem 0.6rem; border-top: 1px solid var(--app-border-soft); background: var(--app-surface); overflow-x: auto; }
+  .gob-pv-sheetbar button { border: 1px solid transparent !important; box-shadow: none; text-decoration: none; min-height: 0 !important; background: transparent; padding: 0.25rem 0.8rem; border-radius: 0.3rem; color: var(--app-fg); cursor: pointer; font: inherit; font-size: 0.85rem; white-space: nowrap; }
+  .gob-pv-sheetbar button.is-active { background: var(--app-bg); border-color: var(--app-border) !important; color: var(--app-primary); font-weight: 600; }
+  .gob-pv-sheetbar .gob-pv-muted { margin-left: auto; padding-left: 1rem; white-space: nowrap; }
+  .gob-pv-slides { height: 100%; display: flex; flex-direction: column; }
+  .gob-pv-slide-stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: 1rem; min-height: 0; }
+  .gob-pv-slide { width: min(100%, 44rem); aspect-ratio: 16 / 9; max-height: 100%; background: var(--app-bg); color: var(--app-fg); box-shadow: var(--app-shadow); border: 1px solid var(--app-border-soft); padding: 1.6rem 2rem; overflow: auto; }
+  .gob-pv-slide h3 { color: var(--app-heading); margin: 0 0 0.8rem; font-size: 1.5rem; } .gob-pv-slide ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.3rem; }
+  .gob-pv-slidebar { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0.8rem; border-top: 1px solid var(--app-border-soft); background: var(--app-surface); font-size: 0.9rem; }
+  .gob-pv-cad { height: 100%; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; padding: 0.8rem; background: var(--app-bg); color: var(--app-primary); } .gob-pv-dxf { flex: 1; min-height: 0; width: 100%; }
+  .gob-pv-fallback { min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; text-align: center; padding: 2rem 1.2rem; background: var(--app-bg); }
+  .gob-pv-fallback p { max-width: 34rem; } .gob-pv-fallback-icon { font-size: 3.2rem; color: var(--app-primary); }
+  .gob-pv-dl { display: grid; grid-template-columns: auto auto; gap: 0.2rem 0.8rem; margin: 0.4rem 0; } .gob-pv-dl dt { font-weight: 600; color: var(--app-heading); } .gob-pv-dl dd { margin: 0; }
+  @media (max-width: 575.98px) { .gob-pv-hide-sm { display: none; } .gob-pv-doc { padding: 1.2rem; } .gob-pv-slide { padding: 1rem; } }
+  .gob-pv-modal .gob-modal-body { padding: 0.75rem; }
+  @media (prefers-reduced-motion: reduce) { .gob-pv-image img { transition: none; } }
+
   /* ───────────────────────── Alto contraste (html.a11y-contrast) ───────────────────────── */
-  .a11y-contrast .app-shell, .a11y-contrast .gob-modal, .a11y-contrast .gob-toasts, .a11y-contrast .auth-page, .a11y-contrast .app-public {
+  .a11y-contrast .app-shell, .a11y-contrast .gob-modal, .a11y-contrast .gob-toasts, .a11y-contrast .auth-page, .a11y-contrast .app-public, .a11y-contrast .gob-pv, .a11y-contrast .gob-loading-screen, .a11y-contrast .gob-overlay-wrap, .a11y-contrast .gob-loading {
     --app-bg: #000; --app-fg: #eee; --app-muted: #b5b5b5; --app-subtle: #9a9a9a; --app-border: #8a8a8a; --app-border-soft: #3a3a3a; --app-surface: #111; --app-page-bg: #050505;
     --app-primary: #ff904c; --app-primary-fg: #000; --app-accent: #1dd3d3; --app-danger: #ff6b6b; --app-danger-ink: #ff9a9a; --app-success: #7fe0a0; --app-warning: #ffd84d; --app-heading: #fff;
     --app-side-bg: #000; --app-side-hover: #1a1a1a; --app-side-active: #2c2c2c; --app-side-muted: #bdbdbd; --app-shadow: none;

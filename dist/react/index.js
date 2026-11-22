@@ -377,10 +377,13 @@ function Footer({ logo = "/img/gob-footer.svg", description, columns = [], socia
   ] }) });
 }
 function AppFooter({ children, links = [] }) {
-  return /* @__PURE__ */ jsxs6("footer", { className: "app-footer", children: [
-    /* @__PURE__ */ jsx7("span", { children }),
-    /* @__PURE__ */ jsx7("nav", { "aria-label": "Enlaces legales", children: links.map((l) => /* @__PURE__ */ jsx7("a", { href: l.href || "#", children: l.label }, l.label)) })
-  ] });
+  return (
+    // <div> y no <footer>: el core de gob.cl da estilo de footer institucional (azul, 300 px) a ese elemento
+    /* @__PURE__ */ jsxs6("div", { className: "app-footer", role: "contentinfo", children: [
+      /* @__PURE__ */ jsx7("span", { children }),
+      /* @__PURE__ */ jsx7("nav", { "aria-label": "Enlaces legales", children: links.map((l) => /* @__PURE__ */ jsx7("a", { href: l.href || "#", children: l.label }, l.label)) })
+    ] })
+  );
 }
 
 // src/react/layout/SiteNavbar.jsx
@@ -1210,7 +1213,7 @@ function Modal({ open, onClose, title, subtitle, icon, tone = "", size = "md", v
           /* @__PURE__ */ jsx15("button", { type: "button", className: "gob-modal-close", "aria-label": "Cerrar", disabled: busy, onClick: requestClose, children: /* @__PURE__ */ jsx15(Icon, { name: "x" }) })
         ] }),
         /* @__PURE__ */ jsx15("div", { className: "gob-modal-body", id: bodyId, children }),
-        footer && /* @__PURE__ */ jsx15("footer", { className: "gob-modal-footer", children: footer })
+        footer && /* @__PURE__ */ jsx15("div", { className: "gob-modal-footer", children: footer })
       ] })
     }
   );
@@ -1372,34 +1375,509 @@ function Alert({ tone = "info", title, children, onClose, className = "" }) {
   ] });
 }
 
+// src/react/feedback/Loading.jsx
+import { jsx as jsx18, jsxs as jsxs17 } from "react/jsx-runtime";
+function Spinner({ size = "md", variant = "border", tone = "primary", label = "Cargando\u2026", className = "" }) {
+  const sm = size === "sm" ? ` spinner-${variant}-sm` : "";
+  const big = size === "lg" ? { width: "3rem", height: "3rem", borderWidth: variant === "border" ? ".3em" : void 0 } : void 0;
+  return /* @__PURE__ */ jsx18("span", { className: `spinner-${variant}${sm}${tone ? ` text-${tone}` : ""} ${className}`, style: big, role: "status", children: /* @__PURE__ */ jsx18("span", { className: "sr-only", children: label }) });
+}
+function Loading({ children = "Cargando\u2026", size = "sm", className = "" }) {
+  return /* @__PURE__ */ jsxs17("span", { className: `gob-loading ${className}`, role: "status", "aria-live": "polite", children: [
+    /* @__PURE__ */ jsx18(Spinner, { size, label: "" }),
+    /* @__PURE__ */ jsx18("span", { children })
+  ] });
+}
+function LoadingScreen({ title = "Cargando", message = "Un momento, por favor.", minHeight = "16rem", className = "" }) {
+  return /* @__PURE__ */ jsxs17("div", { className: `gob-loading-screen ${className}`, style: { minHeight }, role: "status", "aria-live": "polite", children: [
+    /* @__PURE__ */ jsx18(Spinner, { size: "lg", label: "" }),
+    /* @__PURE__ */ jsx18("strong", { children: title }),
+    message && /* @__PURE__ */ jsx18("span", { children: message })
+  ] });
+}
+function LoadingOverlay({ active, label = "Cargando\u2026", children, className = "" }) {
+  return /* @__PURE__ */ jsxs17("div", { className: `gob-overlay-wrap ${className}`, "aria-busy": active, children: [
+    children,
+    active && /* @__PURE__ */ jsxs17("div", { className: "gob-overlay", role: "status", "aria-live": "polite", children: [
+      /* @__PURE__ */ jsx18(Spinner, { label: "" }),
+      /* @__PURE__ */ jsx18("span", { children: label })
+    ] })
+  ] });
+}
+function ProgressBar({ value, label, tone = "", striped = false, height, className = "" }) {
+  const indeterminate = value == null;
+  const v = indeterminate ? 100 : Math.max(0, Math.min(100, Math.round(value)));
+  return /* @__PURE__ */ jsxs17("div", { className, children: [
+    label && /* @__PURE__ */ jsxs17("div", { className: "gob-progress-label", children: [
+      /* @__PURE__ */ jsx18("span", { children: label }),
+      !indeterminate && /* @__PURE__ */ jsxs17("span", { children: [
+        v,
+        "%"
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx18("div", { className: "progress", style: height ? { height } : void 0, role: "progressbar", "aria-label": label || "Progreso", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": indeterminate ? void 0 : v, children: /* @__PURE__ */ jsx18("div", { className: `progress-bar${tone ? ` bg-${tone}` : ""}${striped || indeterminate ? " progress-bar-striped progress-bar-animated" : ""}`, style: { width: `${v}%` } }) })
+  ] });
+}
+function SkeletonText({ lines = 3, className = "" }) {
+  return /* @__PURE__ */ jsx18("div", { className: `gob-skeleton-text ${className}`, "aria-hidden": "true", children: Array.from({ length: lines }, (_, i) => /* @__PURE__ */ jsx18("span", { className: "app-skeleton", style: { width: i === lines - 1 ? "60%" : "100%" } }, i)) });
+}
+function SkeletonCard({ className = "" }) {
+  return /* @__PURE__ */ jsxs17("div", { className: `gob-skeleton-card ${className}`, "aria-hidden": "true", children: [
+    /* @__PURE__ */ jsx18("span", { className: "app-skeleton gob-skeleton-avatar" }),
+    /* @__PURE__ */ jsx18(SkeletonText, { lines: 3 })
+  ] });
+}
+
+// src/react/preview/FilePreview.jsx
+import { useEffect as useEffect9, useMemo as useMemo6, useState as useState10 } from "react";
+
+// src/react/preview/parsers.js
+var xmlDoc = (s) => new DOMParser().parseFromString(s, "application/xml");
+var textOf = (el) => el ? el.textContent : "";
+var sanitizeHtml = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  doc.querySelectorAll("script,iframe,object,embed,link,style,form").forEach((n) => n.remove());
+  doc.body.querySelectorAll("*").forEach((el) => {
+    for (const a of [...el.attributes]) {
+      if (/^on/i.test(a.name) || /^(href|src|xlink:href)$/i.test(a.name) && /^\s*javascript:/i.test(a.value)) el.removeAttribute(a.name);
+    }
+    if (el.tagName === "A") {
+      el.setAttribute("target", "_blank");
+      el.setAttribute("rel", "noopener noreferrer");
+    }
+  });
+  return doc.body.innerHTML;
+};
+async function parseDocx(buffer) {
+  const mammoth = (await import("mammoth")).default || await import("mammoth");
+  const { value, messages } = await mammoth.convertToHtml({ arrayBuffer: buffer });
+  return { html: sanitizeHtml(value), warnings: messages.length };
+}
+var colIndex = (ref) => [...ref.replace(/\d+/g, "")].reduce((n, c) => n * 26 + c.charCodeAt(0) - 64, 0) - 1;
+async function parseXlsx(buffer, { maxRows = 500, maxCols = 40 } = {}) {
+  const JSZip = (await import("jszip")).default;
+  const zip = await JSZip.loadAsync(buffer);
+  const read2 = async (p) => {
+    const f = zip.file(p);
+    return f ? f.async("string") : null;
+  };
+  const shared = [];
+  const ss = await read2("xl/sharedStrings.xml");
+  if (ss) xmlDoc(ss).querySelectorAll("si").forEach((si) => shared.push([...si.querySelectorAll("t")].map(textOf).join("")));
+  const wb = xmlDoc(await read2("xl/workbook.xml") || "<x/>");
+  const rels = xmlDoc(await read2("xl/_rels/workbook.xml.rels") || "<x/>");
+  const target = {};
+  rels.querySelectorAll("Relationship").forEach((r) => {
+    target[r.getAttribute("Id")] = r.getAttribute("Target");
+  });
+  const sheets = [];
+  for (const s of [...wb.querySelectorAll("sheet")]) {
+    const rid = s.getAttribute("r:id") || s.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships", "id");
+    let path = target[rid] || `worksheets/sheet${sheets.length + 1}.xml`;
+    path = path.startsWith("/") ? path.slice(1) : `xl/${path}`;
+    const xml = await read2(path);
+    if (!xml) continue;
+    const rows = [];
+    let total = 0;
+    xmlDoc(xml).querySelectorAll("sheetData > row").forEach((row) => {
+      total++;
+      if (rows.length >= maxRows) return;
+      const out = [];
+      row.querySelectorAll("c").forEach((c) => {
+        const i = colIndex(c.getAttribute("r") || "A1");
+        if (i >= maxCols) return;
+        const t = c.getAttribute("t");
+        const v = textOf(c.querySelector("v"));
+        out[i] = t === "s" ? shared[+v] ?? "" : t === "inlineStr" ? textOf(c.querySelector("is")) : t === "b" ? v === "1" ? "VERDADERO" : "FALSO" : v;
+      });
+      rows.push(Array.from(out, (x) => x ?? ""));
+    });
+    sheets.push({ name: s.getAttribute("name"), rows, truncated: total > rows.length });
+  }
+  return sheets;
+}
+async function parsePptx(buffer) {
+  const JSZip = (await import("jszip")).default;
+  const zip = await JSZip.loadAsync(buffer);
+  const names = Object.keys(zip.files).filter((n) => /^ppt\/slides\/slide\d+\.xml$/.test(n)).sort((a, b) => parseInt(a.match(/\d+/)[0]) - parseInt(b.match(/\d+/)[0]));
+  const slides = [];
+  for (const n of names) {
+    const doc = xmlDoc(await zip.file(n).async("string"));
+    const paras = [...doc.querySelectorAll("p")].map((p) => [...p.querySelectorAll("t")].map(textOf).join("")).filter(Boolean);
+    slides.push({ title: paras[0] || `Diapositiva ${slides.length + 1}`, lines: paras.slice(1) });
+  }
+  return slides;
+}
+var DWG_VERSIONS = {
+  AC1006: "AutoCAD R10",
+  AC1009: "AutoCAD R11/R12",
+  AC1012: "AutoCAD R13",
+  AC1014: "AutoCAD R14",
+  AC1015: "AutoCAD 2000",
+  AC1018: "AutoCAD 2004",
+  AC1021: "AutoCAD 2007",
+  AC1024: "AutoCAD 2010",
+  AC1027: "AutoCAD 2013",
+  AC1032: "AutoCAD 2018+"
+};
+var parseDwgHeader = (buffer) => {
+  const code = new TextDecoder("ascii").decode(new Uint8Array(buffer.slice(0, 6)));
+  return DWG_VERSIONS[code] ? { code, version: DWG_VERSIONS[code] } : { code, version: null };
+};
+function parseDxf(text, maxEntities = 2e4) {
+  const raw = text.split(/\r?\n/);
+  const pairs = [];
+  for (let i = 0; i + 1 < raw.length; i += 2) pairs.push([raw[i].trim(), raw[i + 1].trim()]);
+  const shapes = [];
+  let cur = null;
+  const flush = () => {
+    if (cur && shapes.length < maxEntities) shapes.push(cur);
+    cur = null;
+  };
+  let inEntities = false;
+  for (const [code, val] of pairs) {
+    if (code === "0") {
+      flush();
+      if (val === "SECTION") continue;
+      if (val === "ENDSEC") {
+        inEntities = false;
+        continue;
+      }
+      if (inEntities && ["LINE", "CIRCLE", "ARC", "LWPOLYLINE"].includes(val)) cur = { type: val, pts: [], closed: false };
+      continue;
+    }
+    if (code === "2" && val === "ENTITIES") {
+      inEntities = true;
+      continue;
+    }
+    if (!cur) continue;
+    const n = parseFloat(val);
+    if (cur.type === "LINE") {
+      if (code === "10") cur.x1 = n;
+      else if (code === "20") cur.y1 = n;
+      else if (code === "11") cur.x2 = n;
+      else if (code === "21") cur.y2 = n;
+    } else if (cur.type === "CIRCLE" || cur.type === "ARC") {
+      if (code === "10") cur.cx = n;
+      else if (code === "20") cur.cy = n;
+      else if (code === "40") cur.r = n;
+      else if (code === "50") cur.a0 = n;
+      else if (code === "51") cur.a1 = n;
+    } else if (cur.type === "LWPOLYLINE") {
+      if (code === "70") cur.closed = (parseInt(val) & 1) === 1;
+      else if (code === "10") cur.pts.push([n, 0]);
+      else if (code === "20" && cur.pts.length) cur.pts[cur.pts.length - 1][1] = n;
+    }
+  }
+  flush();
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  const ext2 = (x, y) => {
+    if (Number.isFinite(x) && Number.isFinite(y)) {
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x);
+      minY = Math.min(minY, y);
+      maxY = Math.max(maxY, y);
+    }
+  };
+  for (const s of shapes) {
+    if (s.type === "LINE") {
+      ext2(s.x1, s.y1);
+      ext2(s.x2, s.y2);
+    } else if (s.type === "LWPOLYLINE") s.pts.forEach(([x, y]) => ext2(x, y));
+    else {
+      ext2(s.cx - s.r, s.cy - s.r);
+      ext2(s.cx + s.r, s.cy + s.r);
+    }
+  }
+  return { shapes, bounds: shapes.length ? { minX, minY, maxX, maxY } : null };
+}
+var parseRows = (text, delimiter) => {
+  const src = text.replace(/^﻿/, "");
+  const first = src.split("\n")[0];
+  const sep = delimiter || ["	", ";", ","].map((d) => [d, first.split(d).length]).sort((a, b) => b[1] - a[1])[0][0];
+  const rows = [];
+  let row = [], cell = "", q = false;
+  for (let i = 0; i < src.length; i++) {
+    const c = src[i];
+    if (q) {
+      if (c === '"' && src[i + 1] === '"') {
+        cell += '"';
+        i++;
+      } else if (c === '"') q = false;
+      else cell += c;
+    } else if (c === '"') q = true;
+    else if (c === sep) {
+      row.push(cell);
+      cell = "";
+    } else if (c === "\n" || c === "\r") {
+      if (c === "\r" && src[i + 1] === "\n") i++;
+      row.push(cell);
+      rows.push(row);
+      row = [];
+      cell = "";
+    } else cell += c;
+  }
+  if (cell || row.length) {
+    row.push(cell);
+    rows.push(row);
+  }
+  return rows.filter((r) => r.some((x) => x.trim()));
+};
+
+// src/react/preview/FilePreview.jsx
+import { jsx as jsx19, jsxs as jsxs18 } from "react/jsx-runtime";
+var ext = (name = "") => (name.match(/\.([a-z0-9]+)$/i)?.[1] || "").toLowerCase();
+var previewKind = (name = "", type = "") => {
+  const e = ext(name);
+  if (type.startsWith("image/") || ["png", "jpg", "jpeg", "gif", "webp", "svg", "bmp", "avif"].includes(e)) return "image";
+  if (type === "application/pdf" || e === "pdf") return "pdf";
+  if (type.startsWith("video/") || ["mp4", "webm", "ogv", "mov"].includes(e)) return "video";
+  if (type.startsWith("audio/") || ["mp3", "wav", "ogg", "m4a"].includes(e)) return "audio";
+  if (e === "docx") return "docx";
+  if (e === "xlsx") return "xlsx";
+  if (e === "pptx") return "pptx";
+  if (e === "csv" || e === "tsv") return "csv";
+  if (e === "dxf") return "dxf";
+  if (e === "dwg") return "dwg";
+  if (["doc", "xls", "ppt", "odt", "ods", "odp", "rtf"].includes(e)) return "legacy";
+  if (type.startsWith("text/") || type === "application/json" || ["txt", "md", "json", "xml", "yaml", "yml", "html", "css", "js", "jsx", "ts", "tsx", "py", "sql", "log", "ini", "toml", "sh"].includes(e)) return "text";
+  return "unknown";
+};
+var KIND_META = {
+  image: ["file-image", "Imagen"],
+  pdf: ["file-text", "PDF"],
+  video: ["file", "Video"],
+  audio: ["file", "Audio"],
+  docx: ["file-text", "Documento Word"],
+  xlsx: ["file-spreadsheet", "Planilla Excel"],
+  pptx: ["file", "Presentaci\xF3n PowerPoint"],
+  csv: ["file-spreadsheet", "Datos CSV"],
+  dxf: ["ruler", "Plano DXF"],
+  dwg: ["ruler", "Plano DWG"],
+  legacy: ["file", "Documento Office"],
+  text: ["file-code", "Texto"],
+  unknown: ["file", "Archivo"]
+};
+var LEGACY_HINT = { doc: "Word 97-2003", xls: "Excel 97-2003", ppt: "PowerPoint 97-2003", odt: "OpenDocument", ods: "OpenDocument", odp: "OpenDocument", rtf: "RTF" };
+function Fallback({ name, kind, size, reason, onDownload, children }) {
+  return /* @__PURE__ */ jsxs18("div", { className: "gob-pv-fallback", children: [
+    /* @__PURE__ */ jsx19(Icon, { name: KIND_META[kind]?.[0] || "file", className: "gob-pv-fallback-icon" }),
+    /* @__PURE__ */ jsx19("strong", { children: name }),
+    /* @__PURE__ */ jsx19("span", { className: "gob-pv-muted", children: [KIND_META[kind]?.[1], size != null && formatSize(size)].filter(Boolean).join(" \xB7 ") }),
+    children,
+    /* @__PURE__ */ jsx19("p", { className: "gob-pv-muted mb-0", children: reason }),
+    onDownload && /* @__PURE__ */ jsxs18("button", { type: "button", className: "btn btn-primary btn-sm", onClick: onDownload, children: [
+      /* @__PURE__ */ jsx19(Icon, { name: "download" }),
+      " Descargar archivo"
+    ] })
+  ] });
+}
+function Table({ rows }) {
+  const width = Math.max(0, ...rows.map((r) => r.length));
+  return /* @__PURE__ */ jsx19("div", { className: "gob-pv-table-wrap", children: /* @__PURE__ */ jsxs18("table", { className: "gob-pv-table", children: [
+    /* @__PURE__ */ jsx19("thead", { children: /* @__PURE__ */ jsxs18("tr", { children: [
+      /* @__PURE__ */ jsx19("th", { className: "gob-pv-rownum" }),
+      Array.from({ length: width }, (_, i) => /* @__PURE__ */ jsx19("th", { children: String.fromCharCode(65 + i % 26).repeat(Math.floor(i / 26) + 1) }, i))
+    ] }) }),
+    /* @__PURE__ */ jsx19("tbody", { children: rows.map((r, i) => /* @__PURE__ */ jsxs18("tr", { children: [
+      /* @__PURE__ */ jsx19("th", { className: "gob-pv-rownum", children: i + 1 }),
+      Array.from({ length: width }, (_, j) => /* @__PURE__ */ jsx19("td", { children: r[j] ?? "" }, j))
+    ] }, i)) })
+  ] }) });
+}
+function DxfView({ model }) {
+  const b = model.bounds;
+  if (!b) return /* @__PURE__ */ jsx19("p", { className: "gob-pv-muted p-3", children: "El plano no contiene entidades 2D reconocibles (LINE, CIRCLE, ARC, LWPOLYLINE)." });
+  const w = b.maxX - b.minX || 1, h = b.maxY - b.minY || 1, pad = Math.max(w, h) * 0.04;
+  const sw = Math.max(w, h) / 600;
+  const Y = (y) => b.maxY - y;
+  const arc = (s) => {
+    const a0 = s.a0 * Math.PI / 180, a1 = s.a1 * Math.PI / 180;
+    const x0 = s.cx + s.r * Math.cos(a0), y0 = s.cy + s.r * Math.sin(a0), x1 = s.cx + s.r * Math.cos(a1), y1 = s.cy + s.r * Math.sin(a1);
+    const large = (s.a1 - s.a0 + 360) % 360 > 180 ? 1 : 0;
+    return `M${x0} ${Y(y0)} A${s.r} ${s.r} 0 ${large} 0 ${x1} ${Y(y1)}`;
+  };
+  return /* @__PURE__ */ jsx19("svg", { className: "gob-pv-dxf", viewBox: `${b.minX - pad} ${-pad} ${w + pad * 2} ${h + pad * 2}`, role: "img", "aria-label": `Plano con ${model.shapes.length} entidades`, fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round", strokeLinejoin: "round", children: model.shapes.map((s, i) => s.type === "LINE" ? /* @__PURE__ */ jsx19("line", { x1: s.x1, y1: Y(s.y1), x2: s.x2, y2: Y(s.y2) }, i) : s.type === "CIRCLE" ? /* @__PURE__ */ jsx19("circle", { cx: s.cx, cy: Y(s.cy), r: s.r }, i) : s.type === "ARC" ? /* @__PURE__ */ jsx19("path", { d: arc(s) }, i) : /* @__PURE__ */ jsx19("polyline", { points: s.pts.map(([x, y]) => `${x},${Y(y)}`).join(" ") + (s.closed && s.pts.length ? ` ${s.pts[0][0]},${Y(s.pts[0][1])}` : "") }, i)) });
+}
+function FilePreview({ file, name: nameProp, height = "28rem", toolbar = true, onDownload, className = "" }) {
+  const meta = useMemo6(() => ({
+    name: nameProp || file?.name || "archivo",
+    type: file?.type || "",
+    size: file?.size ?? null,
+    url: file?.url || null
+  }), [file, nameProp]);
+  const kind = previewKind(meta.name, meta.type);
+  const [raw, setState] = useState10({ status: "loading" });
+  const state2 = raw.file === file && raw.kind === kind ? raw : { status: "loading" };
+  const [zoom, setZoom] = useState10(1);
+  const [tab, setTab] = useState10(0);
+  const objectUrl = useMemo6(() => file instanceof Blob ? URL.createObjectURL(file) : null, [file]);
+  useEffect9(() => () => {
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+  }, [objectUrl]);
+  const src = objectUrl || meta.url;
+  useEffect9(() => {
+    let off = false;
+    setZoom(1);
+    setTab(0);
+    const set2 = (s) => {
+      if (!off) setState({ ...s, file, kind });
+    };
+    const getBuffer = async () => file instanceof Blob ? file.arrayBuffer() : (await fetch(meta.url)).arrayBuffer();
+    const getText = async () => file instanceof Blob ? file.text() : (await fetch(meta.url)).text();
+    (async () => {
+      try {
+        if (["image", "pdf", "video", "audio"].includes(kind)) return set2({ status: "ready" });
+        if (kind === "text") {
+          const t = await getText();
+          return set2({ status: "ready", text: t.length > 2e5 ? t.slice(0, 2e5) : t, cut: t.length > 2e5 });
+        }
+        if (kind === "csv") {
+          const t = await getText();
+          const rows = parseRows(t, ext(meta.name) === "tsv" ? "	" : void 0);
+          return set2({ status: "ready", rows: rows.slice(0, 500), cut: rows.length > 500 });
+        }
+        if (kind === "docx") return set2({ status: "ready", ...await parseDocx(await getBuffer()) });
+        if (kind === "xlsx") {
+          const sheets = await parseXlsx(await getBuffer());
+          return set2({ status: "ready", sheets });
+        }
+        if (kind === "pptx") return set2({ status: "ready", slides: await parsePptx(await getBuffer()) });
+        if (kind === "dxf") return set2({ status: "ready", model: parseDxf(await getText()) });
+        if (kind === "dwg") return set2({ status: "ready", dwg: parseDwgHeader(await getBuffer()) });
+        set2({ status: "ready" });
+      } catch (e) {
+        set2({ status: "error", message: e?.message || "No se pudo leer el archivo" });
+      }
+    })();
+    return () => {
+      off = true;
+    };
+  }, [file, kind, meta.name, meta.url]);
+  const download = onDownload || (() => {
+    if (src) Object.assign(document.createElement("a"), { href: src, download: meta.name }).click();
+  });
+  const fb = (reason, extra) => /* @__PURE__ */ jsx19(Fallback, { name: meta.name, kind, size: meta.size, reason, onDownload: download, children: extra });
+  let body;
+  if (state2.status === "loading") body = /* @__PURE__ */ jsx19(LoadingScreen, { title: "Cargando vista previa", message: meta.name, minHeight: "100%" });
+  else if (state2.status === "error") body = fb(`No se pudo generar la vista previa: ${state2.message}`);
+  else if (kind === "image") body = /* @__PURE__ */ jsx19("div", { className: "gob-pv-image", children: /* @__PURE__ */ jsx19("img", { src, alt: meta.name, style: { transform: `scale(${zoom})` }, draggable: "false" }) });
+  else if (kind === "pdf") body = /* @__PURE__ */ jsx19("object", { className: "gob-pv-frame", data: src, type: "application/pdf", "aria-label": meta.name, children: fb("Tu navegador no puede mostrar PDF integrados.") });
+  else if (kind === "video") body = /* @__PURE__ */ jsx19("div", { className: "gob-pv-media", children: /* @__PURE__ */ jsx19("video", { src, controls: true, preload: "metadata" }) });
+  else if (kind === "audio") body = /* @__PURE__ */ jsx19("div", { className: "gob-pv-media", children: /* @__PURE__ */ jsx19("audio", { src, controls: true, preload: "metadata" }) });
+  else if (kind === "text") body = /* @__PURE__ */ jsxs18("pre", { className: "gob-pv-text", tabIndex: 0, children: [
+    state2.text,
+    state2.cut ? "\n\u2026 (archivo truncado)" : ""
+  ] });
+  else if (kind === "csv") body = /* @__PURE__ */ jsx19(Table, { rows: state2.rows });
+  else if (kind === "docx") body = /* @__PURE__ */ jsx19("article", { className: "gob-pv-doc", dangerouslySetInnerHTML: { __html: state2.html || "<p>(documento vac\xEDo)</p>" } });
+  else if (kind === "xlsx") {
+    const sheets = state2.sheets || [];
+    const cur = sheets[Math.min(tab, sheets.length - 1)];
+    body = !cur ? fb("La planilla no tiene hojas con datos.") : /* @__PURE__ */ jsxs18("div", { className: "gob-pv-sheets", children: [
+      /* @__PURE__ */ jsx19(Table, { rows: cur.rows }),
+      /* @__PURE__ */ jsxs18("div", { className: "gob-pv-sheetbar", role: "tablist", "aria-label": "Hojas", children: [
+        sheets.map((s, i) => /* @__PURE__ */ jsx19("button", { type: "button", role: "tab", "aria-selected": i === tab, className: i === tab ? "is-active" : "", onClick: () => setTab(i), children: s.name }, s.name + i)),
+        cur.truncated && /* @__PURE__ */ jsxs18("span", { className: "gob-pv-muted", children: [
+          "Se muestran las primeras ",
+          cur.rows.length,
+          " filas"
+        ] })
+      ] })
+    ] });
+  } else if (kind === "pptx") {
+    const slides = state2.slides || [];
+    const s = slides[Math.min(tab, slides.length - 1)];
+    body = !s ? fb("La presentaci\xF3n no contiene diapositivas legibles.") : /* @__PURE__ */ jsxs18("div", { className: "gob-pv-slides", children: [
+      /* @__PURE__ */ jsx19("div", { className: "gob-pv-slide-stage", children: /* @__PURE__ */ jsxs18("div", { className: "gob-pv-slide", "aria-live": "polite", children: [
+        /* @__PURE__ */ jsx19("h3", { children: s.title }),
+        /* @__PURE__ */ jsx19("ul", { children: s.lines.map((l, i) => /* @__PURE__ */ jsx19("li", { children: l }, i)) })
+      ] }) }),
+      /* @__PURE__ */ jsxs18("div", { className: "gob-pv-slidebar", children: [
+        /* @__PURE__ */ jsx19("button", { type: "button", className: "btn btn-sm btn-outline-primary", disabled: tab === 0, onClick: () => setTab(tab - 1), "aria-label": "Diapositiva anterior", children: /* @__PURE__ */ jsx19(Icon, { name: "chevron-left" }) }),
+        /* @__PURE__ */ jsxs18("span", { children: [
+          "Diapositiva ",
+          Math.min(tab, slides.length - 1) + 1,
+          " de ",
+          slides.length
+        ] }),
+        /* @__PURE__ */ jsx19("button", { type: "button", className: "btn btn-sm btn-outline-primary", disabled: tab >= slides.length - 1, onClick: () => setTab(tab + 1), "aria-label": "Diapositiva siguiente", children: /* @__PURE__ */ jsx19(Icon, { name: "chevron-right" }) }),
+        /* @__PURE__ */ jsx19("span", { className: "gob-pv-muted ms-auto", children: "Vista de contenido (texto)" })
+      ] })
+    ] });
+  } else if (kind === "dxf") body = /* @__PURE__ */ jsxs18("div", { className: "gob-pv-cad", children: [
+    /* @__PURE__ */ jsx19(DxfView, { model: state2.model }),
+    /* @__PURE__ */ jsxs18("span", { className: "gob-pv-muted", children: [
+      state2.model.shapes.length,
+      " entidades 2D"
+    ] })
+  ] });
+  else if (kind === "dwg") {
+    const d = state2.dwg;
+    body = fb(
+      "DWG es un formato binario propietario: no se puede dibujar en el navegador. Abre el archivo en AutoCAD / DWG TrueView, o exp\xF3rtalo a PDF o DXF para previsualizarlo aqu\xED.",
+      /* @__PURE__ */ jsxs18("dl", { className: "gob-pv-dl", children: [
+        /* @__PURE__ */ jsx19("dt", { children: "Versi\xF3n" }),
+        /* @__PURE__ */ jsx19("dd", { children: d.version ? `${d.version} (${d.code})` : `No reconocida (${d.code || "sin cabecera"})` })
+      ] })
+    );
+  } else if (kind === "legacy") body = fb(`El formato ${LEGACY_HINT[ext(meta.name)] || "Office antiguo"} no se puede previsualizar en el navegador. Gu\xE1rdalo como .docx / .xlsx / .pptx o PDF para verlo aqu\xED.`);
+  else body = fb("No hay vista previa disponible para este tipo de archivo.");
+  return /* @__PURE__ */ jsxs18("div", { className: `gob-pv ${className}`, children: [
+    toolbar && /* @__PURE__ */ jsxs18("div", { className: "gob-pv-bar", children: [
+      /* @__PURE__ */ jsx19(Icon, { name: KIND_META[kind]?.[0] || "file" }),
+      /* @__PURE__ */ jsx19("span", { className: "gob-pv-name", title: meta.name, children: meta.name }),
+      /* @__PURE__ */ jsx19("span", { className: "gob-pv-muted gob-pv-hide-sm", children: [KIND_META[kind]?.[1], meta.size != null && formatSize(meta.size)].filter(Boolean).join(" \xB7 ") }),
+      /* @__PURE__ */ jsx19("span", { className: "gob-pv-spacer" }),
+      kind === "image" && state2.status === "ready" && /* @__PURE__ */ jsxs18("span", { className: "gob-pv-zoom", children: [
+        /* @__PURE__ */ jsx19("button", { type: "button", className: "btn btn-sm btn-outline-primary", onClick: () => setZoom((z) => Math.max(0.25, +(z - 0.25).toFixed(2))), "aria-label": "Alejar", children: /* @__PURE__ */ jsx19(Icon, { name: "zoom-out" }) }),
+        /* @__PURE__ */ jsxs18("button", { type: "button", className: "btn btn-sm btn-outline-primary", onClick: () => setZoom(1), "aria-label": "Tama\xF1o original", children: [
+          Math.round(zoom * 100),
+          "%"
+        ] }),
+        /* @__PURE__ */ jsx19("button", { type: "button", className: "btn btn-sm btn-outline-primary", onClick: () => setZoom((z) => Math.min(4, +(z + 0.25).toFixed(2))), "aria-label": "Acercar", children: /* @__PURE__ */ jsx19(Icon, { name: "zoom-in" }) })
+      ] }),
+      /* @__PURE__ */ jsxs18("button", { type: "button", className: "btn btn-sm btn-outline-primary", onClick: download, children: [
+        /* @__PURE__ */ jsx19(Icon, { name: "download" }),
+        " ",
+        /* @__PURE__ */ jsx19("span", { className: "gob-pv-hide-sm", children: "Descargar" })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx19("div", { className: "gob-pv-body", style: { height }, children: body })
+  ] });
+}
+function FilePreviewModal({ file, open, onClose, onDownload }) {
+  return /* @__PURE__ */ jsx19(Modal, { open, onClose, size: "xl", title: "Vista previa", className: "gob-pv-modal", children: file && /* @__PURE__ */ jsx19(FilePreview, { file, height: "min(70vh, 40rem)", onDownload }) });
+}
+
 // src/react/auth/auth.jsx
-import { useEffect as useEffect9, useState as useState10 } from "react";
-import { Fragment as Fragment6, jsx as jsx18, jsxs as jsxs17 } from "react/jsx-runtime";
-var Submit = ({ busy, children, ...rest }) => /* @__PURE__ */ jsxs17("button", { type: "submit", className: "btn btn-primary btn-block btn-compact", disabled: busy, ...rest, children: [
-  busy && /* @__PURE__ */ jsx18("span", { className: "spinner-border spinner-border-sm mr-2", "aria-hidden": "true" }),
+import { useEffect as useEffect10, useState as useState11 } from "react";
+import { Fragment as Fragment6, jsx as jsx20, jsxs as jsxs19 } from "react/jsx-runtime";
+var Submit = ({ busy, children, ...rest }) => /* @__PURE__ */ jsxs19("button", { type: "submit", className: "btn btn-primary btn-block btn-compact", disabled: busy, ...rest, children: [
+  busy && /* @__PURE__ */ jsx20("span", { className: "spinner-border spinner-border-sm mr-2", "aria-hidden": "true" }),
   children
 ] });
 function AuthLayout({ title, subtitle, children, footer, aside = {}, logo = "/img/gob-footer.svg", home = "#" }) {
-  return /* @__PURE__ */ jsxs17("div", { className: "auth-page", children: [
-    /* @__PURE__ */ jsxs17("aside", { className: "auth-aside", children: [
-      /* @__PURE__ */ jsx18("a", { href: home, children: /* @__PURE__ */ jsx18("img", { src: logo, alt: "Gobierno de Chile", style: { height: 38 } }) }),
-      /* @__PURE__ */ jsxs17("div", { className: "auth-aside-body", children: [
-        /* @__PURE__ */ jsx18("div", { className: "line" }),
-        /* @__PURE__ */ jsx18("h2", { children: aside.title }),
-        aside.text && /* @__PURE__ */ jsx18("p", { children: aside.text }),
-        aside.points && /* @__PURE__ */ jsx18("ul", { children: aside.points.map((p) => /* @__PURE__ */ jsxs17("li", { children: [
-          /* @__PURE__ */ jsx18(Icon, { name: "circle-check" }),
+  return /* @__PURE__ */ jsxs19("div", { className: "auth-page", children: [
+    /* @__PURE__ */ jsxs19("aside", { className: "auth-aside", children: [
+      /* @__PURE__ */ jsx20("a", { href: home, children: /* @__PURE__ */ jsx20("img", { src: logo, alt: "Gobierno de Chile", style: { height: 38 } }) }),
+      /* @__PURE__ */ jsxs19("div", { className: "auth-aside-body", children: [
+        /* @__PURE__ */ jsx20("div", { className: "line" }),
+        /* @__PURE__ */ jsx20("h2", { children: aside.title }),
+        aside.text && /* @__PURE__ */ jsx20("p", { children: aside.text }),
+        aside.points && /* @__PURE__ */ jsx20("ul", { children: aside.points.map((p) => /* @__PURE__ */ jsxs19("li", { children: [
+          /* @__PURE__ */ jsx20(Icon, { name: "circle-check" }),
           p
         ] }, p)) })
       ] }),
-      /* @__PURE__ */ jsx18("small", { children: aside.note ?? "Sitio de demostraci\xF3n construido con el framework Gob.cl." })
+      /* @__PURE__ */ jsx20("small", { children: aside.note ?? "Sitio de demostraci\xF3n construido con el framework Gob.cl." })
     ] }),
-    /* @__PURE__ */ jsx18("main", { className: "auth-main", id: "contenido", children: /* @__PURE__ */ jsxs17("div", { className: "auth-card", children: [
-      /* @__PURE__ */ jsx18("img", { className: "auth-mobile-logo", src: "/img/gob-header.svg", alt: "Gobierno de Chile" }),
-      /* @__PURE__ */ jsx18("h1", { children: title }),
-      subtitle && /* @__PURE__ */ jsx18("p", { className: "auth-subtitle", children: subtitle }),
+    /* @__PURE__ */ jsx20("main", { className: "auth-main", id: "contenido", children: /* @__PURE__ */ jsxs19("div", { className: "auth-card", children: [
+      /* @__PURE__ */ jsx20("img", { className: "auth-mobile-logo", src: "/img/gob-header.svg", alt: "Gobierno de Chile" }),
+      /* @__PURE__ */ jsx20("h1", { children: title }),
+      subtitle && /* @__PURE__ */ jsx20("p", { className: "auth-subtitle", children: subtitle }),
       children,
-      footer && /* @__PURE__ */ jsx18("div", { className: "auth-footer", children: footer })
+      footer && /* @__PURE__ */ jsx20("div", { className: "auth-footer", children: footer })
     ] }) })
   ] });
 }
@@ -1409,25 +1887,25 @@ function LoginForm({ onSubmit, links = {}, identifierLabel = "RUN o correo elect
     validate: (v) => ({ ...!v.identifier.trim() && { identifier: "Ingresa tu RUN o correo" }, ...!v.password && { password: "Ingresa tu clave" } }),
     onSubmit
   });
-  return /* @__PURE__ */ jsxs17("form", { onSubmit: f.handleSubmit, noValidate: true, children: [
-    f.submitError && /* @__PURE__ */ jsx18(Alert, { tone: "danger", onClose: () => f.setSubmitError(""), children: f.submitError }),
-    /* @__PURE__ */ jsx18(TextField, { label: identifierLabel, autoComplete: "username", autoFocus: true, ...f.bind("identifier") }),
-    /* @__PURE__ */ jsx18(PasswordField, { label: "Clave", autoComplete: "current-password", ...f.bind("password") }),
-    /* @__PURE__ */ jsxs17("div", { className: "auth-row", children: [
-      /* @__PURE__ */ jsx18(CheckboxField, { label: "Mantener sesi\xF3n iniciada", ...f.bindCheck("remember"), className: "mb-0" }),
-      links.forgot && /* @__PURE__ */ jsx18("a", { href: links.forgot, children: "\xBFOlvidaste tu clave?" })
+  return /* @__PURE__ */ jsxs19("form", { onSubmit: f.handleSubmit, noValidate: true, children: [
+    f.submitError && /* @__PURE__ */ jsx20(Alert, { tone: "danger", onClose: () => f.setSubmitError(""), children: f.submitError }),
+    /* @__PURE__ */ jsx20(TextField, { label: identifierLabel, autoComplete: "username", autoFocus: true, ...f.bind("identifier") }),
+    /* @__PURE__ */ jsx20(PasswordField, { label: "Clave", autoComplete: "current-password", ...f.bind("password") }),
+    /* @__PURE__ */ jsxs19("div", { className: "auth-row", children: [
+      /* @__PURE__ */ jsx20(CheckboxField, { label: "Mantener sesi\xF3n iniciada", ...f.bindCheck("remember"), className: "mb-0" }),
+      links.forgot && /* @__PURE__ */ jsx20("a", { href: links.forgot, children: "\xBFOlvidaste tu clave?" })
     ] }),
-    /* @__PURE__ */ jsx18(Submit, { busy: f.submitting, children: "Ingresar" }),
-    onClaveUnica && /* @__PURE__ */ jsxs17(Fragment6, { children: [
-      /* @__PURE__ */ jsx18("div", { className: "auth-divider", children: /* @__PURE__ */ jsx18("span", { children: "o" }) }),
-      /* @__PURE__ */ jsxs17("button", { type: "button", className: "btn btn-outline-primary btn-block btn-compact", onClick: onClaveUnica, children: [
-        /* @__PURE__ */ jsx18(Icon, { name: "claveunica" }),
+    /* @__PURE__ */ jsx20(Submit, { busy: f.submitting, children: "Ingresar" }),
+    onClaveUnica && /* @__PURE__ */ jsxs19(Fragment6, { children: [
+      /* @__PURE__ */ jsx20("div", { className: "auth-divider", children: /* @__PURE__ */ jsx20("span", { children: "o" }) }),
+      /* @__PURE__ */ jsxs19("button", { type: "button", className: "btn btn-outline-primary btn-block btn-compact", onClick: onClaveUnica, children: [
+        /* @__PURE__ */ jsx20(Icon, { name: "claveunica" }),
         " Ingresar con Clave\xDAnica (simulado)"
       ] })
     ] }),
-    links.register && /* @__PURE__ */ jsxs17("p", { className: "auth-alt", children: [
+    links.register && /* @__PURE__ */ jsxs19("p", { className: "auth-alt", children: [
       "\xBFNo tienes cuenta? ",
-      /* @__PURE__ */ jsx18("a", { href: links.register, children: "Reg\xEDstrate" })
+      /* @__PURE__ */ jsx20("a", { href: links.register, children: "Reg\xEDstrate" })
     ] })
   ] });
 }
@@ -1446,34 +1924,34 @@ function RegisterForm({ onSubmit, links = {} }) {
     }),
     onSubmit
   });
-  return /* @__PURE__ */ jsxs17("form", { onSubmit: f.handleSubmit, noValidate: true, children: [
-    f.submitError && /* @__PURE__ */ jsx18(Alert, { tone: "danger", children: f.submitError }),
-    /* @__PURE__ */ jsxs17("div", { className: "app-field-row", children: [
-      /* @__PURE__ */ jsx18(TextField, { label: "Nombres", required: true, autoComplete: "given-name", ...f.bind("names") }),
-      /* @__PURE__ */ jsx18(TextField, { label: "Apellidos", required: true, autoComplete: "family-name", ...f.bind("lastNames") })
+  return /* @__PURE__ */ jsxs19("form", { onSubmit: f.handleSubmit, noValidate: true, children: [
+    f.submitError && /* @__PURE__ */ jsx20(Alert, { tone: "danger", children: f.submitError }),
+    /* @__PURE__ */ jsxs19("div", { className: "app-field-row", children: [
+      /* @__PURE__ */ jsx20(TextField, { label: "Nombres", required: true, autoComplete: "given-name", ...f.bind("names") }),
+      /* @__PURE__ */ jsx20(TextField, { label: "Apellidos", required: true, autoComplete: "family-name", ...f.bind("lastNames") })
     ] }),
-    /* @__PURE__ */ jsxs17("div", { className: "app-field-row", children: [
-      /* @__PURE__ */ jsx18(RunField, { required: true, ...f.bind("run") }),
-      /* @__PURE__ */ jsx18(TextField, { label: "Tel\xE9fono (opcional)", type: "tel", autoComplete: "tel", placeholder: "+56 9 1234 5678", ...f.bind("phone") })
+    /* @__PURE__ */ jsxs19("div", { className: "app-field-row", children: [
+      /* @__PURE__ */ jsx20(RunField, { required: true, ...f.bind("run") }),
+      /* @__PURE__ */ jsx20(TextField, { label: "Tel\xE9fono (opcional)", type: "tel", autoComplete: "tel", placeholder: "+56 9 1234 5678", ...f.bind("phone") })
     ] }),
-    /* @__PURE__ */ jsx18(TextField, { label: "Correo electr\xF3nico", type: "email", required: true, autoComplete: "email", ...f.bind("email") }),
-    /* @__PURE__ */ jsx18(PasswordField, { label: "Clave", required: true, strength: true, autoComplete: "new-password", ...f.bind("password") }),
-    /* @__PURE__ */ jsx18(PasswordField, { label: "Repite tu clave", required: true, autoComplete: "new-password", ...f.bind("confirm") }),
-    /* @__PURE__ */ jsx18(CheckboxField, { label: /* @__PURE__ */ jsxs17(Fragment6, { children: [
+    /* @__PURE__ */ jsx20(TextField, { label: "Correo electr\xF3nico", type: "email", required: true, autoComplete: "email", ...f.bind("email") }),
+    /* @__PURE__ */ jsx20(PasswordField, { label: "Clave", required: true, strength: true, autoComplete: "new-password", ...f.bind("password") }),
+    /* @__PURE__ */ jsx20(PasswordField, { label: "Repite tu clave", required: true, autoComplete: "new-password", ...f.bind("confirm") }),
+    /* @__PURE__ */ jsx20(CheckboxField, { label: /* @__PURE__ */ jsxs19(Fragment6, { children: [
       "Acepto los ",
-      /* @__PURE__ */ jsx18("a", { href: "#terminos", children: "t\xE9rminos y condiciones" }),
+      /* @__PURE__ */ jsx20("a", { href: "#terminos", children: "t\xE9rminos y condiciones" }),
       " y la pol\xEDtica de privacidad"
     ] }), ...f.bindCheck("terms") }),
-    /* @__PURE__ */ jsx18(Submit, { busy: f.submitting, children: "Crear cuenta" }),
-    links.login && /* @__PURE__ */ jsxs17("p", { className: "auth-alt", children: [
+    /* @__PURE__ */ jsx20(Submit, { busy: f.submitting, children: "Crear cuenta" }),
+    links.login && /* @__PURE__ */ jsxs19("p", { className: "auth-alt", children: [
       "\xBFYa tienes cuenta? ",
-      /* @__PURE__ */ jsx18("a", { href: links.login, children: "Inicia sesi\xF3n" })
+      /* @__PURE__ */ jsx20("a", { href: links.login, children: "Inicia sesi\xF3n" })
     ] })
   ] });
 }
 var useCountdown = (start) => {
-  const [n, setN] = useState10(0);
-  useEffect9(() => {
+  const [n, setN] = useState11(0);
+  useEffect10(() => {
     if (n <= 0) return void 0;
     const t = setTimeout(() => setN(n - 1), 1e3);
     return () => clearTimeout(t);
@@ -1481,7 +1959,7 @@ var useCountdown = (start) => {
   return [n, () => setN(start)];
 };
 function ForgotPasswordForm({ onSubmit, links = {}, resendAfter = 30 }) {
-  const [sent, setSent] = useState10(false);
+  const [sent, setSent] = useState11(false);
   const [wait, startWait] = useCountdown(resendAfter);
   const f = useForm({
     initial: { email: "" },
@@ -1493,26 +1971,26 @@ function ForgotPasswordForm({ onSubmit, links = {}, resendAfter = 30 }) {
     }
   });
   if (sent) {
-    return /* @__PURE__ */ jsxs17("div", { role: "status", children: [
-      /* @__PURE__ */ jsxs17(Alert, { tone: "success", title: "Revisa tu correo", children: [
+    return /* @__PURE__ */ jsxs19("div", { role: "status", children: [
+      /* @__PURE__ */ jsxs19(Alert, { tone: "success", title: "Revisa tu correo", children: [
         "Si ",
-        /* @__PURE__ */ jsx18("strong", { children: f.values.email }),
+        /* @__PURE__ */ jsx20("strong", { children: f.values.email }),
         " est\xE1 registrado, te enviamos las instrucciones para restablecer tu clave. El enlace vence en 30 minutos."
       ] }),
-      /* @__PURE__ */ jsx18("button", { type: "button", className: "btn btn-outline-primary btn-block btn-compact", disabled: wait > 0 || f.submitting, onClick: () => f.handleSubmit(), children: wait > 0 ? `Reenviar en ${wait} s` : "Reenviar correo" }),
-      links.login && /* @__PURE__ */ jsx18("p", { className: "auth-alt", children: /* @__PURE__ */ jsx18("a", { href: links.login, children: "Volver a iniciar sesi\xF3n" }) })
+      /* @__PURE__ */ jsx20("button", { type: "button", className: "btn btn-outline-primary btn-block btn-compact", disabled: wait > 0 || f.submitting, onClick: () => f.handleSubmit(), children: wait > 0 ? `Reenviar en ${wait} s` : "Reenviar correo" }),
+      links.login && /* @__PURE__ */ jsx20("p", { className: "auth-alt", children: /* @__PURE__ */ jsx20("a", { href: links.login, children: "Volver a iniciar sesi\xF3n" }) })
     ] });
   }
-  return /* @__PURE__ */ jsxs17("form", { onSubmit: f.handleSubmit, noValidate: true, children: [
-    f.submitError && /* @__PURE__ */ jsx18(Alert, { tone: "danger", children: f.submitError }),
-    /* @__PURE__ */ jsx18("p", { className: "auth-subtitle", style: { marginTop: 0 }, children: "Escribe el correo de tu cuenta y te enviaremos un enlace para crear una nueva clave." }),
-    /* @__PURE__ */ jsx18(TextField, { label: "Correo electr\xF3nico", type: "email", autoComplete: "email", autoFocus: true, ...f.bind("email") }),
-    /* @__PURE__ */ jsx18(Submit, { busy: f.submitting, children: "Enviar instrucciones" }),
-    links.login && /* @__PURE__ */ jsx18("p", { className: "auth-alt", children: /* @__PURE__ */ jsx18("a", { href: links.login, children: "Volver a iniciar sesi\xF3n" }) })
+  return /* @__PURE__ */ jsxs19("form", { onSubmit: f.handleSubmit, noValidate: true, children: [
+    f.submitError && /* @__PURE__ */ jsx20(Alert, { tone: "danger", children: f.submitError }),
+    /* @__PURE__ */ jsx20("p", { className: "auth-subtitle", style: { marginTop: 0 }, children: "Escribe el correo de tu cuenta y te enviaremos un enlace para crear una nueva clave." }),
+    /* @__PURE__ */ jsx20(TextField, { label: "Correo electr\xF3nico", type: "email", autoComplete: "email", autoFocus: true, ...f.bind("email") }),
+    /* @__PURE__ */ jsx20(Submit, { busy: f.submitting, children: "Enviar instrucciones" }),
+    links.login && /* @__PURE__ */ jsx20("p", { className: "auth-alt", children: /* @__PURE__ */ jsx20("a", { href: links.login, children: "Volver a iniciar sesi\xF3n" }) })
   ] });
 }
 function ResetPasswordForm({ onSubmit, links = {} }) {
-  const [done, setDone] = useState10(false);
+  const [done, setDone] = useState11(false);
   const f = useForm({
     initial: { password: "", confirm: "" },
     validate: (v) => ({ ...v.password.length < 8 && { password: "Debe tener al menos 8 caracteres" }, ...v.confirm !== v.password && { confirm: "Las claves no coinciden" } }),
@@ -1521,21 +1999,21 @@ function ResetPasswordForm({ onSubmit, links = {} }) {
       setDone(true);
     }
   });
-  if (done) return /* @__PURE__ */ jsxs17("div", { role: "status", children: [
-    /* @__PURE__ */ jsx18(Alert, { tone: "success", title: "Clave actualizada", children: "Ya puedes ingresar con tu nueva clave." }),
-    links.login && /* @__PURE__ */ jsx18("a", { className: "btn btn-primary btn-block btn-compact", href: links.login, children: "Ir a iniciar sesi\xF3n" })
+  if (done) return /* @__PURE__ */ jsxs19("div", { role: "status", children: [
+    /* @__PURE__ */ jsx20(Alert, { tone: "success", title: "Clave actualizada", children: "Ya puedes ingresar con tu nueva clave." }),
+    links.login && /* @__PURE__ */ jsx20("a", { className: "btn btn-primary btn-block btn-compact", href: links.login, children: "Ir a iniciar sesi\xF3n" })
   ] });
-  return /* @__PURE__ */ jsxs17("form", { onSubmit: f.handleSubmit, noValidate: true, children: [
-    f.submitError && /* @__PURE__ */ jsx18(Alert, { tone: "danger", children: f.submitError }),
-    /* @__PURE__ */ jsx18(PasswordField, { label: "Nueva clave", strength: true, autoComplete: "new-password", autoFocus: true, ...f.bind("password") }),
-    /* @__PURE__ */ jsx18(PasswordField, { label: "Repite la nueva clave", autoComplete: "new-password", ...f.bind("confirm") }),
-    /* @__PURE__ */ jsx18(Submit, { busy: f.submitting, children: "Guardar nueva clave" })
+  return /* @__PURE__ */ jsxs19("form", { onSubmit: f.handleSubmit, noValidate: true, children: [
+    f.submitError && /* @__PURE__ */ jsx20(Alert, { tone: "danger", children: f.submitError }),
+    /* @__PURE__ */ jsx20(PasswordField, { label: "Nueva clave", strength: true, autoComplete: "new-password", autoFocus: true, ...f.bind("password") }),
+    /* @__PURE__ */ jsx20(PasswordField, { label: "Repite la nueva clave", autoComplete: "new-password", ...f.bind("confirm") }),
+    /* @__PURE__ */ jsx20(Submit, { busy: f.submitting, children: "Guardar nueva clave" })
   ] });
 }
 function TwoFactorForm({ onSubmit, onResend, links = {}, destination = "tu aplicaci\xF3n autenticadora" }) {
-  const [code, setCode] = useState10("");
-  const [error, setError] = useState10("");
-  const [busy, setBusy] = useState10(false);
+  const [code, setCode] = useState11("");
+  const [error, setError] = useState11("");
+  const [busy, setBusy] = useState11(false);
   const [wait, startWait] = useCountdown(30);
   const submit = async (c = code) => {
     if (c.length < 6) {
@@ -1553,28 +2031,28 @@ function TwoFactorForm({ onSubmit, onResend, links = {}, destination = "tu aplic
       setBusy(false);
     }
   };
-  return /* @__PURE__ */ jsxs17("form", { onSubmit: (e) => {
+  return /* @__PURE__ */ jsxs19("form", { onSubmit: (e) => {
     e.preventDefault();
     submit();
   }, noValidate: true, children: [
-    /* @__PURE__ */ jsxs17("p", { className: "auth-subtitle", style: { marginTop: 0 }, children: [
+    /* @__PURE__ */ jsxs19("p", { className: "auth-subtitle", style: { marginTop: 0 }, children: [
       "Ingresa el c\xF3digo de 6 d\xEDgitos que genera ",
       destination,
       "."
     ] }),
-    /* @__PURE__ */ jsx18(OtpInput, { value: code, onChange: (v) => {
+    /* @__PURE__ */ jsx20(OtpInput, { value: code, onChange: (v) => {
       setCode(v);
       setError("");
     }, onComplete: submit, error, disabled: busy }),
-    /* @__PURE__ */ jsx18(Submit, { busy, children: "Verificar" }),
-    /* @__PURE__ */ jsxs17("p", { className: "auth-alt", children: [
-      onResend && /* @__PURE__ */ jsx18("button", { type: "button", className: "btn btn-link btn-compact btn-sm", disabled: wait > 0, onClick: () => {
+    /* @__PURE__ */ jsx20(Submit, { busy, children: "Verificar" }),
+    /* @__PURE__ */ jsxs19("p", { className: "auth-alt", children: [
+      onResend && /* @__PURE__ */ jsx20("button", { type: "button", className: "btn btn-link btn-compact btn-sm", disabled: wait > 0, onClick: () => {
         onResend();
         startWait();
       }, children: wait > 0 ? `Reenviar c\xF3digo en ${wait} s` : "Reenviar c\xF3digo" }),
-      links.login && /* @__PURE__ */ jsxs17(Fragment6, { children: [
+      links.login && /* @__PURE__ */ jsxs19(Fragment6, { children: [
         " \xB7 ",
-        /* @__PURE__ */ jsx18("a", { href: links.login, children: "Cancelar" })
+        /* @__PURE__ */ jsx20("a", { href: links.login, children: "Cancelar" })
       ] })
     ] })
   ] });
@@ -1594,12 +2072,17 @@ export {
   DropdownMenu,
   EmptyState,
   Field,
+  FilePreview,
+  FilePreviewModal,
   FileUpload,
   FilterBar,
   Footer,
   ForgotPasswordForm,
   Icon,
   LIMITS,
+  Loading,
+  LoadingOverlay,
+  LoadingScreen,
   LoginForm,
   Modal,
   ModalProvider,
@@ -1608,6 +2091,7 @@ export {
   Pagination,
   Panel,
   PasswordField,
+  ProgressBar,
   RadioGroup,
   RegisterForm,
   ResetPasswordForm,
@@ -1617,6 +2101,9 @@ export {
   SelectField,
   SiteNavbar,
   Skeleton,
+  SkeletonCard,
+  SkeletonText,
+  Spinner,
   StatCard,
   StatusBadge,
   Stepper,
@@ -1638,6 +2125,7 @@ export {
   parseCsv,
   passwordChecks,
   passwordScore,
+  previewKind,
   readAttachment,
   runDv,
   toCsv,

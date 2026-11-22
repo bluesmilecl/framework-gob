@@ -75,14 +75,20 @@
     "framework"
   ],
   "peerDependencies": {
-    "tailwindcss": "^4.0.0",
-    "react": ">=18"
+    "react": ">=18",
+    "tailwindcss": "^4.0.0"
   },
   "peerDependenciesMeta": {
     "tailwindcss": {
       "optional": true
     },
     "react": {
+      "optional": true
+    },
+    "mammoth": {
+      "optional": true
+    },
+    "jszip": {
       "optional": true
     }
   },
@@ -96,7 +102,9 @@
     "bootstrap-next": "npm:bootstrap@^6.0.0-alpha.1",
     "esbuild": "^0.25.0",
     "html-react-parser": "^5.2.17",
+    "jszip": "^3.10.2",
     "lucide-static": "^0.468.0",
+    "mammoth": "^1.13.0",
     "postcss": "^8.5.33",
     "pug": "^3.0.4",
     "react": "^19.3.1",
