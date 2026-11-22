@@ -20,6 +20,7 @@ export default function Header() {
                 <a className="dropdown-item" href="#nuevos">Nuevos (Bootstrap 6)</a>
               </div>
             </li>
+            <li className="nav-item"><a className="nav-link" href="#chat-ia">Chat IA</a></li>
             <li className="nav-item"><a className="nav-link" href="#migracion">Migración</a></li>
             <li className="nav-separator" />
             <li className="nav-behavior"><a className="nav-link toolbar-behavior-contrast" href="#" title="Alto contraste" aria-label="Alto contraste"><i className="cl cl-contrast" /></a></li>

@@ -2154,6 +2154,204 @@
     "source": "lucide"
   },
   {
+    "name": "bot",
+    "class": "cl-bot",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "sparkles",
+    "class": "cl-sparkles",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "wand-sparkles",
+    "class": "cl-wand-sparkles",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "brain-alt",
+    "class": "cl-brain-alt",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "message-square-plus",
+    "class": "cl-message-square-plus",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "message-square-text",
+    "class": "cl-message-square-text",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "message-square-heart",
+    "class": "cl-message-square-heart",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "keyboard",
+    "class": "cl-keyboard",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-stop",
+    "class": "cl-circle-stop",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "corner-down-left",
+    "class": "cl-corner-down-left",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "paperclip-alt",
+    "class": "cl-paperclip-alt",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "file-code",
+    "class": "cl-file-code",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "file-spreadsheet",
+    "class": "cl-file-spreadsheet",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "file-image",
+    "class": "cl-file-image",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "file-archive",
+    "class": "cl-file-archive",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "audio-lines",
+    "class": "cl-audio-lines",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "languages",
+    "class": "cl-languages",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "quote",
+    "class": "cl-quote",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "panel-left-close",
+    "class": "cl-panel-left-close",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "panel-left-open",
+    "class": "cl-panel-left-open",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "square-pen-alt",
+    "class": "cl-square-pen-alt",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "text-cursor-input",
+    "class": "cl-text-cursor-input",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "arrow-big-up",
+    "class": "cl-arrow-big-up",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "thumbs-up-alt",
+    "class": "cl-thumbs-up-alt",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "thumbs-down-alt",
+    "class": "cl-thumbs-down-alt",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "flag-triangle-right",
+    "class": "cl-flag-triangle-right",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "pin-off",
+    "class": "cl-pin-off",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "history-alt",
+    "class": "cl-history-alt",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "messages-square-alt",
+    "class": "cl-messages-square-alt",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "list-restart",
+    "class": "cl-list-restart",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "rotate-ccw",
+    "class": "cl-rotate-ccw",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "clipboard-copy",
+    "class": "cl-clipboard-copy",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
+    "name": "share",
+    "class": "cl-share",
+    "group": "IA y chat",
+    "source": "lucide"
+  },
+  {
     "name": "linkedin",
     "class": "cl-linkedin",
     "group": "Redes sociales (línea)",

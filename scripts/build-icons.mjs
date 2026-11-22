@@ -45,6 +45,10 @@ const LUCIDE = {
     chart-column chart-bar`,
   'Multimedia': `image images camera play pause square circle-play circle-pause skip-back skip-forward volume-2 volume-x
     music film`,
+  'IA y chat': `bot sparkles wand-sparkles brain message-square-plus message-square-text message-square-heart keyboard circle-stop
+    corner-down-left paperclip file-code file-spreadsheet file-image file-archive audio-lines languages quote panel-left-close
+    panel-left-open square-pen text-cursor-input arrow-big-up thumbs-up thumbs-down flag-triangle-right pin-off history
+    messages-square list-restart rotate-ccw clipboard-copy share download-cloud`,
   'Redes sociales (línea)': `linkedin`,
 }
 

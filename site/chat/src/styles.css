@@ -1,0 +1,13 @@
+/* App de chat: consume el paquete como cualquier proyecto Tailwind 4 */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "../../../dist/fonts.css";
+@import "../../../src/index.css";
+@import "../../../src/compat.css";
+@import "../../../src/next.css";
+@import "../../../src/chat.css";
+@import "tailwindcss/utilities.css" layer(utilities);
+@source ".";
+
+html, body, #root { height: 100%; }
+body { overflow: hidden; }

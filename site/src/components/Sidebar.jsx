@@ -5,7 +5,7 @@ export const NAV = [
   ['iconos', 'Íconos'], ['botones', 'Botones'], ['tags', 'Tags'], ['alertas', 'Alertas y banners'], ['cards', 'Cards'],
   ['navegacion', 'Navegación'], ['colapsables', 'Colapsables'], ['formularios', 'Formularios'], ['nuevos', 'Componentes nuevos (BS6)'],
   ['busqueda', 'Búsqueda y toolbar'], ['componentes', 'Tablas, listas y modal'], ['footer', 'Footer'],
-  ['accesibilidad', 'Accesibilidad'], ['migracion', 'Migrar desde Bootstrap 4'],
+  ['chat-ia', 'Chat de IA'], ['accesibilidad', 'Accesibilidad'], ['migracion', 'Migrar desde Bootstrap 4'],
 ]
 const IDS = NAV.map(([id]) => id)
 

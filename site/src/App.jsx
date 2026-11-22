@@ -8,6 +8,7 @@ import { Botones, Tags, Alertas, Cards } from './sections/Components.jsx'
 import { Navegacion, Colapsables, Busqueda } from './sections/Navigation.jsx'
 import { Formularios, Nuevos } from './sections/Forms.jsx'
 import { Componentes, FooterDoc, Accesibilidad, Migracion } from './sections/Misc.jsx'
+import ChatIA from './sections/ChatIA.jsx'
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
             <Busqueda />
             <Componentes />
             <FooterDoc />
+            <ChatIA />
             <Accesibilidad />
             <Migracion />
           </main>
