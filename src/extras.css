@@ -60,3 +60,15 @@
   .accordion-gob .accordion-button[aria-expanded="true"]::after { transform: rotate(180deg); }
   .accordion-gob .accordion-body { padding: 0 0.5rem 1rem; }
 }
+
+/* Corrección sobre el original: en el menú desplegable de la barra de navegación el core solo define :hover
+   (fondo oscuro + texto blanco). Con teclado el ítem enfocado recibía el :focus genérico de Bootstrap
+   (fondo gris claro) con texto blanco, y quedaba ilegible. Se le da el mismo estilo que a :hover. */
+@layer components {
+  nav.navbar .navbar-nav .nav-item.dropdown.show .dropdown-menu.show .dropdown-item:focus,
+  nav.navbar.navbar-light .navbar-nav .nav-item.dropdown.show .dropdown-menu.show .dropdown-item:focus,
+  nav.navbar.navbar-dark .navbar-nav .nav-item.dropdown.show .dropdown-menu.show .dropdown-item:focus {
+    color: var(--color-white);
+    background-color: var(--color-tertiary);
+  }
+}

@@ -23829,6 +23829,10 @@
   .accordion-gob .accordion-body {
     padding: 0 0.5rem 1rem;
   }
+  nav.navbar .navbar-nav .nav-item.dropdown.show .dropdown-menu.show .dropdown-item:focus, nav.navbar.navbar-light .navbar-nav .nav-item.dropdown.show .dropdown-menu.show .dropdown-item:focus, nav.navbar.navbar-dark .navbar-nav .nav-item.dropdown.show .dropdown-menu.show .dropdown-item:focus {
+    color: var(--color-white);
+    background-color: var(--color-tertiary);
+  }
 }
 @layer utilities {
   .align-baseline {
