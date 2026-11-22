@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 Third-party assets
+- Bootstrap 4.5 (core CSS derivado vía el framework oficial) y Bootstrap 6 alpha (src/next, dist/next): MIT, © The Bootstrap Authors.
 - Íconos y logotipos oficiales (icons/gob, brand/): © Gobierno de Chile, distribuidos en el paquete MIT original.
   El uso de la marca de Gobierno debe respetar los lineamientos de la División de Gobierno Digital.
 - Lucide (icons/extra via build): ISC License, © Lucide Contributors.

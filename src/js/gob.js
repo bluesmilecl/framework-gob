@@ -1,15 +1,16 @@
 /**
  * gob-cl-tailwind · JS vanilla (sin jQuery ni Popper)
- * Compatible con los atributos del framework original: data-toggle="collapse|dropdown|tab|pill|modal", data-dismiss, etc.
- * También acepta data-gob-toggle / data-gob-target / data-gob-dismiss.
+ * Compatible con los atributos del framework original (Bootstrap 4): data-toggle="collapse|dropdown|tab|pill|modal", data-dismiss, etc.
+ * También acepta data-gob-toggle / data-gob-target / data-gob-dismiss. No toca data-bs-* (Bootstrap 6).
  */
 
 const STORAGE = 'gob.cl:toolbar'
 const FONT_CLASSES = ['a11y-font-0', 'a11y-font-1', 'a11y-font-2']
 const FONT_SIZES = ['16px', '20px', '24px']
 
-const attr = (el, name) => el.getAttribute(`data-gob-${name}`) ?? el.getAttribute(`data-${name}`) ?? el.getAttribute(`data-bs-${name}`)
-const sel = (name) => `[data-gob-${name}],[data-${name}],[data-bs-${name}]`
+// Solo data-gob-* y data-* (Bootstrap 4). Los data-bs-* son de Bootstrap 6 y los gestiona su propio bundle (dist/next).
+const attr = (el, name) => el.getAttribute(`data-gob-${name}`) ?? el.getAttribute(`data-${name}`)
+const sel = (name) => `[data-gob-${name}],[data-${name}]`
 const emit = (el, name, detail) => el.dispatchEvent(new CustomEvent(`gob:${name}`, { bubbles: true, detail }))
 const storage = {
   get: (k) => { try { return localStorage.getItem(`${STORAGE}.${k}`) } catch { return null } },

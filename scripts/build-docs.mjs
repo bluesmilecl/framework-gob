@@ -65,7 +65,7 @@ const iconHtml = Object.entries(groups)
 const navItems = [
   ['inicio', 'Comenzando'], ['instalacion', 'Instalación'], ['colores', 'Colores'], ['tipografia', 'Tipografía'],
   ['iconos', 'Íconos'], ['botones', 'Botones'], ['tags', 'Tags'], ['alertas', 'Alertas y banners'], ['cards', 'Cards'],
-  ['navegacion', 'Navegación'], ['colapsables', 'Colapsables'], ['formularios', 'Formularios'], ['busqueda', 'Búsqueda y toolbar'],
+  ['navegacion', 'Navegación'], ['colapsables', 'Colapsables'], ['formularios', 'Formularios'], ['nuevos', 'Componentes nuevos (BS6)'], ['busqueda', 'Búsqueda y toolbar'],
   ['componentes', 'Tablas, listas y modal'], ['footer', 'Footer'], ['accesibilidad', 'Accesibilidad'], ['migracion', 'Migrar desde Bootstrap 4'],
 ]
 
@@ -88,6 +88,7 @@ const page = `<!doctype html>
   <link rel="icon" href="img/gob-icon.svg">
   <link rel="stylesheet" href="../dist/fonts.css">
   <link rel="stylesheet" href="../dist/gob.css">
+  <link rel="stylesheet" href="../dist/gob-next.css">
   <style>
     .doc-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; padding-block: 1.5rem; }
     .doc-side nav { display: flex; flex-wrap: wrap; gap: .25rem; }
@@ -200,23 +201,33 @@ ${sec('inicio', 'Comenzando', 'Esta librería mantiene el sistema visual oficial
 ${sec('instalacion', 'Instalación', 'Tres formas de usarlo, según tu proyecto.', `
 <h3>1 · Proyecto con Tailwind CSS 4 (recomendado)</h3>
 ${code(`npm install tailwindcss @tailwindcss/vite gob-cl-tailwind`)}
-${code(`/* app.css */
-@import "tailwindcss";
+${code(`/* app.css — sin preflight: el reboot de Bootstrap ya viene en el core de gob.cl */
+@import "tailwindcss/theme.css" layer(theme);
 @import "gob-cl-tailwind/fonts.css";   /* Roboto + Roboto Slab auto-alojadas */
-@import "gob-cl-tailwind";             /* tokens + componentes + íconos */
-@import "gob-cl-tailwind/compat.css";  /* (opcional) grid .row/.col-* y d-* de Bootstrap 4 */`)}
+@import "gob-cl-tailwind";             /* tokens + core Bootstrap 4/gob.cl + íconos */
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Opcionales */
+@import "gob-cl-tailwind/compat.css";  /* utilidades Bootstrap 4 (m-*, p-*, d-*, flex…) + modo a11y-fonts */
+@import "gob-cl-tailwind/next.css";    /* componentes nuevos de Bootstrap 6 (alpha) con identidad gob.cl */`)}
 ${code(`// main.js
-import "gob-cl-tailwind/js";   // activa colapsables, dropdown, tabs, modal, toolbar…`)}
-<p>Con esto tienes <code>bg-primary</code>, <code>text-tertiary</code>, <code>border-accent</code>, <code>font-slab</code>, <code>md:flex</code>… más todas las clases de componentes.</p>
+import "gob-cl-tailwind/js";        // colapsables, dropdown, tabs, modal, toolbar (data-toggle de Bootstrap 4)
+import "gob-cl-tailwind/next/js";   // opcional: dialog, drawer, menu, combobox… (data-bs-toggle de Bootstrap 6)`)}
+<p>Con esto tienes <code>bg-primary</code>, <code>text-tertiary</code>, <code>border-accent</code>, <code>font-slab</code>, <code>md:</code>… y todas las clases del framework original. Los componentes viven en <code>@layer components</code>, así que una utilidad de Tailwind siempre los puede sobrescribir (<code>btn btn-primary p-2</code>).</p>
 
 <h3>2 · CSS precompilado (sin build)</h3>
 ${code(`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@${pkg.version}/dist/fonts.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@${pkg.version}/dist/gob.min.css">
-<script src="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@${pkg.version}/dist/gob.min.js" defer></script>`)}
+<!-- opcional: componentes nuevos de Bootstrap 6 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@${pkg.version}/dist/gob-next.css">
+<script src="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@${pkg.version}/dist/gob.min.js" defer></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@${pkg.version}/dist/next/bootstrap6.bundle.min.js"></script>`)}
+<p><code>dist/gob.min.css</code> es un reemplazo directo de <code>gob.cl.css</code>: el HTML oficial funciona sin cambios.</p>
 
 <h3>3 · Desde el repositorio</h3>
 ${code(`npm install
-npm run build      # genera dist/ (CSS, JS, fuentes, íconos, docs)`)}
+npm run build      # genera dist/ (CSS, JS, fuentes, íconos, docs)
+npm run build:core # regenera src/core desde el CSS oficial (tools/build-core.mjs)`)}
 
 <h3>Plantilla inicial</h3>
 ${code(`<!doctype html>
@@ -465,6 +476,90 @@ ${ex(`<form class="row" onsubmit="return false">
 ${ex(`<div class="input-group" style="max-width:26rem"><div class="input-group-prepend"><span class="input-group-text">RUN</span></div><input class="form-control" placeholder="12.345.678-9" aria-label="RUN"><div class="input-group-append"><button class="btn btn-primary" style="min-height:0;padding-block:.375rem">Validar</button></div></div>`)}
 `)}
 
+${sec('nuevos', 'Componentes nuevos (Bootstrap 6)', 'Capa opcional con los componentes nuevos de <strong>Bootstrap 6</strong> (<code>6.0.0-alpha.1</code>, pre-lanzamiento), reteñidos con la paleta oficial y esquinas rectas. Solo incluye clases sin equivalente en Bootstrap 4/gob.cl, por lo que no altera el core verificado. Requiere <code>gob-cl-tailwind/next.css</code> y el módulo JS <code>dist/next/bootstrap6.bundle.min.js</code> (atributos <code>data-bs-*</code>).', `
+<h3>Botones nuevos y tema</h3>
+${ex(`<div class="flex flex-wrap gap-2">
+  <button class="btn-solid theme-primary">Primary</button>
+  <button class="btn-solid theme-secondary">Secondary</button>
+  <button class="btn-solid theme-success">Success</button>
+  <button class="btn-solid theme-warning">Warning</button>
+  <button class="btn-solid theme-danger">Danger</button>
+  <button class="btn-subtle theme-primary">Subtle</button>
+  <button class="btn-solid theme-inverse">Inverse</button>
+</div>`)}
+<h3>Dialog y Drawer (elemento nativo &lt;dialog&gt;)</h3>
+${ex(`<div class="flex flex-wrap gap-2">
+  <button type="button" class="btn-solid theme-primary" data-bs-toggle="dialog" data-bs-target="#dlgDemo">Abrir dialog</button>
+  <button type="button" class="btn-subtle theme-primary" data-bs-toggle="drawer" data-bs-target="#drwDemo" aria-controls="drwDemo">Abrir drawer</button>
+</div>
+<dialog class="dialog" id="dlgDemo" aria-labelledby="dlgTitle">
+  <div class="dialog-header"><h1 class="dialog-title" id="dlgTitle">Confirmar trámite</h1><button type="button" class="btn-close" data-bs-dismiss="dialog" aria-label="Cerrar"></button></div>
+  <div class="dialog-body"><p>Usa el elemento <code>&lt;dialog&gt;</code> del navegador: foco, ESC y accesibilidad nativos.</p></div>
+  <div class="dialog-footer"><button type="button" class="btn-solid theme-secondary" data-bs-dismiss="dialog">Cancelar</button><button type="button" class="btn-solid theme-primary" data-bs-dismiss="dialog">Continuar</button></div>
+</dialog>
+<dialog class="drawer drawer-end" tabindex="-1" id="drwDemo" aria-labelledby="drwTitle">
+  <div class="drawer-header"><h5 class="drawer-title" id="drwTitle">Filtros</h5><button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Cerrar"></button></div>
+  <div class="drawer-body"><p>Panel lateral (también <code>drawer-start</code>, <code>drawer-top</code>, <code>drawer-bottom</code>).</p></div>
+  <div class="drawer-footer"><button type="button" class="btn-solid theme-primary" data-bs-dismiss="drawer">Aplicar</button></div>
+</dialog>`)}
+<h3>Menu (reemplaza al dropdown)</h3>
+${ex(`<div style="min-height:17rem">
+<button class="btn-solid theme-secondary" type="button" data-bs-toggle="menu" aria-expanded="false">Opciones</button>
+<div class="menu">
+  <h6 class="menu-header">Mi cuenta</h6>
+  <a class="menu-item" href="#">Perfil</a>
+  <a class="menu-item active" href="#" aria-current="true">Mis trámites</a>
+  <a class="menu-item disabled" aria-disabled="true">Deshabilitado</a>
+  <hr class="menu-divider">
+  <button class="menu-item selected" type="button">Español <span class="cl cl-ok menu-item-check"></span></button>
+  <div class="submenu"><button class="menu-item" type="button">Más opciones</button><div class="menu"><a class="menu-item" href="#">Ayuda</a><a class="menu-item" href="#">Contacto</a></div></div>
+</div></div>`)}
+<h3>Stepper, avatar y chips</h3>
+${ex(`<ol class="stepper stepper-horizontal mb-4">
+  <li class="stepper-item theme-success active">Identificación</li>
+  <li class="stepper-item theme-primary active">Datos personales</li>
+  <li class="stepper-item theme-secondary">Confirmación</li>
+</ol>
+<div class="flex flex-wrap items-center gap-4">
+  <span class="avatar theme-primary">MG</span>
+  <span class="avatar avatar-subtle theme-success avatar-lg">JP</span>
+  <span class="avatar theme-secondary avatar-xl">+5</span>
+  <span class="avatar"><span>CS</span><span class="avatar-status status-online" role="img" aria-label="En línea"></span></span>
+  <div class="avatar-stack"><span class="avatar theme-primary">A</span><span class="avatar theme-accent">B</span><span class="avatar theme-success">C</span></div>
+  <span class="chip">Salud</span>
+  <span class="chip">Educación <button type="button" class="chip-dismiss" aria-label="Quitar"><span class="cl cl-close"></span></button></span>
+</div>`)}
+<h3>Campos: field, switch, check, radio, chips, OTP, fuerza de clave</h3>
+${ex(`<div class="row">
+  <div class="col-md-6">
+    <div class="form-field"><div class="switch"><input type="checkbox" id="nsw" role="switch" switch></div><label for="nsw">Notificaciones por correo</label></div>
+    <div class="form-field"><div class="check"><input type="checkbox" id="nck" checked></div><label for="nck">Acepto los términos</label></div>
+    <div class="form-field"><div class="radio"><input type="radio" name="nr" id="nr1" checked></div><label for="nr1">Persona natural</label></div>
+    <div class="form-field"><div class="radio"><input type="radio" name="nr" id="nr2"></div><label for="nr2">Persona jurídica</label></div>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label" for="otp1">Código de verificación</label>
+    <div class="otp mb-3" data-bs-otp><input type="text" class="otp-input" id="otp1" maxlength="6" aria-label="Código de verificación"></div>
+    <label for="pw1" class="form-label">Clave</label>
+    <input type="password" class="form-control" id="pw1" placeholder="Ingresa tu clave">
+    <div class="strength mt-2" data-bs-strength><div class="strength-segment"></div><div class="strength-segment"></div><div class="strength-segment"></div><div class="strength-segment"></div></div>
+    <span class="strength-text"></span>
+  </div>
+</div>
+<div class="chip-input theme-primary mt-3" data-bs-chips><label class="chip-input-label" for="skills">Temas:</label><span class="chip">Salud</span><input type="text" class="form-ghost" id="skills" placeholder="Agregar…"></div>`)}
+<h3>Combobox y datepicker</h3>
+${ex(`<div class="row" style="min-height:22rem">
+  <div class="col-md-6"><label class="form-label">Región</label>
+    <button class="form-control combobox-toggle" type="button" data-bs-toggle="combobox" data-bs-name="region" data-bs-placeholder="Selecciona una región…"><span class="combobox-value">Selecciona una región…</span><span class="cl cl-m-arrow-down combobox-caret"></span></button>
+    <div class="menu"><button class="menu-item" type="button" data-bs-value="rm">Metropolitana</button><button class="menu-item" type="button" data-bs-value="v">Valparaíso</button><button class="menu-item" type="button" data-bs-value="b">Biobío</button></div>
+  </div>
+  <div class="col-md-6"><label for="dp1" class="form-label">Fecha</label>
+    <input type="text" class="form-control" id="dp1" data-bs-toggle="datepicker" autocomplete="off" placeholder="Elige una fecha…">
+  </div>
+</div>`)}
+<p><small>Las clases <code>btn-solid</code>/<code>btn-subtle</code>/<code>btn-close</code> y <code>theme-*</code> son de Bootstrap 6 y conviven con <code>.btn-primary</code> (Bootstrap 4/gob.cl). El JS se carga como módulo: <code>&lt;script type="module" src="dist/next/bootstrap6.bundle.min.js"&gt;&lt;/script&gt;</code> (requiere servir por http, no <code>file://</code>).</small></p>
+`)}
+
 ${sec('busqueda', 'Búsqueda y toolbar', '', `
 <h3>Buscador</h3>
 ${ex(`<form class="search"><input class="form-control" type="text" placeholder="Buscar trámites, servicios…" aria-label="Buscar"><div class="search-action"><button class="btn" type="submit" aria-label="Buscar"><i class="cl cl-search"></i></button></div></form>`)}
@@ -516,7 +611,7 @@ ${ex(`<div class="row">
 
 ${sec('accesibilidad', 'Accesibilidad', 'Cumple con los lineamientos de la guía de accesibilidad del Estado.', `
 <ul>
-  <li><strong>Alto contraste</strong>: añade la clase <code>a11y-contrast</code> a <code>&lt;html&gt;</code> (o usa el botón de la toolbar). Todos los tokens de color se invierten, igual que en el framework original.</li>
+  <li><strong>Alto contraste</strong>: añade la clase <code>a11y-contrast</code> a <code>&lt;html&gt;</code> (o usa el botón de la toolbar). Aplica el tema oficial del framework original a todos sus componentes. Para utilidades Tailwind y componentes Bootstrap 6 importa además <code>gob-cl-tailwind/contrast-tokens.css</code>.</li>
   <li><strong>Tamaño de texto</strong>: <code>a11y-font-1</code> (20px) y <code>a11y-font-2</code> (24px). Todo el sistema usa <code>rem</code>.</li>
   <li><strong>Foco visible</strong> en todos los elementos interactivos (<code>:focus-visible</code>) y enlace “Saltar al contenido” (<code>.skip-link</code>).</li>
   <li><strong>Movimiento reducido</strong>: se respeta <code>prefers-reduced-motion</code>.</li>
@@ -562,6 +657,7 @@ ${code(`@import "tailwindcss";
   </footer>
   <div class="toast-copy" id="toast" role="status" aria-live="polite"></div>
   <script src="../dist/gob.js"></script>
+  <script type="module" src="../dist/next/bootstrap6.bundle.min.js"></script>
   <script>
     // Filtro y copia de íconos
     (function () {

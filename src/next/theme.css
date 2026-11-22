@@ -1,0 +1,76 @@
+/* gob-cl-tailwind · Reteñido de los componentes de Bootstrap 6 con la identidad gob.cl
+   Todo se expresa con los tokens de gob (--color-*), por lo que el modo alto contraste también aplica. */
+:root,
+.a11y-contrast,
+[data-theme="contrast"] {
+  /* Base */
+  --bs-white: var(--color-white);
+  --bs-black: var(--color-black);
+  --bs-body-font-family: var(--font-sans);
+  --bs-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Escala de grises oficial (025–975) */
+  --bs-gray-025: color-mix(in srgb, var(--color-white) 50%, var(--color-gray-100));
+  --bs-gray-050: var(--color-gray-100);
+  --bs-gray-100: var(--color-gray-200);
+  --bs-gray-200: var(--color-gray-300);
+  --bs-gray-300: var(--color-gray-400);
+  --bs-gray-400: var(--color-gray-500);
+  --bs-gray-500: color-mix(in srgb, var(--color-gray-500) 50%, var(--color-gray-600));
+  --bs-gray-600: var(--color-gray-600);
+  --bs-gray-700: var(--color-gray-700);
+  --bs-gray-800: var(--color-gray-800);
+  --bs-gray-900: var(--color-gray-900);
+  --bs-gray-950: color-mix(in srgb, var(--color-gray-900) 60%, var(--color-black));
+  --bs-gray-975: color-mix(in srgb, var(--color-gray-900) 35%, var(--color-black));
+
+  /* "secondary" en gob.cl es el rojo institucional (en Bootstrap 6 es gris) */
+  --bs-secondary-base: var(--bs-red-500);
+  --bs-secondary-fg: light-dark(var(--bs-red-600), var(--bs-red-400));
+  --bs-secondary-fg-emphasis: light-dark(var(--bs-red-800), var(--bs-red-300));
+  --bs-secondary-bg: var(--bs-red-500);
+  --bs-secondary-bg-subtle: light-dark(var(--bs-red-100), var(--bs-red-900));
+  --bs-secondary-bg-muted: light-dark(var(--bs-red-200), var(--bs-red-800));
+  --bs-secondary-border: light-dark(var(--bs-red-300), var(--bs-red-600));
+  --bs-secondary-contrast: var(--color-white);
+  --bs-secondary-focus-ring: color-mix(in srgb, var(--bs-red-500) 50%, var(--color-white));
+  /* "inverse" = azul oscuro institucional */
+  --bs-inverse-base: var(--color-tertiary);
+  --bs-inverse-bg: var(--color-tertiary);
+  --bs-inverse-contrast: var(--color-white);
+
+  /* Superficies, texto y bordes */
+  --bs-bg-body: var(--color-white);
+  --bs-bg-1: var(--color-gray-100);
+  --bs-bg-2: var(--color-surface-muted);
+  --bs-bg-3: var(--color-gray-200);
+  --bs-bg-4: var(--color-gray-300);
+  --bs-fg-body: var(--color-black);
+  --bs-fg-1: var(--color-gray-900);
+  --bs-fg-2: var(--color-gray-a);
+  --bs-fg-3: var(--color-gray-b);
+  --bs-fg-4: var(--color-gray-500);
+  --bs-border-color: var(--color-gray-300);
+  --bs-border-body: var(--color-gray-300);
+  --bs-border-muted: var(--color-neutral);
+  --bs-border-subtle: var(--color-neutral);
+  --bs-border-emphasized: var(--color-accent);
+  --bs-link-color: var(--color-primary);
+  --bs-link-hover-color: var(--color-tertiary);
+
+  /* Esquinas rectas (gob.cl): todos los radios en 0; solo se conserva la píldora */
+  --bs-radius-0: 0; --bs-radius-1: 0; --bs-radius-2: 0; --bs-radius-3: 0; --bs-radius-4: 0;
+  --bs-radius-5: 0; --bs-radius-6: 0; --bs-radius-7: 0; --bs-radius-8: 0; --bs-radius-9: 0;
+
+  /* Foco: mismo anillo azul que el resto del framework */
+  --bs-focus-ring-width: 3px;
+  --bs-focus-ring-offset: 2px;
+
+  /* Breakpoints de gob.cl */
+  --bs-breakpoint-lg: 992px;
+  --bs-breakpoint-xl: 1200px;
+  --bs-breakpoint-2xl: 1400px;
+}
+
+/* Botón de cierre y controles pequeños: esquinas rectas como el resto del framework */
+.btn-close, .chip-dismiss { border-radius: 0; }

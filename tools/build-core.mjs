@@ -2,7 +2,7 @@
 //  · Conserva el orden exacto de la cascada del original.
 //  · Colores literales -> tokens de Tailwind (var(--color-*)), para que el modo alto contraste y @theme los controlen.
 //  · Íconos de fuente (font-family: gob-cl) -> máscaras CSS.
-//  · Descarta el tema a11y-contrast (se resuelve con variables) y las reglas del icon-font.
+//  · Descarta solo las reglas del icon-font (se reemplazan por máscaras).
 // Uso: node tools/build-core.mjs
 import { writeFileSync, mkdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -59,7 +59,7 @@ const drop = (why) => { stats.dropped[why] = (stats.dropped[why] || 0) + 1; retu
 const sel = (n) => (n.type === 'rule' ? n.selector : '')
 
 const FILES = {
-  base: [], components: [], bsutil: [], fonts: [],
+  base: [], components: [], bsutil: [], fonts: [], contrast: [],
 }
 
 const isElementOnly = (selector) => selector.split(',').every((p) => !/[.#\[]/.test(p.replace(/::?[\w-]+(\([^)]*\))?/g, '')))
@@ -69,7 +69,7 @@ const classify = (e) => {
   const g = e.group
   if (e.node.type === 'atrule' && e.node.name === 'font-face') return drop('font-face')
   if (g === 'icons/_gob-cl.scss') return drop('icon-font')
-  if (/a11y-contrast|a11y-contarst/.test(s) || g.startsWith('themes/a11y-contrast')) return drop('a11y-contrast (variables)')
+  if (/a11y-contrast|a11y-contarst/.test(s) || g.startsWith('themes/a11y-contrast')) return 'contrast'
   if (/a11y-font/.test(s) || g.startsWith('themes/a11y-fonts')) return 'fonts'
   if (g.startsWith('bootstrap/utilities') || g === 'bootstrap/_print.scss') return 'bsutil'
   if (/^bootstrap\/_(root|reboot|images|code|type)\.scss$/.test(g)) return 'base'
@@ -145,7 +145,7 @@ for (const e of entries) {
     node = transformRule(node)
     if (!node) { drop('typo-iconfont'); continue }
   } else node = node.clone()
-  tokenizeNode(node)
+  if (key !== 'contrast') tokenizeNode(node) // el tema de contraste ya trae valores invertidos literales: no se tokeniza
   emit(key, e, node)
 }
 
@@ -172,5 +172,6 @@ const out = (f, s) => { writeFileSync(join(root, 'src/core', f), s); console.log
 out('reboot.css', render(FILES.base, 'base', 'Bootstrap 4 reboot + tipografía base (con la personalización de gob.cl)'))
 out('components.css', render(FILES.components, 'components', 'Bootstrap 4 + gob.cl: grid, formularios, botones, navbar, cards, secciones, footer, etc. (en el orden de cascada original)'))
 out('utilities-bootstrap.css', render(FILES.bsutil, 'utilities', 'Utilidades de Bootstrap 4 (spacing, display, flex, text, etc.)'))
+out('a11y-contrast.css', render(FILES.contrast, 'components', 'Tema de alto contraste (html.a11y-contrast) del framework original'))
 out('a11y-fonts.css', render(FILES.fonts, 'components', 'Modo de fuentes accesibles (html.a11y-font-1/2): re-flujo de grilla'))
 console.log('reglas conservadas', stats.kept, '· descartadas', JSON.stringify(stats.dropped))

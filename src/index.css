@@ -9,5 +9,6 @@
 @import "./theme.css";
 @import "./core/reboot.css";
 @import "./core/components.css";
+@import "./core/a11y-contrast.css";
 @import "./icons.generated.css";
 @import "./extras.css";

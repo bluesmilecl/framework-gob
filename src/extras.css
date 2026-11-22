@@ -59,11 +59,4 @@
   }
   .accordion-gob .accordion-button[aria-expanded="true"]::after { transform: rotate(180deg); }
   .accordion-gob .accordion-body { padding: 0 0.5rem 1rem; }
-
-  /* Modo alto contraste: texto legible sobre el color base del botón */
-  @supports (color: oklch(from red l c h)) {
-    :root.a11y-contrast .btn:is(.btn-primary, .btn-secondary, .btn-tertiary, .btn-success, .btn-info, .btn-warning, .btn-danger, .btn-light, .btn-dark, .btn-accent, .btn-neutral) {
-      color: oklch(from var(--color-white) calc(1 - l) 0 0);
-    }
-  }
 }

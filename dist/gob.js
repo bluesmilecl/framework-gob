@@ -34,10 +34,10 @@ var Gob = (() => {
   var FONT_CLASSES = ["a11y-font-0", "a11y-font-1", "a11y-font-2"];
   var FONT_SIZES = ["16px", "20px", "24px"];
   var attr = (el, name) => {
-    var _a, _b;
-    return (_b = (_a = el.getAttribute(`data-gob-${name}`)) != null ? _a : el.getAttribute(`data-${name}`)) != null ? _b : el.getAttribute(`data-bs-${name}`);
+    var _a;
+    return (_a = el.getAttribute(`data-gob-${name}`)) != null ? _a : el.getAttribute(`data-${name}`);
   };
-  var sel = (name) => `[data-gob-${name}],[data-${name}],[data-bs-${name}]`;
+  var sel = (name) => `[data-gob-${name}],[data-${name}]`;
   var emit = (el, name, detail) => el.dispatchEvent(new CustomEvent(`gob:${name}`, { bubbles: true, detail }));
   var storage = {
     get: (k) => {

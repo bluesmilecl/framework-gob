@@ -32,7 +32,10 @@
     },
     "./dist/*": "./dist/*",
     "./icons/*": "./icons/*",
-    "./icons.json": "./dist/icons.json"
+    "./icons.json": "./dist/icons.json",
+    "./next.css": "./src/next.css",
+    "./next/js": "./dist/next/bootstrap6.bundle.min.js",
+    "./contrast-tokens.css": "./src/contrast-tokens.css"
   },
   "sideEffects": [
     "*.css",
@@ -45,9 +48,10 @@
     "build:css": "tailwindcss -i src/dist-entry.css -o dist/gob.css && tailwindcss -i src/dist-entry.css -o dist/gob.min.css --minify",
     "build:js": "node scripts/build-js.mjs",
     "build:docs": "node scripts/build-docs.mjs",
-    "build": "npm run build:icons && npm run build:fonts && npm run build:js && npm run build:docs && npm run build:css",
+    "build": "npm run build:icons && npm run build:fonts && npm run build:js && npm run build:next && npm run build:docs && npm run build:css",
     "prepublishOnly": "npm run build",
-    "build:core": "node tools/build-core.mjs"
+    "build:core": "node tools/build-core.mjs",
+    "build:next": "node tools/build-next.mjs && tailwindcss -i src/next.css -o dist/gob-next.css --minify"
   },
   "keywords": [
     "gob.cl",
@@ -71,6 +75,7 @@
     "@fontsource/roboto-slab": "^5.1.0",
     "@gobdigital-cl/gob.cl": "^3.0.10",
     "@tailwindcss/cli": "^4.1.0",
+    "bootstrap-next": "npm:bootstrap@^6.0.0-alpha.1",
     "esbuild": "^0.25.0",
     "lucide-static": "^0.468.0",
     "postcss": "^8.5.33",

@@ -8,6 +8,7 @@
   <link rel="icon" href="img/gob-icon.svg">
   <link rel="stylesheet" href="../dist/fonts.css">
   <link rel="stylesheet" href="../dist/gob.css">
+  <link rel="stylesheet" href="../dist/gob-next.css">
   <style>
     .doc-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; padding-block: 1.5rem; }
     .doc-side nav { display: flex; flex-wrap: wrap; gap: .25rem; }
@@ -105,7 +106,7 @@
   <div class="container">
     <div class="doc-layout">
       <aside class="doc-side" aria-label="Navegación de la documentación">
-        <nav><a href="#inicio">Comenzando</a><a href="#instalacion">Instalación</a><a href="#colores">Colores</a><a href="#tipografia">Tipografía</a><a href="#iconos">Íconos</a><a href="#botones">Botones</a><a href="#tags">Tags</a><a href="#alertas">Alertas y banners</a><a href="#cards">Cards</a><a href="#navegacion">Navegación</a><a href="#colapsables">Colapsables</a><a href="#formularios">Formularios</a><a href="#busqueda">Búsqueda y toolbar</a><a href="#componentes">Tablas, listas y modal</a><a href="#footer">Footer</a><a href="#accesibilidad">Accesibilidad</a><a href="#migracion">Migrar desde Bootstrap 4</a></nav>
+        <nav><a href="#inicio">Comenzando</a><a href="#instalacion">Instalación</a><a href="#colores">Colores</a><a href="#tipografia">Tipografía</a><a href="#iconos">Íconos</a><a href="#botones">Botones</a><a href="#tags">Tags</a><a href="#alertas">Alertas y banners</a><a href="#cards">Cards</a><a href="#navegacion">Navegación</a><a href="#colapsables">Colapsables</a><a href="#formularios">Formularios</a><a href="#nuevos">Componentes nuevos (BS6)</a><a href="#busqueda">Búsqueda y toolbar</a><a href="#componentes">Tablas, listas y modal</a><a href="#footer">Footer</a><a href="#accesibilidad">Accesibilidad</a><a href="#migracion">Migrar desde Bootstrap 4</a></nav>
       </aside>
 
       <main id="contenido" style="min-height:0;padding-bottom:3rem">
@@ -129,23 +130,33 @@
   
 <h3>1 · Proyecto con Tailwind CSS 4 (recomendado)</h3>
 <pre class="code-block"><code>npm install tailwindcss @tailwindcss/vite gob-cl-tailwind</code></pre>
-<pre class="code-block"><code>/* app.css */
-@import "tailwindcss";
+<pre class="code-block"><code>/* app.css — sin preflight: el reboot de Bootstrap ya viene en el core de gob.cl */
+@import "tailwindcss/theme.css" layer(theme);
 @import "gob-cl-tailwind/fonts.css";   /* Roboto + Roboto Slab auto-alojadas */
-@import "gob-cl-tailwind";             /* tokens + componentes + íconos */
-@import "gob-cl-tailwind/compat.css";  /* (opcional) grid .row/.col-* y d-* de Bootstrap 4 */</code></pre>
+@import "gob-cl-tailwind";             /* tokens + core Bootstrap 4/gob.cl + íconos */
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Opcionales */
+@import "gob-cl-tailwind/compat.css";  /* utilidades Bootstrap 4 (m-*, p-*, d-*, flex…) + modo a11y-fonts */
+@import "gob-cl-tailwind/next.css";    /* componentes nuevos de Bootstrap 6 (alpha) con identidad gob.cl */</code></pre>
 <pre class="code-block"><code>// main.js
-import "gob-cl-tailwind/js";   // activa colapsables, dropdown, tabs, modal, toolbar…</code></pre>
-<p>Con esto tienes <code>bg-primary</code>, <code>text-tertiary</code>, <code>border-accent</code>, <code>font-slab</code>, <code>md:flex</code>… más todas las clases de componentes.</p>
+import "gob-cl-tailwind/js";        // colapsables, dropdown, tabs, modal, toolbar (data-toggle de Bootstrap 4)
+import "gob-cl-tailwind/next/js";   // opcional: dialog, drawer, menu, combobox… (data-bs-toggle de Bootstrap 6)</code></pre>
+<p>Con esto tienes <code>bg-primary</code>, <code>text-tertiary</code>, <code>border-accent</code>, <code>font-slab</code>, <code>md:</code>… y todas las clases del framework original. Los componentes viven en <code>@layer components</code>, así que una utilidad de Tailwind siempre los puede sobrescribir (<code>btn btn-primary p-2</code>).</p>
 
 <h3>2 · CSS precompilado (sin build)</h3>
 <pre class="code-block"><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@4.0.0/dist/fonts.css"&gt;
 &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@4.0.0/dist/gob.min.css"&gt;
-&lt;script src="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@4.0.0/dist/gob.min.js" defer&gt;&lt;/script&gt;</code></pre>
+&lt;!-- opcional: componentes nuevos de Bootstrap 6 --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@4.0.0/dist/gob-next.css"&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@4.0.0/dist/gob.min.js" defer&gt;&lt;/script&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/gob-cl-tailwind@4.0.0/dist/next/bootstrap6.bundle.min.js"&gt;&lt;/script&gt;</code></pre>
+<p><code>dist/gob.min.css</code> es un reemplazo directo de <code>gob.cl.css</code>: el HTML oficial funciona sin cambios.</p>
 
 <h3>3 · Desde el repositorio</h3>
 <pre class="code-block"><code>npm install
-npm run build      # genera dist/ (CSS, JS, fuentes, íconos, docs)</code></pre>
+npm run build      # genera dist/ (CSS, JS, fuentes, íconos, docs)
+npm run build:core # regenera src/core desde el CSS oficial (tools/build-core.mjs)</code></pre>
 
 <h3>Plantilla inicial</h3>
 <pre class="code-block"><code>&lt;!doctype html&gt;
@@ -714,6 +725,163 @@ npm run build      # genera dist/ (CSS, JS, fuentes, íconos, docs)</code></pre>
 </section>
 
 
+<section id="nuevos" class="doc-section">
+  <h2 class="line line-primary doc-h2">Componentes nuevos (Bootstrap 6)</h2>
+  <p class="doc-lead">Capa opcional con los componentes nuevos de <strong>Bootstrap 6</strong> (<code>6.0.0-alpha.1</code>, pre-lanzamiento), reteñidos con la paleta oficial y esquinas rectas. Solo incluye clases sin equivalente en Bootstrap 4/gob.cl, por lo que no altera el core verificado. Requiere <code>gob-cl-tailwind/next.css</code> y el módulo JS <code>dist/next/bootstrap6.bundle.min.js</code> (atributos <code>data-bs-*</code>).</p>
+  
+<h3>Botones nuevos y tema</h3>
+<div class="ex "><div class="ex-preview "><div class="flex flex-wrap gap-2">
+  <button class="btn-solid theme-primary">Primary</button>
+  <button class="btn-solid theme-secondary">Secondary</button>
+  <button class="btn-solid theme-success">Success</button>
+  <button class="btn-solid theme-warning">Warning</button>
+  <button class="btn-solid theme-danger">Danger</button>
+  <button class="btn-subtle theme-primary">Subtle</button>
+  <button class="btn-solid theme-inverse">Inverse</button>
+</div></div><details class="ex-code"><summary>Ver código</summary><pre><code>&lt;div class="flex flex-wrap gap-2"&gt;
+  &lt;button class="btn-solid theme-primary"&gt;Primary&lt;/button&gt;
+  &lt;button class="btn-solid theme-secondary"&gt;Secondary&lt;/button&gt;
+  &lt;button class="btn-solid theme-success"&gt;Success&lt;/button&gt;
+  &lt;button class="btn-solid theme-warning"&gt;Warning&lt;/button&gt;
+  &lt;button class="btn-solid theme-danger"&gt;Danger&lt;/button&gt;
+  &lt;button class="btn-subtle theme-primary"&gt;Subtle&lt;/button&gt;
+  &lt;button class="btn-solid theme-inverse"&gt;Inverse&lt;/button&gt;
+&lt;/div&gt;</code></pre></details></div>
+<h3>Dialog y Drawer (elemento nativo &lt;dialog&gt;)</h3>
+<div class="ex "><div class="ex-preview "><div class="flex flex-wrap gap-2">
+  <button type="button" class="btn-solid theme-primary" data-bs-toggle="dialog" data-bs-target="#dlgDemo">Abrir dialog</button>
+  <button type="button" class="btn-subtle theme-primary" data-bs-toggle="drawer" data-bs-target="#drwDemo" aria-controls="drwDemo">Abrir drawer</button>
+</div>
+<dialog class="dialog" id="dlgDemo" aria-labelledby="dlgTitle">
+  <div class="dialog-header"><h1 class="dialog-title" id="dlgTitle">Confirmar trámite</h1><button type="button" class="btn-close" data-bs-dismiss="dialog" aria-label="Cerrar"></button></div>
+  <div class="dialog-body"><p>Usa el elemento <code>&lt;dialog&gt;</code> del navegador: foco, ESC y accesibilidad nativos.</p></div>
+  <div class="dialog-footer"><button type="button" class="btn-solid theme-secondary" data-bs-dismiss="dialog">Cancelar</button><button type="button" class="btn-solid theme-primary" data-bs-dismiss="dialog">Continuar</button></div>
+</dialog>
+<dialog class="drawer drawer-end" tabindex="-1" id="drwDemo" aria-labelledby="drwTitle">
+  <div class="drawer-header"><h5 class="drawer-title" id="drwTitle">Filtros</h5><button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Cerrar"></button></div>
+  <div class="drawer-body"><p>Panel lateral (también <code>drawer-start</code>, <code>drawer-top</code>, <code>drawer-bottom</code>).</p></div>
+  <div class="drawer-footer"><button type="button" class="btn-solid theme-primary" data-bs-dismiss="drawer">Aplicar</button></div>
+</dialog></div><details class="ex-code"><summary>Ver código</summary><pre><code>&lt;div class="flex flex-wrap gap-2"&gt;
+  &lt;button type="button" class="btn-solid theme-primary" data-bs-toggle="dialog" data-bs-target="#dlgDemo"&gt;Abrir dialog&lt;/button&gt;
+  &lt;button type="button" class="btn-subtle theme-primary" data-bs-toggle="drawer" data-bs-target="#drwDemo" aria-controls="drwDemo"&gt;Abrir drawer&lt;/button&gt;
+&lt;/div&gt;
+&lt;dialog class="dialog" id="dlgDemo" aria-labelledby="dlgTitle"&gt;
+  &lt;div class="dialog-header"&gt;&lt;h1 class="dialog-title" id="dlgTitle"&gt;Confirmar trámite&lt;/h1&gt;&lt;button type="button" class="btn-close" data-bs-dismiss="dialog" aria-label="Cerrar"&gt;&lt;/button&gt;&lt;/div&gt;
+  &lt;div class="dialog-body"&gt;&lt;p&gt;Usa el elemento &lt;code&gt;&amp;lt;dialog&amp;gt;&lt;/code&gt; del navegador: foco, ESC y accesibilidad nativos.&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="dialog-footer"&gt;&lt;button type="button" class="btn-solid theme-secondary" data-bs-dismiss="dialog"&gt;Cancelar&lt;/button&gt;&lt;button type="button" class="btn-solid theme-primary" data-bs-dismiss="dialog"&gt;Continuar&lt;/button&gt;&lt;/div&gt;
+&lt;/dialog&gt;
+&lt;dialog class="drawer drawer-end" tabindex="-1" id="drwDemo" aria-labelledby="drwTitle"&gt;
+  &lt;div class="drawer-header"&gt;&lt;h5 class="drawer-title" id="drwTitle"&gt;Filtros&lt;/h5&gt;&lt;button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Cerrar"&gt;&lt;/button&gt;&lt;/div&gt;
+  &lt;div class="drawer-body"&gt;&lt;p&gt;Panel lateral (también &lt;code&gt;drawer-start&lt;/code&gt;, &lt;code&gt;drawer-top&lt;/code&gt;, &lt;code&gt;drawer-bottom&lt;/code&gt;).&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="drawer-footer"&gt;&lt;button type="button" class="btn-solid theme-primary" data-bs-dismiss="drawer"&gt;Aplicar&lt;/button&gt;&lt;/div&gt;
+&lt;/dialog&gt;</code></pre></details></div>
+<h3>Menu (reemplaza al dropdown)</h3>
+<div class="ex "><div class="ex-preview "><div style="min-height:17rem">
+<button class="btn-solid theme-secondary" type="button" data-bs-toggle="menu" aria-expanded="false">Opciones</button>
+<div class="menu">
+  <h6 class="menu-header">Mi cuenta</h6>
+  <a class="menu-item" href="#">Perfil</a>
+  <a class="menu-item active" href="#" aria-current="true">Mis trámites</a>
+  <a class="menu-item disabled" aria-disabled="true">Deshabilitado</a>
+  <hr class="menu-divider">
+  <button class="menu-item selected" type="button">Español <span class="cl cl-ok menu-item-check"></span></button>
+  <div class="submenu"><button class="menu-item" type="button">Más opciones</button><div class="menu"><a class="menu-item" href="#">Ayuda</a><a class="menu-item" href="#">Contacto</a></div></div>
+</div></div></div><details class="ex-code"><summary>Ver código</summary><pre><code>&lt;div style="min-height:17rem"&gt;
+&lt;button class="btn-solid theme-secondary" type="button" data-bs-toggle="menu" aria-expanded="false"&gt;Opciones&lt;/button&gt;
+&lt;div class="menu"&gt;
+  &lt;h6 class="menu-header"&gt;Mi cuenta&lt;/h6&gt;
+  &lt;a class="menu-item" href="#"&gt;Perfil&lt;/a&gt;
+  &lt;a class="menu-item active" href="#" aria-current="true"&gt;Mis trámites&lt;/a&gt;
+  &lt;a class="menu-item disabled" aria-disabled="true"&gt;Deshabilitado&lt;/a&gt;
+  &lt;hr class="menu-divider"&gt;
+  &lt;button class="menu-item selected" type="button"&gt;Español &lt;span class="cl cl-ok menu-item-check"&gt;&lt;/span&gt;&lt;/button&gt;
+  &lt;div class="submenu"&gt;&lt;button class="menu-item" type="button"&gt;Más opciones&lt;/button&gt;&lt;div class="menu"&gt;&lt;a class="menu-item" href="#"&gt;Ayuda&lt;/a&gt;&lt;a class="menu-item" href="#"&gt;Contacto&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;</code></pre></details></div>
+<h3>Stepper, avatar y chips</h3>
+<div class="ex "><div class="ex-preview "><ol class="stepper stepper-horizontal mb-4">
+  <li class="stepper-item theme-success active">Identificación</li>
+  <li class="stepper-item theme-primary active">Datos personales</li>
+  <li class="stepper-item theme-secondary">Confirmación</li>
+</ol>
+<div class="flex flex-wrap items-center gap-4">
+  <span class="avatar theme-primary">MG</span>
+  <span class="avatar avatar-subtle theme-success avatar-lg">JP</span>
+  <span class="avatar theme-secondary avatar-xl">+5</span>
+  <span class="avatar"><span>CS</span><span class="avatar-status status-online" role="img" aria-label="En línea"></span></span>
+  <div class="avatar-stack"><span class="avatar theme-primary">A</span><span class="avatar theme-accent">B</span><span class="avatar theme-success">C</span></div>
+  <span class="chip">Salud</span>
+  <span class="chip">Educación <button type="button" class="chip-dismiss" aria-label="Quitar"><span class="cl cl-close"></span></button></span>
+</div></div><details class="ex-code"><summary>Ver código</summary><pre><code>&lt;ol class="stepper stepper-horizontal mb-4"&gt;
+  &lt;li class="stepper-item theme-success active"&gt;Identificación&lt;/li&gt;
+  &lt;li class="stepper-item theme-primary active"&gt;Datos personales&lt;/li&gt;
+  &lt;li class="stepper-item theme-secondary"&gt;Confirmación&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="flex flex-wrap items-center gap-4"&gt;
+  &lt;span class="avatar theme-primary"&gt;MG&lt;/span&gt;
+  &lt;span class="avatar avatar-subtle theme-success avatar-lg"&gt;JP&lt;/span&gt;
+  &lt;span class="avatar theme-secondary avatar-xl"&gt;+5&lt;/span&gt;
+  &lt;span class="avatar"&gt;&lt;span&gt;CS&lt;/span&gt;&lt;span class="avatar-status status-online" role="img" aria-label="En línea"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;div class="avatar-stack"&gt;&lt;span class="avatar theme-primary"&gt;A&lt;/span&gt;&lt;span class="avatar theme-accent"&gt;B&lt;/span&gt;&lt;span class="avatar theme-success"&gt;C&lt;/span&gt;&lt;/div&gt;
+  &lt;span class="chip"&gt;Salud&lt;/span&gt;
+  &lt;span class="chip"&gt;Educación &lt;button type="button" class="chip-dismiss" aria-label="Quitar"&gt;&lt;span class="cl cl-close"&gt;&lt;/span&gt;&lt;/button&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre></details></div>
+<h3>Campos: field, switch, check, radio, chips, OTP, fuerza de clave</h3>
+<div class="ex "><div class="ex-preview "><div class="row">
+  <div class="col-md-6">
+    <div class="form-field"><div class="switch"><input type="checkbox" id="nsw" role="switch" switch></div><label for="nsw">Notificaciones por correo</label></div>
+    <div class="form-field"><div class="check"><input type="checkbox" id="nck" checked></div><label for="nck">Acepto los términos</label></div>
+    <div class="form-field"><div class="radio"><input type="radio" name="nr" id="nr1" checked></div><label for="nr1">Persona natural</label></div>
+    <div class="form-field"><div class="radio"><input type="radio" name="nr" id="nr2"></div><label for="nr2">Persona jurídica</label></div>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label" for="otp1">Código de verificación</label>
+    <div class="otp mb-3" data-bs-otp><input type="text" class="otp-input" id="otp1" maxlength="6" aria-label="Código de verificación"></div>
+    <label for="pw1" class="form-label">Clave</label>
+    <input type="password" class="form-control" id="pw1" placeholder="Ingresa tu clave">
+    <div class="strength mt-2" data-bs-strength><div class="strength-segment"></div><div class="strength-segment"></div><div class="strength-segment"></div><div class="strength-segment"></div></div>
+    <span class="strength-text"></span>
+  </div>
+</div>
+<div class="chip-input theme-primary mt-3" data-bs-chips><label class="chip-input-label" for="skills">Temas:</label><span class="chip">Salud</span><input type="text" class="form-ghost" id="skills" placeholder="Agregar…"></div></div><details class="ex-code"><summary>Ver código</summary><pre><code>&lt;div class="row"&gt;
+  &lt;div class="col-md-6"&gt;
+    &lt;div class="form-field"&gt;&lt;div class="switch"&gt;&lt;input type="checkbox" id="nsw" role="switch" switch&gt;&lt;/div&gt;&lt;label for="nsw"&gt;Notificaciones por correo&lt;/label&gt;&lt;/div&gt;
+    &lt;div class="form-field"&gt;&lt;div class="check"&gt;&lt;input type="checkbox" id="nck" checked&gt;&lt;/div&gt;&lt;label for="nck"&gt;Acepto los términos&lt;/label&gt;&lt;/div&gt;
+    &lt;div class="form-field"&gt;&lt;div class="radio"&gt;&lt;input type="radio" name="nr" id="nr1" checked&gt;&lt;/div&gt;&lt;label for="nr1"&gt;Persona natural&lt;/label&gt;&lt;/div&gt;
+    &lt;div class="form-field"&gt;&lt;div class="radio"&gt;&lt;input type="radio" name="nr" id="nr2"&gt;&lt;/div&gt;&lt;label for="nr2"&gt;Persona jurídica&lt;/label&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-6"&gt;
+    &lt;label class="form-label" for="otp1"&gt;Código de verificación&lt;/label&gt;
+    &lt;div class="otp mb-3" data-bs-otp&gt;&lt;input type="text" class="otp-input" id="otp1" maxlength="6" aria-label="Código de verificación"&gt;&lt;/div&gt;
+    &lt;label for="pw1" class="form-label"&gt;Clave&lt;/label&gt;
+    &lt;input type="password" class="form-control" id="pw1" placeholder="Ingresa tu clave"&gt;
+    &lt;div class="strength mt-2" data-bs-strength&gt;&lt;div class="strength-segment"&gt;&lt;/div&gt;&lt;div class="strength-segment"&gt;&lt;/div&gt;&lt;div class="strength-segment"&gt;&lt;/div&gt;&lt;div class="strength-segment"&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;span class="strength-text"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="chip-input theme-primary mt-3" data-bs-chips&gt;&lt;label class="chip-input-label" for="skills"&gt;Temas:&lt;/label&gt;&lt;span class="chip"&gt;Salud&lt;/span&gt;&lt;input type="text" class="form-ghost" id="skills" placeholder="Agregar…"&gt;&lt;/div&gt;</code></pre></details></div>
+<h3>Combobox y datepicker</h3>
+<div class="ex "><div class="ex-preview "><div class="row" style="min-height:22rem">
+  <div class="col-md-6"><label class="form-label">Región</label>
+    <button class="form-control combobox-toggle" type="button" data-bs-toggle="combobox" data-bs-name="region" data-bs-placeholder="Selecciona una región…"><span class="combobox-value">Selecciona una región…</span><span class="cl cl-m-arrow-down combobox-caret"></span></button>
+    <div class="menu"><button class="menu-item" type="button" data-bs-value="rm">Metropolitana</button><button class="menu-item" type="button" data-bs-value="v">Valparaíso</button><button class="menu-item" type="button" data-bs-value="b">Biobío</button></div>
+  </div>
+  <div class="col-md-6"><label for="dp1" class="form-label">Fecha</label>
+    <input type="text" class="form-control" id="dp1" data-bs-toggle="datepicker" autocomplete="off" placeholder="Elige una fecha…">
+  </div>
+</div></div><details class="ex-code"><summary>Ver código</summary><pre><code>&lt;div class="row" style="min-height:22rem"&gt;
+  &lt;div class="col-md-6"&gt;&lt;label class="form-label"&gt;Región&lt;/label&gt;
+    &lt;button class="form-control combobox-toggle" type="button" data-bs-toggle="combobox" data-bs-name="region" data-bs-placeholder="Selecciona una región…"&gt;&lt;span class="combobox-value"&gt;Selecciona una región…&lt;/span&gt;&lt;span class="cl cl-m-arrow-down combobox-caret"&gt;&lt;/span&gt;&lt;/button&gt;
+    &lt;div class="menu"&gt;&lt;button class="menu-item" type="button" data-bs-value="rm"&gt;Metropolitana&lt;/button&gt;&lt;button class="menu-item" type="button" data-bs-value="v"&gt;Valparaíso&lt;/button&gt;&lt;button class="menu-item" type="button" data-bs-value="b"&gt;Biobío&lt;/button&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-6"&gt;&lt;label for="dp1" class="form-label"&gt;Fecha&lt;/label&gt;
+    &lt;input type="text" class="form-control" id="dp1" data-bs-toggle="datepicker" autocomplete="off" placeholder="Elige una fecha…"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></details></div>
+<p><small>Las clases <code>btn-solid</code>/<code>btn-subtle</code>/<code>btn-close</code> y <code>theme-*</code> son de Bootstrap 6 y conviven con <code>.btn-primary</code> (Bootstrap 4/gob.cl). El JS se carga como módulo: <code>&lt;script type="module" src="dist/next/bootstrap6.bundle.min.js"&gt;&lt;/script&gt;</code> (requiere servir por http, no <code>file://</code>).</small></p>
+
+</section>
+
+
 <section id="busqueda" class="doc-section">
   <h2 class="line line-primary doc-h2">Búsqueda y toolbar</h2>
   
@@ -814,7 +982,7 @@ npm run build      # genera dist/ (CSS, JS, fuentes, íconos, docs)</code></pre>
   <p class="doc-lead">Cumple con los lineamientos de la guía de accesibilidad del Estado.</p>
   
 <ul>
-  <li><strong>Alto contraste</strong>: añade la clase <code>a11y-contrast</code> a <code>&lt;html&gt;</code> (o usa el botón de la toolbar). Todos los tokens de color se invierten, igual que en el framework original.</li>
+  <li><strong>Alto contraste</strong>: añade la clase <code>a11y-contrast</code> a <code>&lt;html&gt;</code> (o usa el botón de la toolbar). Aplica el tema oficial del framework original a todos sus componentes. Para utilidades Tailwind y componentes Bootstrap 6 importa además <code>gob-cl-tailwind/contrast-tokens.css</code>.</li>
   <li><strong>Tamaño de texto</strong>: <code>a11y-font-1</code> (20px) y <code>a11y-font-2</code> (24px). Todo el sistema usa <code>rem</code>.</li>
   <li><strong>Foco visible</strong> en todos los elementos interactivos (<code>:focus-visible</code>) y enlace “Saltar al contenido” (<code>.skip-link</code>).</li>
   <li><strong>Movimiento reducido</strong>: se respeta <code>prefers-reduced-motion</code>.</li>
@@ -866,6 +1034,7 @@ npm run build      # genera dist/ (CSS, JS, fuentes, íconos, docs)</code></pre>
   </footer>
   <div class="toast-copy" id="toast" role="status" aria-live="polite"></div>
   <script src="../dist/gob.js"></script>
+  <script type="module" src="../dist/next/bootstrap6.bundle.min.js"></script>
   <script>
     // Filtro y copia de íconos
     (function () {
