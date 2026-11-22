@@ -1,0 +1,8 @@
+/*!
+ * gob-cl-tailwind · "next": componentes nuevos de Bootstrap 6 (alpha) con identidad gob.cl.
+ * Requiere el tema base (define --color-*):
+ *   @import "gob-cl-tailwind";
+ *   @import "gob-cl-tailwind/next.css";
+ */
+@import "./next/components.css";
+@import "./next/theme.css";

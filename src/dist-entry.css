@@ -1,10 +1,8 @@
-/* Entrada para el CSS precompilado (dist/gob.css): Tailwind 4 + gob.cl + utilidades de marca */
-@import "tailwindcss";
+/* CSS precompilado (dist/gob.css): drop-in para el HTML oficial de gob.cl (sin preflight; el reboot de Bootstrap ya viene) */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
 @import "./index.css";
 @import "./compat.css";
+@import "tailwindcss/utilities.css" layer(utilities);
 
-/* Utilidades de color de marca siempre disponibles en el CSS precompilado */
 @source inline("{bg,text,border,fill,stroke,outline,ring,from,to}-{primary,secondary,tertiary,accent,neutral,success,info,warning,danger,light,dark,white,black,transparent,gray-a,gray-b,gray-c}");
-@source inline("{bg,text,border}-{gray-100,gray-200,gray-300,gray-400,gray-500,gray-600,gray-700,gray-800,gray-900,blue,blue-light,blue-dark,red,orange,yellow,green}");
-@source inline("{hover:,focus:}{bg,text,border}-{primary,secondary,tertiary}");
-@source "../docs";

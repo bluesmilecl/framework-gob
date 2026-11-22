@@ -1,0 +1,62 @@
+/* gob-cl-tailwind · Extras propios (no vienen del framework original) */
+
+/* Tailwind trae utilidades con el mismo nombre que clases de Bootstrap/gob.cl: se redefinen para conservar el significado original. */
+@utility container {
+  /* Solo neutraliza los max-width del `container` de Tailwind (375/576/…): el padding, margen y anchos
+     reales (540/720/960/1140) los define el core de Bootstrap en @layer components. */
+  width: 100%;
+  @media (min-width: 375px)  { max-width: none; }
+  @media (min-width: 576px)  { max-width: 540px; }
+  @media (min-width: 768px)  { max-width: 720px; }
+  @media (min-width: 992px)  { max-width: 960px; }
+  @media (min-width: 1200px) { max-width: 1140px; }
+}
+/* `.collapse` = "oculto hasta .show" (Bootstrap). La utilidad de Tailwind (visibility: collapse) se neutraliza; usa `invisible`. */
+@utility collapse {
+  visibility: visible;
+}
+
+@layer base {
+  html.a11y-font-1 { font-size: 20px; }
+  html.a11y-font-2 { font-size: 24px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  /* Foco visible accesible */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-primary) 55%, transparent);
+    outline-offset: 2px;
+  }
+  /* Compatibilidad si el proyecto carga el preflight de Tailwind: se restaura el reboot de Bootstrap */
+  img { display: inline; vertical-align: middle; }
+  svg { vertical-align: middle; }
+}
+
+@layer components {
+  .skip-link {
+    position: absolute; top: 0; left: 0; z-index: 2000; padding: 0.75rem 1rem;
+    color: #fff; background: var(--color-tertiary); transform: translateY(-120%);
+  }
+  .skip-link:focus { transform: none; color: #fff; }
+
+  /* Animaciones de íconos */
+  .cl-spin { animation: gob-spin 1s linear infinite; }
+  .cl-rotate-90 { transform: rotate(90deg); } .cl-rotate-180 { transform: rotate(180deg); } .cl-rotate-270 { transform: rotate(270deg); }
+  .cl-flip-x { transform: scaleX(-1); }
+  @keyframes gob-spin { to { transform: rotate(360deg); } }
+
+  /* Acordeón con caja (extra) */
+  .accordion-gob { border-top: 1px solid var(--color-accent); }
+  .accordion-gob > .accordion-item { border-bottom: 1px solid var(--color-accent); }
+  .accordion-gob .accordion-button {
+    display: flex; width: 100%; align-items: center; justify-content: space-between; padding: 1rem 0.5rem;
+    font-family: var(--font-slab); font-size: 1.125rem; color: var(--color-tertiary); text-align: left; background: transparent; border: 0; cursor: pointer;
+  }
+  .accordion-gob .accordion-button::after {
+    width: 1rem; height: 1rem; content: ""; background-color: currentColor; transition: transform 0.3s ease;
+    -webkit-mask: var(--cl-icon-m-arrow-down) no-repeat center / contain; mask: var(--cl-icon-m-arrow-down) no-repeat center / contain;
+  }
+  .accordion-gob .accordion-button[aria-expanded="true"]::after { transform: rotate(180deg); }
+  .accordion-gob .accordion-body { padding: 0 0.5rem 1rem; }
+}
