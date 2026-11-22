@@ -10,6 +10,7 @@ import { Formularios, Nuevos } from './sections/Forms.jsx'
 import { Componentes, FooterDoc, Accesibilidad, Migracion } from './sections/Misc.jsx'
 import ChatIA from './sections/ChatIA.jsx'
 import ReactLib from './sections/ReactLib.jsx'
+import Agentes from './sections/Agentes.jsx'
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
             <FooterDoc />
             <ReactLib />
             <ChatIA />
+            <Agentes />
             <Accesibilidad />
             <Migracion />
           </main>

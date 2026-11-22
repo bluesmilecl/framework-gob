@@ -131,6 +131,16 @@ Interfaz de conversación con IA lista para usar, con la identidad gob.cl (sideb
 - **Proveedores intercambiables** (`site/chat/src/lib/providers`): por defecto un **motor de demostración local** (respuestas simuladas y rotuladas como tales, sin red); o cualquier servicio compatible con la API de OpenAI desde *Ajustes*. Para producción apunta la URL a tu propio backend: no pongas claves de API en el navegador ni expongas un endpoint sin autenticación ni límites.
 - Las respuestas de IA pueden contener errores: el aviso bajo el cuadro de mensaje se mantiene siempre visible.
 
+## Para agentes de IA (skill + llms.txt)
+
+Contexto listo para que Claude Code, Cursor, Copilot o cualquier agente construya UIs fieles al diseño oficial:
+
+- **Skill** en `skills/gob-cl-tailwind/` (incluida en el paquete npm): reglas, qué componente usar, accesibilidad, trampas conocidas, checklist y referencias (`components.md`, `patterns.md`, `css-classes.md`, `icons.md`).
+  ```bash
+  mkdir -p .claude/skills && cp -r node_modules/gob-cl-tailwind/skills/gob-cl-tailwind .claude/skills/
+  ```
+- **`llms.txt` / `llms-full.txt`** publicados en la raíz del sitio de documentación (se generan con `npm run build:llms` desde la skill, así nunca se desfasan).
+
 ## Documentación (React)
 
 `site/` es una app **React 19 + Vite** que consume el paquete igual que cualquier proyecto Tailwind 4 (con `@tailwindcss/vite`). Incluye todos los componentes con su código, galería de íconos filtrable, scrollspy y tabla de migración.

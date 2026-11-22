@@ -1,0 +1,509 @@
+# gob-cl-tailwind v4.0.0 — documentación completa para modelos de lenguaje
+
+> Framework CSS oficial del Gobierno de Chile (gob.cl) reconstruido sobre Tailwind CSS 4, con librería de componentes React y 427 íconos. Contenido idéntico a la skill `skills/gob-cl-tailwind`.
+
+<!-- SKILL.md -->
+# gob-cl-tailwind
+
+Framework CSS oficial del Gobierno de Chile reconstruido sobre **Tailwind CSS 4** (mismos nombres de clase que `@gobdigital-cl/gob.cl`, que usaba Bootstrap 4), más una **librería de componentes React** (`gob-cl-tailwind/react`) con 427 íconos. Proyecto comunitario: el diseño y la marca pertenecen al Gobierno de Chile.
+
+## Regla de oro
+
+**Usa los componentes y clases que ya existen; no inventes estilos.** El valor de este framework es la fidelidad visual al diseño oficial. Antes de escribir CSS propio, busca en este orden:
+
+1. Un componente React de la librería (`references/components.md`).
+2. Una clase del framework (`references/css-classes.md`): `btn btn-primary`, `card-news`, `alert alert-info`…
+3. Una utilidad de Tailwind (`flex`, `gap-4`, `p-2`) — siempre gana sobre los componentes porque estos viven en `@layer components`.
+4. Solo si nada sirve: CSS propio **usando los tokens** (`var(--color-primary)`), nunca colores literales.
+
+## Instalación (proyecto React + Vite)
+
+```bash
+npm install gob-cl-tailwind tailwindcss @tailwindcss/vite react react-dom
+# solo si se previsualizan Word/Excel/PowerPoint:
+npm install mammoth jszip
+```
+
+```css
+/* app.css — SIN preflight de Tailwind: el reboot de Bootstrap ya viene incluido */
+@import "tailwindcss/theme.css" layer(theme);
+@import "gob-cl-tailwind/fonts.css";
+@import "gob-cl-tailwind";
+@import "gob-cl-tailwind/app.css";      /* estilos de los componentes React */
+@import "tailwindcss/utilities.css" layer(utilities);
+/* Opcionales: */
+@import "gob-cl-tailwind/compat.css";   /* utilidades Bootstrap 4 (m-*, p-*, d-*…) */
+@import "gob-cl-tailwind/chat.css";     /* interfaz tipo ChatGPT */
+```
+
+```jsx
+// main.jsx — los proveedores habilitan modales imperativos y toasts
+import 'gob-cl-tailwind/js'  // solo si usas HTML con data-toggle (colapsables, dropdown, tabs…)
+import { ToastProvider, ModalProvider } from 'gob-cl-tailwind/react'
+<ToastProvider><ModalProvider><App /></ModalProvider></ToastProvider>
+```
+
+Sin build (HTML plano): `<link href="…/dist/gob.min.css">` + `<script src="…/dist/gob.min.js" defer>`. El HTML del framework oficial funciona sin cambios.
+
+## Identidad visual (no negociable)
+
+- **Azul primario** `#006fb3` (`--color-primary`); secundario rojo `#fe6565`; azul oscuro `#0a132d` (`--color-tertiary`); acento `#a8b7c7`.
+- **Tipografía**: Roboto (texto) y Roboto Slab (títulos). Ya viene en el reboot; no cambies `font-family`.
+- **Esquinas rectas** (sin `border-radius` en botones, cards, inputs) y **línea azul/roja** (`<div class="line"></div>`) bajo cabeceras.
+- Un solo botón primario (`btn btn-primary`) por vista; acciones secundarias `btn-outline-primary`; destructivas `btn-danger`.
+- Idioma de la interfaz: **español de Chile**, tono formal-cercano ("Ingresa tu RUN", no "Introduce tu DNI"). Fechas `22 nov 2026`, RUN con puntos y guion (`12.345.678-5`), moneda `$125.000`.
+
+## Componentes React: elegir el correcto
+
+| Necesidad | Usa |
+|---|---|
+| Panel autenticado (sidebar + navbar + contenido) | `AppShell` + `Container` + `PageHeader` + `Panel` |
+| Sitio público (header/footer institucional) | `SiteNavbar` + `Footer` |
+| Login, registro, recuperar clave, 2FA | `AuthLayout` + `LoginForm` / `RegisterForm` / `ForgotPasswordForm` / `ResetPasswordForm` / `TwoFactorForm` |
+| Formulario | `useForm` + `TextField`, `RunField`, `PasswordField`, `SelectField`, `DateField`, `TextareaField`, `CheckboxField`, `Switch`, `RadioGroup` |
+| Subir archivos | `FileUpload` (valida tipo/tamaño, progreso) |
+| Vista previa de archivos | `FilePreview` / `FilePreviewModal` (PDF, imagen, Word, Excel, PowerPoint, CSV, texto, DXF) |
+| Listado de datos | `FilterBar` + `DataTable` (orden, selección, paginación, acciones por fila) |
+| Confirmar / pedir un dato | `useModal().confirm / alert / prompt` |
+| Diálogo propio / lateral | `Modal` (`variant="drawer"` para panel lateral) |
+| Aviso breve (con "Deshacer") | `useToast()` |
+| Mensaje persistente | `Alert` |
+| Carga | `Spinner`, `Loading`, `LoadingScreen`, `LoadingOverlay`, `ProgressBar`, `SkeletonText`, `SkeletonCard` |
+| Menú contextual / de usuario | `DropdownMenu` |
+| Pestañas, pasos, migas | `Tabs`, `Stepper`, `Breadcrumbs` |
+| Estados vacíos y etiquetas | `EmptyState`, `StatusBadge`, `Avatar` |
+| Íconos | `<Icon name="search" />` |
+
+Firmas y props completas: **`references/components.md`**. Recetas de pantallas completas (login, CRUD, wizard con documentos, chat): **`references/patterns.md`**.
+
+## Patrones imprescindibles
+
+```jsx
+// Validación: errores solo después de tocar el campo o enviar
+const f = useForm({
+  initial: { run: '', email: '' },
+  validate: (v) => ({ ...(!validRun(v.run) && { run: 'RUN inválido' }), ...(!validEmail(v.email) && { email: 'Correo inválido' }) }),
+  onSubmit: async (v) => { await api.save(v); toast('Guardado', 'ok') },
+})
+<form onSubmit={f.handleSubmit} noValidate>
+  <RunField label="RUN" required {...f.bind('run')} />
+  <TextField label="Correo" type="email" required {...f.bind('email')} />
+  <button className="btn btn-primary" disabled={f.submitting}>Guardar</button>
+</form>
+```
+
+```jsx
+// Acciones destructivas: confirmación con tono de peligro y, si es grave, texto a escribir; luego "Deshacer"
+const modal = useModal(); const toast = useToast()
+if (await modal.confirm({ title: 'Eliminar trámite', text: 'Esta acción no se puede deshacer.', tone: 'danger', confirmLabel: 'Eliminar', requireText: 'ELIMINAR' })) {
+  remove(id); toast('Trámite eliminado', { action: { label: 'Deshacer', onClick: () => restore(id) } })
+}
+```
+
+```jsx
+// Tabla: filtra tú (rows ya filtrados); la tabla ordena y pagina
+<FilterBar search={q} onSearch={setQ} filters={[{ name: 'estado', label: 'Estado', value: estado, onChange: setEstado, options }]} onClear={reset} />
+<DataTable columns={[{ key: 'folio', header: 'Folio', sortable: true }, { key: 'estado', header: 'Estado', render: (r) => <StatusBadge tone="ok">{r.estado}</StatusBadge> }]}
+  rows={rows} loading={loading} selectable rowActions={(r) => [{ label: 'Ver', icon: 'eye', onSelect: () => open(r) }, { label: 'Eliminar', icon: 'trash-2', danger: true, onSelect: () => del(r) }]} />
+```
+
+## Accesibilidad (requisito, no extra)
+
+El framework oficial exige WCAG: mantenlo.
+- Todo campo con `label` visible; errores asociados (los campos de la librería ya lo hacen). Nunca solo `placeholder`.
+- Íconos decorativos con `aria-hidden` (`<Icon>` ya lo hace); botones de solo ícono con `aria-label`.
+- Foco visible siempre; no uses `outline: none`. Probar todo con teclado (Tab, Enter, Esc, flechas en menús/tabs).
+- **Alto contraste** (`html.a11y-contrast`) y **tamaño de texto** (`a11y-font-N`): `AppShell` los incluye; en otros casos usa el hook `useAccessibility()`. Todo estilo propio debe verse bien en alto contraste: usa tokens y variables `--app-*`, no colores fijos.
+- Mensajes dinámicos en regiones `aria-live` (`useToast`, `Alert`, `Loading` ya lo hacen).
+
+## Trampas conocidas (ahorra tiempo)
+
+1. **No importes el preflight de Tailwind** (`@import "tailwindcss"`): choca con el reboot de Bootstrap. Importa `theme.css` y `utilities.css` por separado, como arriba.
+2. **Elementos HTML globales**: el core estiliza `footer`, `main`, `header`, `nav` con estilos institucionales. Para bloques propios usa `<div role="contentinfo">` en vez de `<footer>`; usa `<main>` solo una vez, en el contenido principal.
+3. **`container`** conserva el significado de Bootstrap (540/720/960/1140), no el de Tailwind. Para ancho propio usa `max-w-*` con `mx-auto`.
+4. **`collapse`** es el colapsable de Bootstrap, no la utilidad de Tailwind.
+5. **Íconos**: `cl cl-<nombre>`; 427 disponibles (`dist/icons.json`, grupo "Oficiales gob.cl" primero). Si dudas del nombre, búscalo en `references/icons.md`; no inventes uno. Si un nombre extra coincide con uno oficial se publica con sufijo `-alt`.
+6. **Colores en `color-mix`/`bg-*`**: usa los tokens del tema (`bg-primary`, `text-tertiary`, `border-accent`); `--color-*` está reiniciado, no existen los colores por defecto de Tailwind (`bg-blue-500` no existe; sí `bg-blue`, `bg-blue-dark`, `bg-gray-a`).
+7. **Breakpoints propios**: `ss` 375, `sm` 576, `md` 768, `lg` 992, `xl` 1200, `2xl` 1400. Diseña mobile-first; verifica 390 px de ancho sin scroll horizontal.
+8. **`<dialog>` nativo**: `Modal` usa `<dialog>`; no apiles modales a mano, usa `useModal()` o varios `Modal` (se apilan solos).
+9. **Bootstrap 6 (`next.css`) es alpha**: solo si necesitas `dialog`, `drawer`, `combobox`, `datepicker`, `otp`… vía HTML; en React prefiere los componentes de la librería. No mezcles `btn-solid` con `btn-primary` en una misma pantalla.
+10. **JS de `gob-cl-tailwind/js`** solo se necesita para HTML con `data-toggle`. En React no lo uses: los componentes ya manejan su estado.
+11. **Autenticación real**: las maquetas simulan login en el navegador. En producción valida en servidor; nunca claves de API en el cliente; en `AuthPages` reemplaza el `onSubmit` por llamadas reales.
+12. **Uso de logos/marca**: usa los SVG oficiales incluidos en `brand/` y `site/public/img/`; no redibujes ni deformes el logo de Gobierno de Chile.
+
+## Verificación antes de entregar
+
+- [ ] `npm run build` del proyecto pasa y no hay errores de consola.
+- [ ] Toda la UI usa componentes/clases del framework; ningún color literal nuevo.
+- [ ] Probado a 390 px y a 1280 px (sin scroll horizontal).
+- [ ] Probado con teclado y con alto contraste activado (`document.documentElement.classList.add('a11y-contrast')`).
+- [ ] Textos en español de Chile; estados vacío, cargando y error cubiertos (`EmptyState`, `Loading*`, `Alert`).
+
+## Dónde mirar más
+
+- **`references/components.md`** — API de todos los componentes React.
+- **`references/patterns.md`** — recetas de pantallas (auth, CRUD, wizard, subir y previsualizar, chat).
+- **`references/css-classes.md`** — clases del framework (botones, cards, alertas, grillas, utilidades) y tokens.
+- **`references/icons.md`** — cómo encontrar y usar íconos.
+- Documentación en vivo: la raíz del sitio de documentación (`/`), maquetas `/tramites/` y `/chat/` (código en `site/tramites` y `site/chat`: son la mejor referencia de uso real).
+- `llms.txt` / `llms-full.txt` en la raíz del sitio: versión para modelos de este mismo contenido.
+
+<!-- references/components.md -->
+# API de componentes React (`gob-cl-tailwind/react`)
+
+Todos se importan de `gob-cl-tailwind/react`. Requieren `@import "gob-cl-tailwind/app.css"`. Los textos por defecto están en español de Chile.
+
+## Layout
+
+**`AppShell`** — estructura de aplicación: sidebar (expandido | riel | oculto | móvil) + navbar + contenedor + footer. Incluye atajo `Ctrl/⌘+B`, preferencias persistidas (`storageKey`) y herramientas de accesibilidad.
+```jsx
+<AppShell
+  brand={{ name: 'Mis Trámites', subtitle: 'Municipalidad', logo: '/img/gob-footer.svg', href: '#/' }}
+  nav={[{ group: 'General', items: [{ label: 'Panel', icon: 'house', href: '#/', active: true, badge: 3 }] }]}
+  user={{ name: 'Camila Rojas', role: 'Analista' }}
+  userMenu={[{ label: 'Mi perfil', icon: 'user', onSelect }, { separator: true }, { label: 'Salir', icon: 'log-out', danger: true, onSelect }]}
+  breadcrumbs={<Breadcrumbs items={[…]} />}  actions={<button …/>}  onSearch={abrirPaleta}
+  renderLink={({ item, className, children, onClick }) => <NavLink to={item.href} className={className} onClick={onClick}>{children}</NavLink>}  // integra tu router
+  footer={<AppFooter links={[…]}>© 2026</AppFooter>}
+>{children}</AppShell>
+```
+`useShell()` → `{ prefs, setPrefs, reset, mobileOpen, setMobileOpen, a11y }` (`prefs`: `sidebar` expanded|rail|hidden, `navbar` light|dark, `density` comfortable|compact, `container` fixed|wide|narrow|fluid). `markActive(nav, (item) => boolean)` devuelve `nav` con `active` calculado, p. ej. `markActive(nav, (i) => i.href === pathname)`.
+
+**`Container`** `{ size: 'fixed'|'wide'|'narrow'|'fluid', as }` · **`PageHeader`** `{ title, description, actions, breadcrumbs }` · **`Panel`** `{ title, actions, footer, flush, danger, id }` (tarjeta de sección; `danger` = zona de riesgo) · **`StatCard`** `{ label, value, delta, down, icon }` (indicador).
+
+**`SiteNavbar`** `{ logo, brandHref, links:[{label,href,active}], actions, dark, sticky }` · **`Footer`** `{ logo, description, columns:[{title,links:[{label,href}]}], social:[{icon,label,href}], legal }` · **`AppFooter`** `{ links, children }`.
+
+## Autenticación
+
+`AuthLayout` `{ title, subtitle, children, footer, aside, logo, home }` envuelve la pantalla (panel azul + formulario). Formularios (todos con `links` para enlaces a otras pantallas):
+
+| Componente | `onSubmit` recibe | Notas |
+|---|---|---|
+| `LoginForm` | `{ identifier, password, remember }` | Lanza `Error('mensaje')` para mostrarlo; `onClaveUnica` agrega botón ClaveÚnica |
+| `RegisterForm` | datos del registro | Valida RUN, correo, clave con medidor |
+| `ForgotPasswordForm` | `{ identifier }` | Confirmación + reenvío con espera (`resendAfter`) |
+| `ResetPasswordForm` | `{ password }` | Medidor y requisitos |
+| `TwoFactorForm` | `{ code }` | `onResend`, `destination`; OTP de 6 dígitos |
+
+El `onSubmit` es el punto de integración con tu backend. **Valida siempre en el servidor.**
+
+## Formularios
+
+`useForm({ initial, validate, onSubmit })` → `{ values, errors, dirty, submitting, submitError, setValue, setValues, touch, bind, bindCheck, handleSubmit, reset, valid }`.
+- `validate(values)` devuelve `{ campo: 'mensaje' }`; el error se muestra tras tocar el campo o enviar. Al fallar, enfoca el primer campo inválido.
+- `<TextField {...f.bind('campo')} />`; para checkbox/switch: `{...f.bindCheck('campo')}`.
+- `f.reset(nuevoInicial)` fija un nuevo estado base (útil tras guardar: `dirty` vuelve a `false`).
+
+Campos (todos aceptan `label, hint, error, required, id` y reenvían el resto al `<input>`): `TextField`, `TextareaField` (`maxLength` con contador), `SelectField` (`options:[{value,label}]`, `placeholder`), `DateField`, `RunField` (formatea al salir: `12.345.678-5`), `PasswordField` (`strength` activa medidor), `CheckboxField`, `Switch` `{ label, description, checked, onChange }`, `RadioGroup` `{ label, name, options:[{value,label,description}], value, onChange, cards }`, `SearchInput` `{ value, onChange }`, `OtpInput` `{ length, value, onChange, onComplete, error }`, `Field` (contenedor genérico para tus propios controles).
+
+Validadores: `validRun`, `formatRun`, `cleanRun`, `runDv`, `validEmail`, `validPhone`, `passwordChecks`, `passwordScore`, `STRENGTH_LABELS`.
+
+**`FileUpload`** `{ label, hint, error, required, accept, maxFiles=5, maxBytes=10MB, multiple, disabled, defaultValue, onChange, upload, onReject, compact }`. `onChange(items)` recibe `[{ id, name, size, type, kind, progress, status: 'uploading'|'done'|'error', error?, file }]`. Sin `upload` simula el progreso; para subir de verdad: `upload={(item, onProgress) => promesa}`. Arrastrar, pegar y teclado incluidos. Helpers: `ACCEPT`, `LIMITS`, `formatSize`, `kindOf`, `validateFiles`.
+
+## Datos
+
+**`FilterBar`** `{ search, onSearch, searchPlaceholder, filters:[{name,label,value,onChange,options:[{value,label}]}], onClear, actions }`.
+
+**`DataTable`** — tú filtras `rows`; la tabla ordena y pagina en cliente.
+`{ columns, rows, rowKey='id', loading, selectable, bulkActions, rowActions, onRowClick, onSelectionChange, pageSizes=[10,20,50], defaultPageSize, defaultSort:{key,dir}, empty, toolbar, caption, noun:['trámite','trámites'] }`
+- `columns: [{ key, header, sortable, render(row), sortValue(row), align, hideBelow:'sm'|'md', width }]`
+- `rowActions(row)` → items de `DropdownMenu`; `bulkActions(selectedRows, clearSelection)` → nodo (barra al seleccionar).
+- `loading` muestra esqueletos; sin filas muestra `EmptyState` (personalizable con `empty`).
+- Para datos de servidor muy grandes, pagina en servidor y pasa solo la página (la tabla paginará esa porción).
+
+`Pagination` `{ page, pages, onChange }` (la usa `DataTable`; también suelta) · `StatusBadge` `{ tone: 'ok'|'warn'|'danger'|'off'|'info' }` · `Avatar` `{ name, src, size }` · `EmptyState` `{ icon, title, children, action }` · `Skeleton` `{ width, height }`.
+CSV: `toCsv(rows, columns)`, `parseCsv(text)` (→ objetos por encabezado), `downloadFile(nombre, texto, mime)`.
+
+## Navegación
+
+`DropdownMenu` `{ trigger, items, align:'left'|'right', side:'bottom'|'top', label, width }`; `items`: `{ label, icon, onSelect, href, danger, disabled, checked }`, `{ separator: true }`, `{ header: 'Texto' }`. Teclado: ↑↓ Inicio Fin, tecla inicial, Esc. `trigger` puede ser nodo o función `(props) => botón` (usa `props` en tu botón).
+`Tabs` `{ tabs:[{id,label,icon,badge}], value, onChange, children }` · `Stepper` `{ steps:['A','B'], current, onStepClick }` · `Breadcrumbs` `{ items:[{label,href}], as }`.
+
+## Feedback
+
+**`Modal`** `{ open, onClose, title, subtitle, icon, tone:''|'info'|'success'|'warning'|'danger', size:'sm'|'md'|'lg'|'xl'|'full', variant:'drawer', staticBackdrop, busy, footer }` — `<dialog>` nativo: foco atrapado y restaurado, Esc, animación, hoja inferior en móvil. `staticBackdrop` evita cerrar por error (formularios con cambios).
+Pie recomendado: `<div className="gob-modal-footer">` con botones `btn btn-outline-primary btn-compact` + `btn btn-primary btn-compact`.
+
+**`useModal()`** (requiere `ModalProvider`) — devuelve promesas:
+- `await modal.confirm({ title, text, tone:'danger', confirmLabel, cancelLabel, requireText:'ELIMINAR', icon, size })` → `true|false`
+- `await modal.alert({ title, text, tone })` → `undefined`
+- `await modal.prompt({ title, label, initial, placeholder, multiline, validate: (v) => 'error'|'' })` → `string|null`
+
+**`useToast()`** (requiere `ToastProvider`) → `toast('Texto', 'ok'|'error'|'warn')` o `toast('Texto', { kind, action:{label,onClick}, duration })`. Úsalo para confirmar acciones; añade `action: Deshacer` en eliminaciones.
+
+**`Alert`** `{ tone:'info'|'success'|'warning'|'danger', title, onClose }` para mensajes que deben quedarse visibles.
+
+## Carga
+
+`Spinner` `{ size:'sm'|'md'|'lg', variant:'border'|'grow', tone, label }` · `Loading` `{ children, size }` (spinner + texto en línea) · `LoadingScreen` `{ title, message, minHeight }` (bloque centrado) · `LoadingOverlay` `{ active, label, children }` (bloquea un contenedor mientras guarda) · `ProgressBar` `{ value 0–100, label, tone, striped, height }` (sin `value` = indeterminada) · `SkeletonText` `{ lines }` · `SkeletonCard`.
+Regla: listas → `loading` de `DataTable`/`Skeleton*`; botón enviando → `disabled` + spinner; acción larga bloqueante → `LoadingOverlay`.
+
+## Vista previa de archivos
+
+`FilePreview` `{ file, name, height='28rem', toolbar, onDownload }` — `file`: `File | Blob | { url, name, type, size }`.
+Se muestran: imagen (zoom), PDF, video/audio, texto/código, CSV/TSV, **Word `.docx`**, **Excel `.xlsx`** (pestañas por hoja), **PowerPoint `.pptx`** (texto por diapositiva), **DXF** (SVG 2D). **DWG** y Office antiguo (`.doc/.xls/.ppt`) **no se pueden dibujar en un navegador**: muestran información (versión de AutoCAD) y descarga; sugiere exportar a PDF/DXF. Word/Excel/PowerPoint requieren `mammoth` y `jszip` (se cargan bajo demanda). `FilePreviewModal` `{ file, open, onClose }` lo abre en un modal. `previewKind(name, type)` devuelve el tipo detectado.
+
+## Accesibilidad y utilidades
+
+`useAccessibility()` → `{ contrast, font (0–2 = 16/20/24 px), toggleContrast, setFont(i), maxFont }` (alto contraste y tamaño de texto; estado compartido, persistido en las mismas claves de localStorage que gob.cl y aplicado como clases `a11y-contrast` / `a11y-font-N` en `<html>`). `useDismiss(open, ref, close)` cierra al clic fuera/Esc. `Icon` `{ name }` (ver `icons.md`).
+
+<!-- references/css-classes.md -->
+# Clases del framework y tokens
+
+Los nombres de clase son **idénticos al framework oficial** (`@gobdigital-cl/gob.cl` 3.x sobre Bootstrap 4). Todo vive en `@layer components`: una utilidad de Tailwind siempre lo sobrescribe (`btn btn-primary px-6`). Marcado HTML de cada componente: `site/src/sections/*.jsx` (cada ejemplo trae su HTML) o la documentación publicada.
+
+## Tokens (`@theme`) — úsalos siempre en vez de colores literales
+
+| Token / utilidad Tailwind | Valor | Uso |
+|---|---|---|
+| `primary` / `blue` | `#006fb3` | Acciones principales, enlaces |
+| `secondary` / `red` / `danger` | `#fe6565` | Acento, error, destructivo |
+| `tertiary` / `blue-dark` | `#0a132d` | Títulos, fondos oscuros, sidebar |
+| `accent` / `blue-light` / `gray` | `#a8b7c7` | Bordes y fondos suaves |
+| `neutral` | `#eeeeee` | Fondos neutros |
+| `success` `#2d717c` · `info` `#17a2b8` · `warning` `#f2c728` · `light` `#f8f9fa` · `dark` `#343a40` | | Semánticos |
+| `orange`, `orange-light`, `yellow`, `green`, `teal`, `cyan`, `indigo`, `purple`, `pink`, `black` `#111`, `white` | | Paleta base |
+| `gray-a` `#4a4a4a`, `gray-b`, `gray-c`, `gray-100 … gray-900` | | Texto secundario y grises |
+
+Utilidades: `bg-primary`, `text-tertiary`, `border-accent`, y las del core: `bg-blue-dark`, `text-gray-a`, `bg-layer-*`, `bg-before-*`, `bg-after-*`. **No existen** los colores por defecto de Tailwind (`bg-blue-500`, `text-slate-700`): `--color-*` está reiniciado.
+Tipografía: `font-sans` (Roboto) · `font-slab` (Roboto Slab, títulos). Breakpoints: `ss` 375 · `sm` 576 · `md` 768 · `lg` 992 · `xl` 1200 · `2xl` 1400.
+Variables CSS disponibles: `var(--color-primary)`, `var(--font-sans)`, etc. Los componentes React definen además `--app-*` (fondo, texto, borde, superficie, primario…) que cambian solas en alto contraste: úsalas en CSS propio dentro de componentes de la librería.
+
+## Botones
+
+`btn` + variante: `btn-primary` · `btn-secondary` · `btn-tertiary` · `btn-success` · `btn-danger` · `btn-warning` · `btn-info` · `btn-light` · `btn-dark` · `btn-neutral` · `btn-accent` · `btn-link`.
+Contorno: `btn-outline-*` · Píldora: `btn-pill-*`. Tamaños: `btn-sm`, `btn-lg`, `btn-block`. Grupo: `btn-group`, `btn-toolbar`. Los botones son de esquinas rectas; no agregues `rounded`.
+
+## Alertas, etiquetas y banners
+
+`alert alert-{primary|secondary|success|danger|warning|info|light|dark|tertiary|accent|neutral}` (+ `alert-dismissible`, `alert-heading`, `alert-link`). Etiquetas: `badge badge-{color}` (+ `badge-pill`). Banner institucional: `banner` con `banner-icon`, `banner-text`, `banner-shadow`.
+
+## Cards (todas oficiales gob.cl)
+
+`card` (+ `card-body`, `card-header`, `card-footer`, `card-title`, `card-text`, `card-img-top`) y las de gobierno: `card-featured`, `card-featured-news`, `card-news` (`card-news-image`, `card-news-body`, `card-news-footer`), `card-informative`, `card-category`, `card-function` (persona/cargo), `card-detail`, `card-organization`, `card-links`, `card-data` / `card-data-list` (cifras). Cada una con sufijos `-image`, `-body`, `-title`. Imagen de fondo con `pseudo-background` + `<img class="pseudo-src">` oculta. Truncado de texto: `text-lines-{líneas}-{lineas-móvil}` (p. ej. `text-lines-7-3`).
+
+## Navegación y estructura
+
+`navbar` (+ `navbar-light|dark`, `navbar-expand-{ss|sm|md|lg|xl}`, `navbar-brand`, `navbar-nav`, `nav-item`, `nav-link`, `nav-separator`), `dropdown` / `dropdown-menu` / `dropdown-item`, `nav nav-tabs`, `breadcrumb`, `pagination` / `page-item` / `page-link`, `collapsible-links` (acordeón de enlaces), `list-group`, `jumbotron`, `section` (+ `section-header`, `section-body`, `section-action`, `section-jumbotron`), `profile` (+ `profile-header`, `profile-body`, `profile-charge`), `search` (+ `search-content`, `search-action`, `search-not-found`), `social` / `social-icon`, `footer` (institucional; ver trampas en SKILL.md), `line` (línea azul/roja).
+Colapsables/dropdown/tabs/modal por HTML necesitan `import 'gob-cl-tailwind/js'` y atributos `data-toggle` / `data-target`.
+
+## Formularios (Bootstrap 4 + gob.cl)
+
+`form-group` → `<label>` + `form-control` (también `form-control-sm|lg`, `custom-select`), `form-text`, validación `is-invalid` + `invalid-feedback` / `is-valid` + `valid-feedback`, `custom-control custom-checkbox|custom-radio|custom-switch`, `input-group` (+ `input-group-prepend|append`), `form-row`, `form-inline`. En React usa los campos de la librería, que ya implementan todo esto con accesibilidad.
+
+## Grilla y utilidades
+
+Grilla `container` (540/720/960/1140; ≠ Tailwind) · `container-fluid` · `row` · `col`, `col-{ss|sm|md|lg|xl}-{1..12}`. Con `compat.css`: utilidades Bootstrap 4 (`m-*`, `p-*`, `d-*`, `d-md-none`, `flex-*`, `justify-content-*`, `align-items-*`, `text-center`, `text-muted`, `w-100`, `sr-only`, `mb-3`…). Con Tailwind puro: `flex`, `gap-4`, `grid`, `max-w-2xl`, `hidden md:block`… Mezclar está permitido; prioriza una familia por componente. **`.visually-hidden` no existe** (es Bootstrap 5): usa `sr-only`.
+
+## Accesibilidad del framework
+
+`html.a11y-contrast` (alto contraste oficial), `html.a11y-font-{0|1|2}` (16/20/24 px). Toolbar oficial: botones con `toolbar-behavior-contrast` / `toolbar-behavior-font-*` (requiere `gob-cl-tailwind/js`). `skip-link` para "Saltar al contenido".
+
+## Bootstrap 6 opcional (`next.css`, alpha)
+
+Familias nuevas sin equivalente en BS4: `dialog`, `drawer`, `menu`, `stepper`, `avatar`, `chip`, `combobox`, `datepicker`, `otp`, `strength`, `check/radio/switch`, `form-field`, `btn-solid`, `theme-*`. Sus clases y JS (`data-bs-toggle`) son de Bootstrap 6 alpha y pueden cambiar. En React prefiere los componentes de la librería.
+
+<!-- references/icons.md -->
+# Catálogo de íconos
+
+Total: **427**. Uso: `<i class="cl cl-NOMBRE"></i>` o `<Icon name="NOMBRE" />` (React). Heredan `currentColor`; el tamaño sale de `font-size` (`cl-2x` … `cl-10x` o `text-2xl`). Decorativos: `aria-hidden="true"` (`<Icon>` lo pone solo); si el ícono es el único contenido de un botón, agrega `aria-label`.
+Si un nombre extra coincidía con uno oficial se publicó con sufijo `-alt`. **No inventes nombres: elige de esta lista.** El grupo "Oficiales gob.cl" tiene prioridad por fidelidad al diseño oficial.
+
+## Oficiales gob.cl (53)
+
+`accessibility` `add-circle-fill` `add-circle-line` `arrow-left` `arrow-line` `arrow-right` `arrow` `authority` `breadcrumb` `briefcase` `burger` `bus` `call-info` `claveunica` `close-line` `close` `computer` `contrast` `currency-cycle` `decrease-text` `doctor` `document-verified` `download` `facebook` `filter` `give-letter` `img-preview` `increase-text` `instagram` `list` `login-fill` `login` `logout` `m-arrow-down` `m-arrow-left` `m-arrow-right` `m-arrow-up` `messenger` `moneybox` `ok` `pause` `play` `question` `reading` `search` `sound` `store` `telephone` `together` `touch-screen` `twitter` `woman` `youtube`
+
+## Interfaz (77)
+
+`house` `menu` `x` `check` `plus` `minus` `ellipsis-vertical` `chevron-up` `chevron-down` `chevron-left` `chevron-right` `chevrons-up` `chevrons-down` `chevrons-left` `chevrons-right` `arrow-up` `arrow-down` `arrow-up-right` `arrow-down-left` `arrow-up-down` `move` `external-link` `link` `unlink` `copy` `clipboard` `clipboard-check` `clipboard-list` `pencil` `square-pen` `trash-2` `save` `undo-2` `redo-2` `eye` `eye-off` `settings` `sliders-horizontal` `list-filter` `search-x` `zoom-in` `zoom-out` `maximize` `minimize` `expand` `shrink` `refresh-cw` `rotate-cw` `loader-circle` `upload` `share-2` `printer` `qr-code` `scan-line` `grip-vertical` `layout-grid` `layout-list` `panel-left` `table` `list-checks` `list-ordered` `toggle-left` `toggle-right` `bell` `bell-off` `bookmark` `star` `heart` `thumbs-up` `thumbs-down` `flag` `tag` `tags` `pin` `arrow-up-narrow-wide` `arrow-down-wide-narrow` `ellipsis`
+
+## Estado y alertas (18)
+
+`circle-check` `circle-x` `circle-alert` `triangle-alert` `info` `circle-help` `octagon-alert` `shield-check` `shield-alert` `shield-x` `badge-check` `badge-alert` `badge-info` `badge-help` `ban` `siren` `bell-ring` `lightbulb`
+
+## Usuarios y cuenta (21)
+
+`user` `users` `user-round` `user-check` `user-plus` `user-minus` `user-x` `user-cog` `user-search` `circle-user` `id-card` `fingerprint` `lock` `lock-open` `key` `key-round` `log-in` `log-out` `contact` `hand-helping` `handshake`
+
+## Comunicación (21)
+
+`mail` `mail-open` `inbox` `send` `message-circle` `message-square` `messages-square` `phone` `phone-call` `phone-off` `megaphone` `newspaper` `rss` `at-sign` `mic` `mic-off` `headphones` `video` `video-off` `captions` `voicemail`
+
+## Documentos (24)
+
+`file` `file-text` `file-check` `file-search` `file-plus` `file-x` `file-down` `file-up` `file-badge` `file-pen` `files` `folder` `folder-open` `folder-check` `archive` `book` `book-open` `book-open-check` `notebook-pen` `library` `scroll-text` `stamp` `award` `paperclip`
+
+## Lugares y mapas (21)
+
+`map` `map-pin` `map-pinned` `navigation` `compass` `globe` `locate` `building` `building-2` `landmark` `school` `hospital` `church` `hotel` `warehouse` `store-alt` `factory` `tent-tree` `trees` `mountain` `waves`
+
+## Tiempo (11)
+
+`calendar` `calendar-days` `calendar-check` `calendar-clock` `calendar-plus` `calendar-x` `clock` `timer` `hourglass` `history` `alarm-clock`
+
+## Finanzas y trámites (14)
+
+`credit-card` `wallet` `banknote` `coins` `receipt` `receipt-text` `piggy-bank` `hand-coins` `badge-dollar-sign` `calculator` `briefcase-alt` `scale` `gavel` `vote`
+
+## Salud (18)
+
+`stethoscope` `pill` `syringe` `heart-pulse` `activity` `ambulance` `baby` `thermometer` `hospital-alt` `brain` `bandage` `cross` `accessibility-alt` `ear` `ear-off` `eye-closed` `glasses` `hand`
+
+## Educación y trabajo (12)
+
+`graduation-cap` `school-alt` `book-marked` `pencil-ruler` `backpack` `briefcase-business` `hard-hat` `wrench` `hammer` `drill` `construction` `tractor`
+
+## Transporte (12)
+
+`car` `bus-alt` `train-front` `plane` `bike` `ship` `truck` `navigation-2` `route` `signpost` `circle-parking` `fuel`
+
+## Medio ambiente y clima (20)
+
+`leaf` `sprout` `trees-alt` `droplets` `droplet` `flame` `zap` `sun` `moon` `cloud` `cloud-rain` `cloud-snow` `cloud-lightning` `wind` `snowflake` `thermometer-sun` `recycle` `umbrella` `tornado` `earth`
+
+## Tecnología y datos (23)
+
+`smartphone` `tablet` `laptop` `monitor` `wifi` `wifi-off` `bluetooth` `server` `database` `cloud-upload` `cloud-download` `code` `terminal` `cpu` `hard-drive` `qr-code-alt` `scan` `chart-pie` `chart-line` `trending-up` `trending-down` `chart-column` `chart-bar`
+
+## Multimedia (14)
+
+`image` `images` `camera` `play-alt` `pause-alt` `square` `circle-play` `circle-pause` `skip-back` `skip-forward` `volume-2` `volume-x` `music` `film`
+
+## IA y chat (33)
+
+`bot` `sparkles` `wand-sparkles` `brain-alt` `message-square-plus` `message-square-text` `message-square-heart` `keyboard` `circle-stop` `corner-down-left` `paperclip-alt` `file-code` `file-spreadsheet` `file-image` `file-archive` `audio-lines` `languages` `quote` `panel-left-close` `panel-left-open` `square-pen-alt` `text-cursor-input` `arrow-big-up` `thumbs-up-alt` `thumbs-down-alt` `flag-triangle-right` `pin-off` `history-alt` `messages-square-alt` `list-restart` `rotate-ccw` `clipboard-copy` `share`
+
+## App y administración (25)
+
+`layout-dashboard` `chevrons-up-down` `palette` `type` `ruler` `square-check-big` `layout-panel-left` `columns-3` `command` `life-buoy` `bell-dot` `rows-3` `table-properties` `sliders-vertical` `import` `mail-check` `user-round-check` `monitor-smartphone` `badge-plus` `copy-plus` `ticket` `log-in-alt` `user-round-cog` `database-zap` `hard-drive-download`
+
+## Redes sociales (línea) (1)
+
+`linkedin`
+
+## Redes sociales (marca) (9)
+
+`x-twitter` `whatsapp` `tiktok` `telegram` `threads` `flickr` `github` `spotify` `mastodon`
+
+<!-- references/patterns.md -->
+# Recetas de pantallas
+
+Referencia de uso real: `site/tramites/src` (plataforma de trámites) y `site/chat/src` (plataforma de IA). Están construidas **solo** con la librería; copia su estructura.
+
+## 1. App autenticada con router (React Router)
+
+```jsx
+// Shell.jsx — AppShell integrado con el router mediante renderLink
+const NAV = [{ group: 'Gestión', items: [{ to: '/', label: 'Panel', icon: 'layout-dashboard', end: true }, { to: '/tramites', label: 'Trámites', icon: 'file-text' }] }]
+export default function Shell() {
+  const { pathname } = useLocation(); const { user, logout } = useAuth(); const modal = useModal()
+  const nav = markActive(NAV, (i) => (i.end ? pathname === i.to : pathname.startsWith(i.to)))
+  return (
+    <AppShell brand={{ name: 'Trámites', subtitle: 'Municipalidad' }} nav={nav} user={user}
+      userMenu={[{ label: 'Mi cuenta', icon: 'user', onSelect: () => navigate('/cuenta') }, { separator: true },
+        { label: 'Cerrar sesión', icon: 'log-out', danger: true, onSelect: async () => (await modal.confirm({ title: 'Cerrar sesión', text: '¿Quieres salir?' })) && logout() }]}
+      renderLink={({ item, className, children, onClick }) => <Link to={item.to} className={className} onClick={onClick} aria-current={item.active ? 'page' : undefined}>{children}</Link>}
+      breadcrumbs={<Breadcrumbs items={[{ label: 'Inicio', href: '#/' }, { label: 'Trámites' }]} />}
+      footer={<AppFooter links={[{ label: 'Ayuda', href: '#' }]}>© 2026 Gobierno de Chile</AppFooter>}>
+      <Outlet />
+    </AppShell>
+  )
+}
+// Rutas privadas: si no hay sesión → <Navigate to="/login" replace />
+```
+HashRouter funciona en hosting estático sin reglas de reescritura; con BrowserRouter configura el fallback a `index.html`.
+
+## 2. Autenticación (login + 2FA + recuperar)
+
+```jsx
+<AuthLayout title="Ingresa a tu cuenta" subtitle="Usa tu RUN o correo">
+  <LoginForm links={{ forgot: '#/recuperar', register: '#/registro' }}
+    onSubmit={async ({ identifier, password }) => { await api.login(identifier, password) /* lanza Error → se muestra */; navigate('/verificar') }} />
+</AuthLayout>
+```
+Flujo estándar: `/login` → `/verificar` (`TwoFactorForm`) → app · `/recuperar` (`ForgotPasswordForm`) → correo → `/restablecer` (`ResetPasswordForm`) → `/login`. No reveles si una cuenta existe en el mensaje de recuperar ("Si el correo existe, enviamos instrucciones").
+
+## 3. CRUD con tabla, filtros y modal de formulario
+
+```jsx
+function Usuarios() {
+  const [rows, setRows] = useState(seed); const [q, setQ] = useState(''); const [rol, setRol] = useState('')
+  const [edit, setEdit] = useState(null)            // null = cerrado; {} = nuevo; fila = editar
+  const modal = useModal(); const toast = useToast()
+  const view = rows.filter((r) => (!q || r.nombre.toLowerCase().includes(q.toLowerCase())) && (!rol || r.rol === rol))
+  const f = useForm({ initial: { nombre: '', email: '', rol: 'Analista' },
+    validate: (v) => ({ ...(!v.nombre.trim() && { nombre: 'Ingresa el nombre' }), ...(!validEmail(v.email) && { email: 'Correo inválido' }) }),
+    onSubmit: async (v) => { setRows(upsert(rows, { ...edit, ...v })); setEdit(null); toast(edit.id ? 'Usuario actualizado' : 'Usuario creado', 'ok') } })
+  useEffect(() => { if (edit) f.reset(edit.id ? edit : undefined) }, [edit])   // al abrir: cargar datos
+  const remove = async (r) => {
+    if (!(await modal.confirm({ title: `Eliminar a ${r.nombre}`, text: 'Perderá el acceso.', tone: 'danger', confirmLabel: 'Eliminar' }))) return
+    const prev = rows; setRows(rows.filter((x) => x.id !== r.id))
+    toast('Usuario eliminado', { action: { label: 'Deshacer', onClick: () => setRows(prev) } })
+  }
+  return (<>
+    <PageHeader title="Usuarios" description="Administra las cuentas." actions={<button className="btn btn-primary" onClick={() => setEdit({})}>Nuevo usuario</button>} />
+    <Panel flush>
+      <FilterBar search={q} onSearch={setQ} onClear={() => { setQ(''); setRol('') }} filters={[{ name: 'rol', label: 'Rol', value: rol, onChange: setRol, options: ROLES }]} />
+      <DataTable rows={view} rowKey="id" noun={['usuario', 'usuarios']} columns={COLUMNS}
+        rowActions={(r) => [{ label: 'Editar', icon: 'pencil', onSelect: () => setEdit(r) }, { separator: true }, { label: 'Eliminar', icon: 'trash-2', danger: true, onSelect: () => remove(r) }]} />
+    </Panel>
+    <Modal open={!!edit} onClose={() => setEdit(null)} staticBackdrop={f.dirty} busy={f.submitting} title={edit?.id ? 'Editar usuario' : 'Nuevo usuario'}
+      footer={<div className="gob-modal-footer"><button className="btn btn-outline-primary btn-compact" onClick={() => setEdit(null)}>Cancelar</button><button className="btn btn-primary btn-compact" onClick={f.handleSubmit}>Guardar</button></div>}>
+      <TextField label="Nombre" required {...f.bind('nombre')} /><TextField label="Correo" type="email" required {...f.bind('email')} />
+    </Modal>
+  </>)
+}
+```
+Claves: estado vacío y de carga cubiertos por `DataTable`; destructivo = `confirm` + `Deshacer`; `staticBackdrop` solo si el formulario tiene cambios sin guardar.
+
+## 4. Wizard de varios pasos con documentos
+
+```jsx
+const STEPS = ['Tipo', 'Datos', 'Documentos', 'Resumen']
+const [step, setStep] = useState(0)
+<Stepper steps={STEPS} current={step} />
+{step === 2 && <FileUpload label="Cédula de identidad" required accept=".pdf,image/*" maxFiles={1} maxBytes={5 * 1024 * 1024}
+    onChange={(items) => setDocs(items)} error={tried && !docs.some((d) => d.status === 'done') ? 'Adjunta el documento' : undefined} />}
+<button className="btn btn-outline-primary" disabled={step === 0} onClick={() => setStep(step - 1)}>Atrás</button>
+<button className="btn btn-primary" onClick={() => (validStep(step) ? setStep(step + 1) : setTried(true))}>{step === 3 ? 'Enviar solicitud' : 'Continuar'}</button>
+```
+Bloquea "Continuar" mientras haya archivos `status: 'uploading'`. Guarda borrador en `localStorage`/servidor en cada paso. Al enviar: `modal.alert({ tone: 'success', title: 'Solicitud enviada', text: 'Tu folio es TR-…' })`.
+
+## 5. Subir y previsualizar archivos
+
+```jsx
+const [files, setFiles] = useState([]); const [view, setView] = useState(null)
+<FileUpload label="Adjuntos" onChange={setFiles} upload={(item, onProgress) => api.upload(item.file, onProgress)} />
+<ul>{files.filter((f) => f.status === 'done').map((f) => <li key={f.id}>{f.name} <button className="btn btn-link btn-sm" onClick={() => setView(f.file)}>Ver</button></li>)}</ul>
+<FilePreviewModal file={view} open={!!view} onClose={() => setView(null)} />
+```
+Para archivos remotos: `<FilePreview file={{ url, name: 'informe.pdf', type: 'application/pdf' }} />` (el servidor debe permitir CORS si es de otro origen).
+
+## 6. Panel (dashboard)
+
+```jsx
+<PageHeader title="Panel" description="Resumen de hoy" />
+<div className="row">{[['Ingresados', '128', '+12 %', 'inbox'], ['En revisión', '34', '−3 %', 'clock']].map(([label, value, delta, icon]) =>
+  <div className="col-sm-6 col-lg-3 mb-3" key={label}><StatCard label={label} value={value} delta={delta} down={delta.startsWith('−')} icon={icon} /></div>)}</div>
+<Panel title="Últimos trámites" flush><DataTable … defaultPageSize={5} /></Panel>
+```
+
+## 7. Configuración (ajustes con barra de cambios)
+
+Una `Tabs`/subnav por sección; cada sección con `useForm`. Muestra una **barra de guardado** (`app-savebar`) solo cuando `f.dirty`, con "Descartar" (`f.reset()`) y "Guardar" (`f.handleSubmit`); tras guardar `toast('Ajustes guardados', 'ok')`. Zona de riesgo en `<Panel danger>` con `confirm({ requireText })`. Código completo: `site/tramites/src/pages/Settings.jsx`.
+
+## 8. Chat de IA
+
+CSS: `@import "gob-cl-tailwind/chat.css"`. Componentes de referencia en `site/chat/src/components` (sidebar de conversaciones, composer con adjuntos, mensajes con Markdown y streaming, atajos) y proveedores intercambiables en `site/chat/src/lib/providers` (motor demo local u OpenAI-compatible). Producción: apunta a **tu backend**; nunca pongas claves de API en el navegador; mantén visible el aviso "las respuestas de IA pueden contener errores".
+
+## 9. Estados que siempre hay que cubrir
+
+| Estado | Cómo |
+|---|---|
+| Cargando datos | `DataTable loading` / `LoadingScreen` / `Skeleton*` |
+| Enviando | botón `disabled` + `busy` del `Modal` o `LoadingOverlay` |
+| Vacío | `EmptyState` con acción (“Crear el primero”) |
+| Error de campo | `error` en el campo (vía `useForm`) |
+| Error de operación | `Alert tone="danger"` (persistente) o `toast(…, 'error')` (breve) |
+| Éxito | `toast(…, 'ok')`; operaciones relevantes `modal.alert({ tone: 'success' })` |
+| Sin permiso / sesión vencida | `Alert tone="warning"` + redirigir a `/login` |
