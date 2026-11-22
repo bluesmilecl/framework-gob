@@ -97,6 +97,8 @@ Componentes funcionales, accesibles y reutilizables, con su CSS (`gob-cl-tailwin
 | Navegación | `DropdownMenu` (teclado completo), `Tabs`, `Stepper`, `Breadcrumbs`, `Pagination` |
 | Formularios | `Field`, `TextField`, `TextareaField`, `SelectField`, `DateField`, `RunField`, `PasswordField` (medidor de fortaleza), `CheckboxField`, `Switch`, `RadioGroup`, `SearchInput`, `OtpInput`, `FileUpload` (arrastrar, vista previa, validación, progreso), `useForm` |
 | Datos | `DataTable` (orden, selección, acciones por fila, paginación, estados de carga/vacío), `FilterBar`, `StatusBadge`, `Avatar`, `EmptyState`, `Skeleton`, `toCsv` / `parseCsv` |
+| Carga | `Spinner`, `Loading`, `LoadingScreen`, `LoadingOverlay`, `ProgressBar`, `SkeletonText`, `SkeletonCard` (sobre `spinner-border` / `progress` oficiales) |
+| Vista previa | `FilePreview`, `FilePreviewModal`: imagen, PDF, video/audio, texto, CSV, Word `.docx`, Excel `.xlsx`, PowerPoint `.pptx`, planos DXF; DWG y Office antiguo muestran información y descarga (requiere `mammoth` y `jszip` solo para Office) |
 | Feedback | `Modal` (tamaños, tonos, drawer, hoja inferior en móvil, apilado, animación de salida), `useModal` (`confirm`, `alert`, `prompt`), `ToastProvider` (con acción «Deshacer»), `Alert` |
 | Autenticación | `AuthLayout`, `LoginForm`, `RegisterForm`, `ForgotPasswordForm`, `ResetPasswordForm`, `TwoFactorForm` |
 | Accesibilidad | `useAccessibility` (alto contraste y tamaño de texto, sincronizado entre componentes) |

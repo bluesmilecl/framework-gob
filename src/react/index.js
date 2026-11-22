@@ -31,6 +31,10 @@ export { toCsv, parseCsv, downloadFile } from './data/csv.js'
 export { Modal, ModalProvider, useModal } from './feedback/Modal.jsx'
 export { ToastProvider, useToast } from './feedback/Toasts.jsx'
 export { default as Alert } from './feedback/Alert.jsx'
+export { Spinner, Loading, LoadingScreen, LoadingOverlay, ProgressBar, SkeletonText, SkeletonCard } from './feedback/Loading.jsx'
+
+// Vista previa de archivos
+export { default as FilePreview, FilePreviewModal, previewKind } from './preview/FilePreview.jsx'
 
 // Autenticación
 export { AuthLayout, LoginForm, RegisterForm, ForgotPasswordForm, ResetPasswordForm, TwoFactorForm } from './auth/auth.jsx'
