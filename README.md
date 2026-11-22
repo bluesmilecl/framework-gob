@@ -1,7 +1,7 @@
 # gob-cl-tailwind
 
 Framework CSS del **Gobierno de Chile** ([framework.digital.gob.cl](https://framework.digital.gob.cl/)) sobre **Tailwind CSS 4**.
-Traspaso íntegro del framework oficial (`@gobdigital-cl/gob.cl` 3.0.10, que dependía de Bootstrap 4 + jQuery + Popper): mismo diseño, mismos nombres de clase, ahora con tokens de Tailwind, capas CSS, JS sin dependencias, **369 íconos** y una capa opcional con los componentes nuevos de **Bootstrap 6**.
+Traspaso íntegro del framework oficial (`@gobdigital-cl/gob.cl` 3.0.10, que dependía de Bootstrap 4 + jQuery + Popper): mismo diseño, mismos nombres de clase, ahora con tokens de Tailwind, capas CSS, JS sin dependencias, **402 íconos** y una capa opcional con los componentes nuevos de **Bootstrap 6**.
 
 > Proyecto comunitario no oficial. El diseño, marca y logotipos pertenecen al Gobierno de Chile / División de Gobierno Digital.
 
@@ -59,7 +59,7 @@ import "gob-cl-tailwind/next/js";  // opcional: dialog, drawer, menu, combobox�
 | `src/core/a11y-contrast.css` | Tema oficial `html.a11y-contrast` | CSS oficial compilado |
 | `src/core/utilities-bootstrap.css` | Utilidades de Bootstrap 4 (`compat.css`) | CSS oficial compilado |
 | `src/core/a11y-fonts.css` | Re-flujo de grilla con fuentes ampliadas (`compat.css`) | CSS oficial compilado |
-| `src/icons.generated.css` | 369 íconos como máscaras CSS (`.cl-*`) | `scripts/build-icons.mjs` |
+| `src/icons.generated.css` | 402 íconos como máscaras CSS (`.cl-*`) | `scripts/build-icons.mjs` |
 | `src/next/*` | Componentes nuevos de Bootstrap 6 reteñidos | `tools/build-next.mjs` |
 | `src/extras.css` | `container`/`collapse` sin choque con Tailwind, skip-link, foco | Propio |
 
@@ -69,7 +69,7 @@ Los componentes están en `@layer components`, por lo que una utilidad de Tailwi
 
 ## Íconos
 
-`<i class="cl cl-search"></i>`: máscaras CSS que heredan `currentColor` y se dimensionan con `font-size` (`cl-2x` … `cl-10x`, `text-2xl`). 53 oficiales + 316 extra (Lucide, Simple Icons). Si un nombre extra coincide con uno oficial se publica con sufijo `-alt`. Listado en `dist/icons.json`.
+`<i class="cl cl-search"></i>`: máscaras CSS que heredan `currentColor` y se dimensionan con `font-size` (`cl-2x` … `cl-10x`, `text-2xl`). 53 oficiales + 349 extra (Lucide, Simple Icons). Si un nombre extra coincide con uno oficial se publica con sufijo `-alt`. Listado en `dist/icons.json`.
 
 ## Bootstrap 6 (opcional)
 
@@ -86,6 +86,15 @@ Bootstrap 6 está en **`6.0.0-alpha.1`** (pre-lanzamiento, rompe compatibilidad 
 - `.collapse` y `.container` conservan su significado Bootstrap (se neutralizan las utilidades homónimas de Tailwind; usa `invisible` para `visibility: collapse`).
 - Variables SCSS → variables CSS (`var(--color-primary)`); personaliza con `@theme`.
 - jQuery/Popper ya no se necesitan: `data-toggle`, `data-dismiss`, `data-parent` funcionan con el JS incluido.
+
+## Chat de IA
+
+Interfaz de conversación con IA lista para usar, con la identidad gob.cl (sidebar azul oscuro, línea azul/roja, esquinas rectas, alto contraste y tamaño de texto):
+
+- **Estilos reutilizables**: `gob-cl-tailwind/chat.css` (clases `.chat-*`, también para quien no use React).
+- **App de referencia en React**: `site/chat` (se publica en `/chat/` junto a la documentación). Incluye historial con búsqueda, fijar/renombrar/eliminar, streaming con detener (Esc), Markdown con tablas y código con copia, adjuntos (clic, arrastrar, pegar; imágenes con vista previa), editar/regenerar/copiar/valorar, exportar a Markdown/JSON, atajos de teclado, persistencia local y dictado por voz.
+- **Proveedores intercambiables** (`site/chat/src/lib/providers`): por defecto un **motor de demostración local** (respuestas simuladas y rotuladas como tales, sin red); o cualquier servicio compatible con la API de OpenAI desde *Ajustes*. Para producción apunta la URL a tu propio backend: no pongas claves de API en el navegador ni expongas un endpoint sin autenticación ni límites.
+- Las respuestas de IA pueden contener errores: el aviso bajo el cuadro de mensaje se mantiene siempre visible.
 
 ## Documentación (React)
 
