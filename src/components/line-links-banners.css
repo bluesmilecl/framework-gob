@@ -1,0 +1,98 @@
+/* Línea institucional, enlaces, banners, badges, alertas */
+
+@layer components {
+  /* ── Línea institucional azul/roja ── */
+  .line {
+    position: relative;
+    display: inline-block;
+    min-width: 100%;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .line::after {
+    position: absolute; right: 0; bottom: -10px; left: 0;
+    height: 5px; content: ""; background: var(--gob-line);
+  }
+  @media (min-width: 768px) { .line { min-width: 600px; } }
+  .line-primary::after   { background: var(--color-primary); }
+  .line-secondary::after { background: var(--color-secondary); }
+  .line-tertiary::after  { background: var(--color-tertiary); }
+  .line-accent::after    { background: var(--color-accent); }
+  .line-black::after     { background: var(--color-black); }
+  .line-white::after     { background: var(--color-white); }
+  .line-warning::after   { background: var(--color-warning); }
+  .line-success::after   { background: var(--color-success); }
+
+  /* ── Enlaces ── */
+  a.link-unstyled, a.link-icon { text-decoration: none; }
+  a.link-icon { margin-left: 0.5rem; font-size: 22px; }
+
+  /* ── Banner ── */
+  .banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1.625rem 1rem 1rem;
+    text-decoration: none;
+    text-transform: none;
+    border: 1px solid var(--color-gray-c);
+    border-radius: 0.25rem;
+  }
+  .banner-text { display: flex; flex-wrap: wrap; margin: 0; }
+  .banner-icon { margin-right: 1rem; font-size: 2em; }
+  .banner .line { position: absolute; top: -1px; left: 1rem; min-width: 0; margin: 0; }
+  .banner .line::after { width: 6.25rem; height: 0.625rem; }
+  .banner.banner-shadow { border: none; box-shadow: var(--shadow-gob-banner); }
+
+  /* ── Badge ── */
+  .badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    color: #fff;
+    background-color: var(--color-primary);
+    border-radius: 0;
+  }
+  .badge-pill { padding-inline: 0.6em; border-radius: 10rem; }
+  .badge-primary   { background: var(--color-primary);   color: #fff; }
+  .badge-secondary { background: var(--color-secondary); color: #fff; }
+  .badge-tertiary  { background: var(--color-tertiary);  color: #fff; }
+  .badge-success   { background: var(--color-success);   color: #fff; }
+  .badge-info      { background: var(--color-info);      color: #fff; }
+  .badge-warning   { background: var(--color-warning);   color: #212529; }
+  .badge-danger    { background: var(--color-danger);    color: #fff; }
+  .badge-light     { background: var(--color-light);     color: #212529; }
+  .badge-dark      { background: var(--color-dark);      color: #fff; }
+  .badge-accent    { background: var(--color-accent);    color: #212529; }
+  .badge-neutral   { background: var(--color-neutral);   color: #212529; }
+
+  /* ── Alertas (contextuales, con barra de énfasis lateral) ── */
+  .alert {
+    --alert-c: var(--color-info);
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    color: color-mix(in srgb, var(--alert-c) 45%, var(--color-black));
+    background-color: color-mix(in srgb, var(--alert-c) 12%, var(--color-white));
+    border: 1px solid color-mix(in srgb, var(--alert-c) 35%, var(--color-white));
+    border-left: 0.3125rem solid var(--alert-c);
+    border-radius: 0;
+  }
+  .alert-primary   { --alert-c: var(--color-primary); }
+  .alert-secondary { --alert-c: var(--color-secondary); }
+  .alert-success   { --alert-c: var(--color-success); }
+  .alert-info      { --alert-c: var(--color-info); }
+  .alert-warning   { --alert-c: var(--color-warning); }
+  .alert-danger    { --alert-c: var(--color-danger); }
+  .alert-dark      { --alert-c: var(--color-dark); }
+  .alert-heading { color: inherit; margin-bottom: 0.25rem; }
+  .alert-link { font-weight: 700; color: inherit; }
+  .alert-dismissible { padding-right: 3rem; }
+  .alert-dismissible .close { position: absolute; top: 0; right: 0; padding: 0.75rem 1.25rem; color: inherit; }
+  .alert p { color: inherit; margin-bottom: 0; }
+}

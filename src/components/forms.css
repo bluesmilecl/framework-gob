@@ -1,0 +1,127 @@
+/* Formularios: controles, select, checkbox/radio/switch, rango, archivo, input-group, validación */
+
+@layer components {
+  .form-group { margin-bottom: 1rem; }
+  label, .col-form-label { display: inline-block; margin-bottom: 0.5rem; }
+  fieldset { min-width: 0; padding: 0; margin: 0; border: 0; }
+  legend { display: block; width: 100%; padding: 0; margin-bottom: 0.5rem; font-size: 1.5rem; line-height: inherit; }
+  .form-text { display: block; margin-top: 0.25rem; font-size: 0.875rem; color: var(--color-gray-600); }
+  .form-row { display: flex; flex-wrap: wrap; margin-inline: -5px; }
+  .form-row > .col, .form-row > [class*="col-"] { padding-inline: 5px; }
+  .form-inline { display: flex; flex-flow: row wrap; align-items: center; gap: 0.5rem; }
+
+  /* Campos de texto */
+  .form-control, .custom-select {
+    display: block; width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;
+    font-family: var(--font-sans); font-size: 1rem; font-weight: 400; line-height: 1.5; color: var(--color-gray-700);
+    background-color: var(--color-white); background-clip: padding-box; border: 1px solid var(--color-gray-400); border-radius: 0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  .form-control::placeholder { color: var(--color-gray-b); opacity: 1; }
+  .form-control:focus, .custom-select:focus {
+    color: var(--color-gray-700); background-color: var(--color-white); border-color: var(--color-primary);
+    outline: 0; box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+  .form-control:disabled, .form-control[readonly], .custom-select:disabled { background-color: var(--color-gray-200); opacity: 1; cursor: not-allowed; }
+  textarea.form-control { height: auto; min-height: calc(1.5em + 0.75rem + 2px); resize: vertical; }
+  .form-control-lg { height: calc(1.5em + 1rem + 2px); padding: 0.5rem 1rem; font-size: 1.25rem; }
+  .form-control-sm { height: calc(1.5em + 0.5rem + 2px); padding: 0.25rem 0.5rem; font-size: 0.875rem; }
+  .form-control-plaintext { display: block; width: 100%; padding: 0.375rem 0; margin-bottom: 0; line-height: 1.5; background-color: transparent; border: solid transparent; border-width: 1px 0; }
+  .form-control-file, .form-control-range { display: block; width: 100%; }
+  input[type="color"].form-control { padding: 0.25rem; }
+
+  /* Select */
+  select.form-control, .custom-select {
+    appearance: none; padding-right: 2.25rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23343a40' stroke-width='2' d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 12px 8px;
+  }
+  select[multiple].form-control, select[size].form-control { height: auto; background-image: none; padding-right: 0.75rem; }
+
+  /* Checkbox / radio / switch (marcado personalizado BS4: .custom-control) */
+  .custom-control { position: relative; z-index: 1; display: block; min-height: 1.5rem; padding-left: 1.5rem; }
+  .custom-control-inline { display: inline-flex; margin-right: 1rem; }
+  .custom-control-input { position: absolute; left: 0; z-index: -1; width: 1rem; height: 1.25rem; opacity: 0; }
+  .custom-control-label { position: relative; margin-bottom: 0; vertical-align: top; cursor: pointer; }
+  .custom-control-label::before {
+    position: absolute; top: 0.25rem; left: -1.5rem; display: block; width: 1rem; height: 1rem; content: "";
+    pointer-events: none; background-color: var(--color-white); border: 1px solid var(--color-gray-b);
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  }
+  .custom-control-label::after { position: absolute; top: 0.25rem; left: -1.5rem; display: block; width: 1rem; height: 1rem; content: ""; background: 50% / 50% 50% no-repeat; }
+  .custom-checkbox .custom-control-label::before { border-radius: 0; }
+  .custom-radio .custom-control-label::before { border-radius: 50%; }
+  .custom-control-input:checked ~ .custom-control-label::before, .custom-control-input:indeterminate ~ .custom-control-label::before { color: #fff; background-color: var(--color-primary); border-color: var(--color-primary); }
+  .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/%3E%3C/svg%3E");
+  }
+  .custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath stroke='%23fff' d='M0 2h4'/%3E%3C/svg%3E");
+  }
+  .custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E");
+  }
+  .custom-control-input:focus-visible ~ .custom-control-label::before { box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-primary) 30%, transparent); }
+  .custom-control-input:disabled ~ .custom-control-label { color: var(--color-gray-600); cursor: not-allowed; }
+  .custom-control-input:disabled ~ .custom-control-label::before { background-color: var(--color-gray-200); }
+
+  .custom-switch { padding-left: 2.25rem; }
+  .custom-switch .custom-control-label::before { left: -2.25rem; width: 1.75rem; pointer-events: all; border-radius: 0.5rem; }
+  .custom-switch .custom-control-label::after {
+    top: calc(0.25rem + 2px); left: calc(-2.25rem + 2px); width: calc(1rem - 4px); height: calc(1rem - 4px);
+    background-color: var(--color-gray-b); border-radius: 0.5rem; transition: transform 0.15s ease-in-out, background-color 0.15s;
+  }
+  .custom-switch .custom-control-input:checked ~ .custom-control-label::after { background-color: #fff; background-image: none; transform: translateX(0.75rem); }
+
+  /* Checkbox/radio nativos (form-check) */
+  .form-check { position: relative; display: block; padding-left: 1.25rem; }
+  .form-check-input { position: absolute; margin-top: 0.3rem; margin-left: -1.25rem; accent-color: var(--color-primary); }
+  .form-check-label { margin-bottom: 0; }
+  .form-check-inline { display: inline-flex; align-items: center; padding-left: 0; margin-right: 0.75rem; }
+  .form-check-inline .form-check-input { position: static; margin: 0 0.3125rem 0 0; }
+
+  /* Rango */
+  .custom-range { width: 100%; height: 1.5rem; padding: 0; background: transparent; appearance: none; accent-color: var(--color-primary); }
+  .custom-range::-webkit-slider-runnable-track { width: 100%; height: 0.5rem; cursor: pointer; background-color: var(--color-gray-300); border-radius: 1rem; }
+  .custom-range::-webkit-slider-thumb { width: 1rem; height: 1rem; margin-top: -0.25rem; appearance: none; background-color: var(--color-primary); border: 0; border-radius: 1rem; }
+  .custom-range::-moz-range-track { width: 100%; height: 0.5rem; cursor: pointer; background-color: var(--color-gray-300); border-radius: 1rem; }
+  .custom-range::-moz-range-thumb { width: 1rem; height: 1rem; background-color: var(--color-primary); border: 0; border-radius: 1rem; }
+
+  /* Archivo */
+  .custom-file { position: relative; display: inline-block; width: 100%; height: calc(1.5em + 0.75rem + 2px); }
+  .custom-file-input { position: relative; z-index: 2; width: 100%; height: calc(1.5em + 0.75rem + 2px); margin: 0; opacity: 0; cursor: pointer; }
+  .custom-file-label {
+    position: absolute; top: 0; right: 0; left: 0; z-index: 1; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;
+    overflow: hidden; line-height: 1.5; color: var(--color-gray-700); background-color: var(--color-white); border: 1px solid var(--color-gray-400); margin-bottom: 0;
+  }
+  .custom-file-label::after {
+    position: absolute; top: 0; right: 0; bottom: 0; z-index: 3; display: block; height: calc(1.5em + 0.75rem); padding: 0.375rem 0.75rem;
+    line-height: 1.5; color: var(--color-gray-700); content: attr(data-browse); background-color: var(--color-gray-200); border-left: inherit;
+  }
+  .custom-file-input:focus ~ .custom-file-label { border-color: var(--color-primary); box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-primary) 25%, transparent); }
+  .custom-file-input:disabled ~ .custom-file-label { background-color: var(--color-gray-200); }
+
+  /* Input group */
+  .input-group { position: relative; display: flex; flex-wrap: wrap; align-items: stretch; width: 100%; }
+  .input-group > .form-control, .input-group > .custom-select { position: relative; flex: 1 1 auto; width: 1%; min-width: 0; margin-bottom: 0; }
+  .input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child) { margin-left: -1px; }
+  .input-group-prepend, .input-group-append { display: flex; }
+  .input-group-prepend { margin-right: -1px; }
+  .input-group-append { margin-left: -1px; }
+  .input-group-text {
+    display: flex; align-items: center; padding: 0.375rem 0.75rem; margin-bottom: 0; font-size: 1rem; line-height: 1.5;
+    color: var(--color-gray-700); text-align: center; white-space: nowrap; background-color: var(--color-gray-200); border: 1px solid var(--color-gray-400);
+  }
+  .input-group-lg > .form-control, .input-group-lg .input-group-text, .input-group-lg .btn { height: calc(1.5em + 1rem + 2px); padding: 0.5rem 1rem; font-size: 1.25rem; }
+
+  /* Validación */
+  .invalid-feedback, .valid-feedback { display: none; width: 100%; margin-top: 0.25rem; font-size: 0.875rem; }
+  .invalid-feedback { color: color-mix(in srgb, var(--color-danger) 70%, #000); }
+  .valid-feedback { color: var(--color-success); }
+  .is-invalid, .was-validated :invalid { border-color: var(--color-danger) !important; }
+  .is-invalid:focus, .was-validated :invalid:focus { box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-danger) 25%, transparent) !important; }
+  .is-valid, .was-validated :valid { border-color: var(--color-success) !important; }
+  .is-invalid ~ .invalid-feedback, .was-validated :invalid ~ .invalid-feedback { display: block; }
+  .is-valid ~ .valid-feedback, .was-validated :valid ~ .valid-feedback { display: block; }
+  .custom-control-input.is-invalid ~ .custom-control-label::before { border-color: var(--color-danger) !important; }
+}

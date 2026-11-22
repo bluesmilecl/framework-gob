@@ -1,0 +1,163 @@
+/*!
+ * gob-cl-tailwind · Tokens de diseño (Tailwind CSS 4)
+ * Paleta, tipografía y breakpoints según el Framework oficial del Gobierno de Chile (gob.cl).
+ */
+
+@theme {
+  /* ── Breakpoints oficiales (idénticos al framework original) ── */
+  --breakpoint-*: initial;
+  --breakpoint-ss: 375px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+
+  /* ── Tipografía ── */
+  --font-sans: "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-slab: "Roboto Slab", ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --font-accent: var(--font-slab);
+
+  /* ── Paleta ── */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Marca */
+  --color-primary: #006fb3;
+  --color-secondary: #fe6565;
+  --color-tertiary: #0a132d;
+  --color-accent: #a8b7c7;
+  --color-neutral: #eeeeee;
+
+  /* Semánticos */
+  --color-success: #2d717c;
+  --color-info: #17a2b8;
+  --color-warning: #f2c728;
+  --color-danger: #fe6565;
+  --color-light: #f8f9fa;
+  --color-dark: #343a40;
+
+  /* Colores base nombrados (igual que $colors del framework) */
+  --color-blue: #006fb3;
+  --color-blue-light: #a8b7c7;
+  --color-blue-dark: #0a132d;
+  --color-red: #fe6565;
+  --color-orange: #e0701e;
+  --color-orange-light: #ffa11b;
+  --color-yellow: #f2c728;
+  --color-green: #2d717c;
+  --color-teal: #20c997;
+  --color-cyan: #17a2b8;
+  --color-indigo: #6610f2;
+  --color-purple: #6633cc;
+  --color-pink: #e83e8c;
+  --color-black: #111111;
+  --color-white: #ffffff;
+
+  /* Escala de grises (a/b/c propios de gob.cl + 100…900) */
+  --color-gray: #a8b7c7;
+  --color-gray-a: #4a4a4a;
+  --color-gray-b: #8a8a8a;
+  --color-gray-c: #eeeeee;
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #6c757d;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+
+  /* Línea institucional (azul / rojo) */
+  --color-brand-blue: #0f69b4;
+  --color-brand-red: #e22c2c;
+
+  /* Superficies y bordes */
+  --color-shadow: #e3e5ef;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5f6f7;
+
+  /* Redes sociales */
+  --color-twitter: #00aced;
+  --color-facebook: #3b5998;
+  --color-youtube: #ff0000;
+  --color-instagram: #bc2a8d;
+  --color-whatsapp: #25d366;
+  --color-linkedin: #0a66c2;
+
+  /* ── Tamaños tipográficos del framework (móvil / ≥768px) ── */
+  --text-gob-h1: 1.5rem;       --text-gob-h1--line-height: 2.88rem;
+  --text-gob-h2: 1.25rem;      --text-gob-h2--line-height: 1.625rem;
+  --text-gob-h3: 1.23125rem;   --text-gob-h3--line-height: 1.625rem;
+  --text-gob-h4: 1.0625rem;    --text-gob-h4--line-height: 1.4625rem;
+  --text-gob-body: 0.9rem;     --text-gob-body--line-height: 1.35rem;
+  --text-gob-small: 0.6875rem; --text-gob-small--line-height: 1.5rem;
+
+  /* ── Sombras ── */
+  --shadow-gob-navbar: 0 2px 0 0 var(--color-shadow);
+  --shadow-gob-banner: 0 1px 2px 0 #858585cc;
+
+  /* ── Animación ── */
+  --animate-gob-fade-in: gob-fade-in 0.2s ease-out both;
+  --animate-gob-slide-down: gob-slide-down 0.2s ease-out both;
+  @keyframes gob-fade-in { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes gob-slide-down { from { opacity: 0; transform: translateY(-0.5rem) } to { opacity: 1; transform: none } }
+}
+
+/* Variables propias (no generan utilidades) */
+:root {
+  --gob-navbar-h: 54px;
+  --gob-navbar-lg-h: 69px;
+  --gob-navbar-xl-h: 90px;
+  --gob-footer-h: 64px;
+  --gob-container-gutter: 0.9375rem;
+  --gob-focus: color-mix(in srgb, var(--color-primary) 55%, transparent);
+  --gob-line: linear-gradient(to right, var(--color-brand-blue) 0, var(--color-brand-blue) 50%, var(--color-brand-red) 50%, var(--color-brand-red) 100%);
+}
+
+/* ── Modo alto contraste (equivale a .a11y-contrast del framework original) ── */
+:root.a11y-contrast,
+[data-theme="contrast"] {
+  --color-primary: #ff904c;
+  --color-secondary: #019a9a;
+  --color-tertiary: #f5ecd2;
+  --color-accent: #574838;
+  --color-neutral: #111111;
+  --color-success: #d28e83;
+  --color-info: #e85d47;
+  --color-warning: #0d38d7;
+  --color-danger: #019a9a;
+  --color-light: #070605;
+  --color-dark: #cbc5bf;
+  --color-blue: #ff904c;
+  --color-blue-light: #574838;
+  --color-blue-dark: #f5ecd2;
+  --color-red: #019a9a;
+  --color-orange: #1f8fe1;
+  --color-yellow: #0d38d7;
+  --color-green: #d28e83;
+  --color-cyan: #e85d47;
+  --color-black: #eeeeee;
+  --color-white: #000000;
+  --color-gray: #574838;
+  --color-gray-a: #b5b5b5;
+  --color-gray-b: #757575;
+  --color-gray-c: #111111;
+  --color-gray-100: #070605;
+  --color-gray-200: #161310;
+  --color-gray-300: #211d19;
+  --color-gray-400: #312b25;
+  --color-gray-500: #524a42;
+  --color-gray-600: #938a82;
+  --color-gray-700: #b6afa8;
+  --color-gray-800: #cbc5bf;
+  --color-gray-900: #dedad6;
+  --color-shadow: #1c1a10;
+  --color-surface: #000000;
+  --color-surface-muted: #0a0908;
+  --color-brand-blue: #f0964b;
+  --color-brand-red: #1dd3d3;
+  color-scheme: dark;
+}

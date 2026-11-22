@@ -1,0 +1,9 @@
+/*!
+ * gob-cl-tailwind v4 — Framework del Gobierno de Chile sobre Tailwind CSS 4
+ * Uso:   @import "tailwindcss";
+ *        @import "gob-cl-tailwind";
+ */
+@import "./theme.css";
+@import "./base.css";
+@import "./components.css";
+@import "./icons.generated.css";

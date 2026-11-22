@@ -1,0 +1,76 @@
+{
+  "name": "gob-cl-tailwind",
+  "version": "4.0.0",
+  "description": "Framework CSS del Gobierno de Chile (gob.cl) reconstruido con Tailwind CSS 4: mismos lineamientos gráficos, componentes e iconos, más moderno y ampliado.",
+  "license": "MIT",
+  "type": "module",
+  "style": "dist/gob.css",
+  "main": "dist/gob.js",
+  "module": "dist/gob.esm.js",
+  "files": [
+    "dist",
+    "src",
+    "icons",
+    "scripts",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "style": "./src/index.css",
+      "default": "./src/index.css"
+    },
+    "./theme.css": "./src/theme.css",
+    "./components.css": "./src/components.css",
+    "./icons.css": "./src/icons.generated.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./compat.css": "./src/compat.css",
+    "./js": {
+      "import": "./dist/gob.esm.js",
+      "default": "./dist/gob.js"
+    },
+    "./dist/*": "./dist/*",
+    "./icons/*": "./icons/*",
+    "./icons.json": "./dist/icons.json"
+  },
+  "sideEffects": [
+    "*.css",
+    "./dist/gob.js",
+    "./dist/gob.esm.js"
+  ],
+  "scripts": {
+    "build:icons": "node scripts/build-icons.mjs && node scripts/build-compat.mjs",
+    "build:fonts": "node scripts/build-fonts.mjs",
+    "build:css": "tailwindcss -i src/dist-entry.css -o dist/gob.css && tailwindcss -i src/dist-entry.css -o dist/gob.min.css --minify",
+    "build:js": "node scripts/build-js.mjs",
+    "build:docs": "node scripts/build-docs.mjs",
+    "build": "npm run build:icons && npm run build:fonts && npm run build:js && npm run build:docs && npm run build:css",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "gob.cl",
+    "gobierno de chile",
+    "tailwindcss",
+    "tailwind4",
+    "css",
+    "design-system",
+    "framework"
+  ],
+  "peerDependencies": {
+    "tailwindcss": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@fontsource/roboto": "^5.1.0",
+    "@fontsource/roboto-slab": "^5.1.0",
+    "@tailwindcss/cli": "^4.1.0",
+    "esbuild": "^0.25.0",
+    "lucide-static": "^0.468.0",
+    "simple-icons": "^14.15.0",
+    "tailwindcss": "^4.1.0"
+  }
+}

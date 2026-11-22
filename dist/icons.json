@@ -1,0 +1,2216 @@
+[
+  {
+    "name": "accessibility",
+    "class": "cl-accessibility",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "add-circle-fill",
+    "class": "cl-add-circle-fill",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "add-circle-line",
+    "class": "cl-add-circle-line",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "arrow-left",
+    "class": "cl-arrow-left",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "arrow-line",
+    "class": "cl-arrow-line",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "arrow-right",
+    "class": "cl-arrow-right",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "arrow",
+    "class": "cl-arrow",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "authority",
+    "class": "cl-authority",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "breadcrumb",
+    "class": "cl-breadcrumb",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "briefcase",
+    "class": "cl-briefcase",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "burger",
+    "class": "cl-burger",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "bus",
+    "class": "cl-bus",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "call-info",
+    "class": "cl-call-info",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "claveunica",
+    "class": "cl-claveunica",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "close-line",
+    "class": "cl-close-line",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "close",
+    "class": "cl-close",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "computer",
+    "class": "cl-computer",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "contrast",
+    "class": "cl-contrast",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "currency-cycle",
+    "class": "cl-currency-cycle",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "decrease-text",
+    "class": "cl-decrease-text",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "doctor",
+    "class": "cl-doctor",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "document-verified",
+    "class": "cl-document-verified",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "download",
+    "class": "cl-download",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "facebook",
+    "class": "cl-facebook",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "filter",
+    "class": "cl-filter",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "give-letter",
+    "class": "cl-give-letter",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "img-preview",
+    "class": "cl-img-preview",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "increase-text",
+    "class": "cl-increase-text",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "instagram",
+    "class": "cl-instagram",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "list",
+    "class": "cl-list",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "login-fill",
+    "class": "cl-login-fill",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "login",
+    "class": "cl-login",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "logout",
+    "class": "cl-logout",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "m-arrow-down",
+    "class": "cl-m-arrow-down",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "m-arrow-left",
+    "class": "cl-m-arrow-left",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "m-arrow-right",
+    "class": "cl-m-arrow-right",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "m-arrow-up",
+    "class": "cl-m-arrow-up",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "messenger",
+    "class": "cl-messenger",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "moneybox",
+    "class": "cl-moneybox",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "ok",
+    "class": "cl-ok",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "pause",
+    "class": "cl-pause",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "play",
+    "class": "cl-play",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "question",
+    "class": "cl-question",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "reading",
+    "class": "cl-reading",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "search",
+    "class": "cl-search",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "sound",
+    "class": "cl-sound",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "store",
+    "class": "cl-store",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "telephone",
+    "class": "cl-telephone",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "together",
+    "class": "cl-together",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "touch-screen",
+    "class": "cl-touch-screen",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "twitter",
+    "class": "cl-twitter",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "woman",
+    "class": "cl-woman",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "youtube",
+    "class": "cl-youtube",
+    "group": "Oficiales gob.cl",
+    "source": "gob.cl"
+  },
+  {
+    "name": "house",
+    "class": "cl-house",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "menu",
+    "class": "cl-menu",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "x",
+    "class": "cl-x",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "check",
+    "class": "cl-check",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "plus",
+    "class": "cl-plus",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "minus",
+    "class": "cl-minus",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "ellipsis-vertical",
+    "class": "cl-ellipsis-vertical",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "chevron-up",
+    "class": "cl-chevron-up",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "chevron-down",
+    "class": "cl-chevron-down",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "chevron-left",
+    "class": "cl-chevron-left",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "chevron-right",
+    "class": "cl-chevron-right",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "chevrons-up",
+    "class": "cl-chevrons-up",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "chevrons-down",
+    "class": "cl-chevrons-down",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "chevrons-left",
+    "class": "cl-chevrons-left",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "chevrons-right",
+    "class": "cl-chevrons-right",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "arrow-up",
+    "class": "cl-arrow-up",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "arrow-down",
+    "class": "cl-arrow-down",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "arrow-up-right",
+    "class": "cl-arrow-up-right",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "arrow-down-left",
+    "class": "cl-arrow-down-left",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "arrow-up-down",
+    "class": "cl-arrow-up-down",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "move",
+    "class": "cl-move",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "external-link",
+    "class": "cl-external-link",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "link",
+    "class": "cl-link",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "unlink",
+    "class": "cl-unlink",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "copy",
+    "class": "cl-copy",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "clipboard",
+    "class": "cl-clipboard",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "clipboard-check",
+    "class": "cl-clipboard-check",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "clipboard-list",
+    "class": "cl-clipboard-list",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "pencil",
+    "class": "cl-pencil",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "square-pen",
+    "class": "cl-square-pen",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "trash-2",
+    "class": "cl-trash-2",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "save",
+    "class": "cl-save",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "undo-2",
+    "class": "cl-undo-2",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "redo-2",
+    "class": "cl-redo-2",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "eye",
+    "class": "cl-eye",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "eye-off",
+    "class": "cl-eye-off",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "settings",
+    "class": "cl-settings",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "sliders-horizontal",
+    "class": "cl-sliders-horizontal",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "list-filter",
+    "class": "cl-list-filter",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "search-x",
+    "class": "cl-search-x",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "zoom-in",
+    "class": "cl-zoom-in",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "zoom-out",
+    "class": "cl-zoom-out",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "maximize",
+    "class": "cl-maximize",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "minimize",
+    "class": "cl-minimize",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "expand",
+    "class": "cl-expand",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "shrink",
+    "class": "cl-shrink",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "refresh-cw",
+    "class": "cl-refresh-cw",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "rotate-cw",
+    "class": "cl-rotate-cw",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "loader-circle",
+    "class": "cl-loader-circle",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "upload",
+    "class": "cl-upload",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "share-2",
+    "class": "cl-share-2",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "printer",
+    "class": "cl-printer",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "qr-code",
+    "class": "cl-qr-code",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "scan-line",
+    "class": "cl-scan-line",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "grip-vertical",
+    "class": "cl-grip-vertical",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "layout-grid",
+    "class": "cl-layout-grid",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "layout-list",
+    "class": "cl-layout-list",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "panel-left",
+    "class": "cl-panel-left",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "table",
+    "class": "cl-table",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "list-checks",
+    "class": "cl-list-checks",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "list-ordered",
+    "class": "cl-list-ordered",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "toggle-left",
+    "class": "cl-toggle-left",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "toggle-right",
+    "class": "cl-toggle-right",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "bell",
+    "class": "cl-bell",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "bell-off",
+    "class": "cl-bell-off",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "bookmark",
+    "class": "cl-bookmark",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "star",
+    "class": "cl-star",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "heart",
+    "class": "cl-heart",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "thumbs-up",
+    "class": "cl-thumbs-up",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "thumbs-down",
+    "class": "cl-thumbs-down",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "flag",
+    "class": "cl-flag",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "tag",
+    "class": "cl-tag",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "tags",
+    "class": "cl-tags",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "pin",
+    "class": "cl-pin",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "arrow-up-narrow-wide",
+    "class": "cl-arrow-up-narrow-wide",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "arrow-down-wide-narrow",
+    "class": "cl-arrow-down-wide-narrow",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "ellipsis",
+    "class": "cl-ellipsis",
+    "group": "Interfaz",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-check",
+    "class": "cl-circle-check",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-x",
+    "class": "cl-circle-x",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-alert",
+    "class": "cl-circle-alert",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "triangle-alert",
+    "class": "cl-triangle-alert",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "info",
+    "class": "cl-info",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-help",
+    "class": "cl-circle-help",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "octagon-alert",
+    "class": "cl-octagon-alert",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "shield-check",
+    "class": "cl-shield-check",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "shield-alert",
+    "class": "cl-shield-alert",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "shield-x",
+    "class": "cl-shield-x",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "badge-check",
+    "class": "cl-badge-check",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "badge-alert",
+    "class": "cl-badge-alert",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "badge-info",
+    "class": "cl-badge-info",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "badge-help",
+    "class": "cl-badge-help",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "ban",
+    "class": "cl-ban",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "siren",
+    "class": "cl-siren",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "bell-ring",
+    "class": "cl-bell-ring",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "lightbulb",
+    "class": "cl-lightbulb",
+    "group": "Estado y alertas",
+    "source": "lucide"
+  },
+  {
+    "name": "user",
+    "class": "cl-user",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "users",
+    "class": "cl-users",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "user-round",
+    "class": "cl-user-round",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "user-check",
+    "class": "cl-user-check",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "user-plus",
+    "class": "cl-user-plus",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "user-minus",
+    "class": "cl-user-minus",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "user-x",
+    "class": "cl-user-x",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "user-cog",
+    "class": "cl-user-cog",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "user-search",
+    "class": "cl-user-search",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-user",
+    "class": "cl-circle-user",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "id-card",
+    "class": "cl-id-card",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "fingerprint",
+    "class": "cl-fingerprint",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "lock",
+    "class": "cl-lock",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "lock-open",
+    "class": "cl-lock-open",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "key",
+    "class": "cl-key",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "key-round",
+    "class": "cl-key-round",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "log-in",
+    "class": "cl-log-in",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "log-out",
+    "class": "cl-log-out",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "contact",
+    "class": "cl-contact",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "hand-helping",
+    "class": "cl-hand-helping",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "handshake",
+    "class": "cl-handshake",
+    "group": "Usuarios y cuenta",
+    "source": "lucide"
+  },
+  {
+    "name": "mail",
+    "class": "cl-mail",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "mail-open",
+    "class": "cl-mail-open",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "inbox",
+    "class": "cl-inbox",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "send",
+    "class": "cl-send",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "message-circle",
+    "class": "cl-message-circle",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "message-square",
+    "class": "cl-message-square",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "messages-square",
+    "class": "cl-messages-square",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "phone",
+    "class": "cl-phone",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "phone-call",
+    "class": "cl-phone-call",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "phone-off",
+    "class": "cl-phone-off",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "megaphone",
+    "class": "cl-megaphone",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "newspaper",
+    "class": "cl-newspaper",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "rss",
+    "class": "cl-rss",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "at-sign",
+    "class": "cl-at-sign",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "mic",
+    "class": "cl-mic",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "mic-off",
+    "class": "cl-mic-off",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "headphones",
+    "class": "cl-headphones",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "video",
+    "class": "cl-video",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "video-off",
+    "class": "cl-video-off",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "captions",
+    "class": "cl-captions",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "voicemail",
+    "class": "cl-voicemail",
+    "group": "Comunicación",
+    "source": "lucide"
+  },
+  {
+    "name": "file",
+    "class": "cl-file",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-text",
+    "class": "cl-file-text",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-check",
+    "class": "cl-file-check",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-search",
+    "class": "cl-file-search",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-plus",
+    "class": "cl-file-plus",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-x",
+    "class": "cl-file-x",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-down",
+    "class": "cl-file-down",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-up",
+    "class": "cl-file-up",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-badge",
+    "class": "cl-file-badge",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "file-pen",
+    "class": "cl-file-pen",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "files",
+    "class": "cl-files",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "folder",
+    "class": "cl-folder",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "folder-open",
+    "class": "cl-folder-open",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "folder-check",
+    "class": "cl-folder-check",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "archive",
+    "class": "cl-archive",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "book",
+    "class": "cl-book",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "book-open",
+    "class": "cl-book-open",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "book-open-check",
+    "class": "cl-book-open-check",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "notebook-pen",
+    "class": "cl-notebook-pen",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "library",
+    "class": "cl-library",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "scroll-text",
+    "class": "cl-scroll-text",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "stamp",
+    "class": "cl-stamp",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "award",
+    "class": "cl-award",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "paperclip",
+    "class": "cl-paperclip",
+    "group": "Documentos",
+    "source": "lucide"
+  },
+  {
+    "name": "map",
+    "class": "cl-map",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "map-pin",
+    "class": "cl-map-pin",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "map-pinned",
+    "class": "cl-map-pinned",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "navigation",
+    "class": "cl-navigation",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "compass",
+    "class": "cl-compass",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "globe",
+    "class": "cl-globe",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "locate",
+    "class": "cl-locate",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "building",
+    "class": "cl-building",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "building-2",
+    "class": "cl-building-2",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "landmark",
+    "class": "cl-landmark",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "school",
+    "class": "cl-school",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "hospital",
+    "class": "cl-hospital",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "church",
+    "class": "cl-church",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "hotel",
+    "class": "cl-hotel",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "warehouse",
+    "class": "cl-warehouse",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "store-alt",
+    "class": "cl-store-alt",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "factory",
+    "class": "cl-factory",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "tent-tree",
+    "class": "cl-tent-tree",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "trees",
+    "class": "cl-trees",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "mountain",
+    "class": "cl-mountain",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "waves",
+    "class": "cl-waves",
+    "group": "Lugares y mapas",
+    "source": "lucide"
+  },
+  {
+    "name": "calendar",
+    "class": "cl-calendar",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "calendar-days",
+    "class": "cl-calendar-days",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "calendar-check",
+    "class": "cl-calendar-check",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "calendar-clock",
+    "class": "cl-calendar-clock",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "calendar-plus",
+    "class": "cl-calendar-plus",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "calendar-x",
+    "class": "cl-calendar-x",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "clock",
+    "class": "cl-clock",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "timer",
+    "class": "cl-timer",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "hourglass",
+    "class": "cl-hourglass",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "history",
+    "class": "cl-history",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "alarm-clock",
+    "class": "cl-alarm-clock",
+    "group": "Tiempo",
+    "source": "lucide"
+  },
+  {
+    "name": "credit-card",
+    "class": "cl-credit-card",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "wallet",
+    "class": "cl-wallet",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "banknote",
+    "class": "cl-banknote",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "coins",
+    "class": "cl-coins",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "receipt",
+    "class": "cl-receipt",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "receipt-text",
+    "class": "cl-receipt-text",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "piggy-bank",
+    "class": "cl-piggy-bank",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "hand-coins",
+    "class": "cl-hand-coins",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "badge-dollar-sign",
+    "class": "cl-badge-dollar-sign",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "calculator",
+    "class": "cl-calculator",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "briefcase-alt",
+    "class": "cl-briefcase-alt",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "scale",
+    "class": "cl-scale",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "gavel",
+    "class": "cl-gavel",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "vote",
+    "class": "cl-vote",
+    "group": "Finanzas y trámites",
+    "source": "lucide"
+  },
+  {
+    "name": "stethoscope",
+    "class": "cl-stethoscope",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "pill",
+    "class": "cl-pill",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "syringe",
+    "class": "cl-syringe",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "heart-pulse",
+    "class": "cl-heart-pulse",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "activity",
+    "class": "cl-activity",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "ambulance",
+    "class": "cl-ambulance",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "baby",
+    "class": "cl-baby",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "thermometer",
+    "class": "cl-thermometer",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "hospital-alt",
+    "class": "cl-hospital-alt",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "brain",
+    "class": "cl-brain",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "bandage",
+    "class": "cl-bandage",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "cross",
+    "class": "cl-cross",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "accessibility-alt",
+    "class": "cl-accessibility-alt",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "ear",
+    "class": "cl-ear",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "ear-off",
+    "class": "cl-ear-off",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "eye-closed",
+    "class": "cl-eye-closed",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "glasses",
+    "class": "cl-glasses",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "hand",
+    "class": "cl-hand",
+    "group": "Salud",
+    "source": "lucide"
+  },
+  {
+    "name": "graduation-cap",
+    "class": "cl-graduation-cap",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "school-alt",
+    "class": "cl-school-alt",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "book-marked",
+    "class": "cl-book-marked",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "pencil-ruler",
+    "class": "cl-pencil-ruler",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "backpack",
+    "class": "cl-backpack",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "briefcase-business",
+    "class": "cl-briefcase-business",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "hard-hat",
+    "class": "cl-hard-hat",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "wrench",
+    "class": "cl-wrench",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "hammer",
+    "class": "cl-hammer",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "drill",
+    "class": "cl-drill",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "construction",
+    "class": "cl-construction",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "tractor",
+    "class": "cl-tractor",
+    "group": "Educación y trabajo",
+    "source": "lucide"
+  },
+  {
+    "name": "car",
+    "class": "cl-car",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "bus-alt",
+    "class": "cl-bus-alt",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "train-front",
+    "class": "cl-train-front",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "plane",
+    "class": "cl-plane",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "bike",
+    "class": "cl-bike",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "ship",
+    "class": "cl-ship",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "truck",
+    "class": "cl-truck",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "navigation-2",
+    "class": "cl-navigation-2",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "route",
+    "class": "cl-route",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "signpost",
+    "class": "cl-signpost",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-parking",
+    "class": "cl-circle-parking",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "fuel",
+    "class": "cl-fuel",
+    "group": "Transporte",
+    "source": "lucide"
+  },
+  {
+    "name": "leaf",
+    "class": "cl-leaf",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "sprout",
+    "class": "cl-sprout",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "trees-alt",
+    "class": "cl-trees-alt",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "droplets",
+    "class": "cl-droplets",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "droplet",
+    "class": "cl-droplet",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "flame",
+    "class": "cl-flame",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "zap",
+    "class": "cl-zap",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "sun",
+    "class": "cl-sun",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "moon",
+    "class": "cl-moon",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "cloud",
+    "class": "cl-cloud",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "cloud-rain",
+    "class": "cl-cloud-rain",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "cloud-snow",
+    "class": "cl-cloud-snow",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "cloud-lightning",
+    "class": "cl-cloud-lightning",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "wind",
+    "class": "cl-wind",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "snowflake",
+    "class": "cl-snowflake",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "thermometer-sun",
+    "class": "cl-thermometer-sun",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "recycle",
+    "class": "cl-recycle",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "umbrella",
+    "class": "cl-umbrella",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "tornado",
+    "class": "cl-tornado",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "earth",
+    "class": "cl-earth",
+    "group": "Medio ambiente y clima",
+    "source": "lucide"
+  },
+  {
+    "name": "smartphone",
+    "class": "cl-smartphone",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "tablet",
+    "class": "cl-tablet",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "laptop",
+    "class": "cl-laptop",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "monitor",
+    "class": "cl-monitor",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "wifi",
+    "class": "cl-wifi",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "wifi-off",
+    "class": "cl-wifi-off",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "bluetooth",
+    "class": "cl-bluetooth",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "server",
+    "class": "cl-server",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "database",
+    "class": "cl-database",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "cloud-upload",
+    "class": "cl-cloud-upload",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "cloud-download",
+    "class": "cl-cloud-download",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "code",
+    "class": "cl-code",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "terminal",
+    "class": "cl-terminal",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "cpu",
+    "class": "cl-cpu",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "hard-drive",
+    "class": "cl-hard-drive",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "qr-code-alt",
+    "class": "cl-qr-code-alt",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "scan",
+    "class": "cl-scan",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "chart-pie",
+    "class": "cl-chart-pie",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "chart-line",
+    "class": "cl-chart-line",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "trending-up",
+    "class": "cl-trending-up",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "trending-down",
+    "class": "cl-trending-down",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "chart-column",
+    "class": "cl-chart-column",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "chart-bar",
+    "class": "cl-chart-bar",
+    "group": "Tecnología y datos",
+    "source": "lucide"
+  },
+  {
+    "name": "image",
+    "class": "cl-image",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "images",
+    "class": "cl-images",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "camera",
+    "class": "cl-camera",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "play-alt",
+    "class": "cl-play-alt",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "pause-alt",
+    "class": "cl-pause-alt",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "square",
+    "class": "cl-square",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-play",
+    "class": "cl-circle-play",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "circle-pause",
+    "class": "cl-circle-pause",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "skip-back",
+    "class": "cl-skip-back",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "skip-forward",
+    "class": "cl-skip-forward",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "volume-2",
+    "class": "cl-volume-2",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "volume-x",
+    "class": "cl-volume-x",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "music",
+    "class": "cl-music",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "film",
+    "class": "cl-film",
+    "group": "Multimedia",
+    "source": "lucide"
+  },
+  {
+    "name": "linkedin",
+    "class": "cl-linkedin",
+    "group": "Redes sociales (línea)",
+    "source": "lucide"
+  },
+  {
+    "name": "x-twitter",
+    "class": "cl-x-twitter",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  },
+  {
+    "name": "whatsapp",
+    "class": "cl-whatsapp",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  },
+  {
+    "name": "tiktok",
+    "class": "cl-tiktok",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  },
+  {
+    "name": "telegram",
+    "class": "cl-telegram",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  },
+  {
+    "name": "threads",
+    "class": "cl-threads",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  },
+  {
+    "name": "flickr",
+    "class": "cl-flickr",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  },
+  {
+    "name": "github",
+    "class": "cl-github",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  },
+  {
+    "name": "spotify",
+    "class": "cl-spotify",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  },
+  {
+    "name": "mastodon",
+    "class": "cl-mastodon",
+    "group": "Redes sociales (marca)",
+    "source": "simple-icons"
+  }
+]
